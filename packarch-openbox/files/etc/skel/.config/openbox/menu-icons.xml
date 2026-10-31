@@ -86,6 +86,11 @@
 			<separator/>
 			<menu id="StylePipeMenu" execute="packarch-skin openbox-menu" label="Changer de style"/>
 			<menu id="FontPipeMenu" execute="&pipes;/pa-change-fonts" label="Changer de police"/>
+			<item label="Couleur des dossiers">
+				<action name="Execute">
+					<command>packarch-folder-color</command>
+				</action>
+			</item>
 			<separator/>
 			<item label="Recharger le thème">
 				<action name="Execute">

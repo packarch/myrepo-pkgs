@@ -37,10 +37,12 @@
 # Icons (7.0-70): Packarch for the default, packarch, red-satanic,
 # pink-sylvanas and yellow-flower themes, with their folder_color (blue, red,
 # purple, yellow; packarch-folder-color) instead of the Luna-* themes.
+# Menu (7.0-71): "Couleur des dossiers" (packarch-folder-color) in
+# Préférences of menu-icons.xml and menu-glyphs.xml.
 
 pkgname=packarch-openbox
 pkgver=7.0
-pkgrel=70
+pkgrel=71
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -69,7 +71,7 @@ depends=(
   # font (1.0.0-11, 7.0-38); role fastfetch of red-satanic (1.0.0-12, 7.0-42);
   # GTK and Openbox themes Packarch-<Theme> of each theme (2.0-5, 7.0-44);
   # no packarch-themes, the GTK themes of the XFCE desktop (7.0-45)
-  'packarch-skin>=1.0.0-18' 'packarch-icons>=2.0-8' packarch-cursors
+  'packarch-skin>=1.0.0-18' 'packarch-icons>=2.0-8' packarch-folder-color packarch-cursors
   packarch-fonts packarch-backgrounds 'packarch-themes-openbox>=2.0-6'
   packarch-icons-openbox packarch-backgrounds-openbox
 )
