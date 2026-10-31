@@ -5,12 +5,14 @@
 # Nordic-Folders(-Bluish, -Green), Numix-Apps(-White), Vimix-White(-Dark),
 # White-Folders, Win11(-Dark). They inherit from and link to the themes of
 # packarch-icons (Packarch, Packarch-Dark, Luna).
+# 2.0-2: no broken symlinks (relinked to the same icon elsewhere in the
+# theme, or removed so that the inherited theme provides it).
 # Files: files/ (installed as is). Most of the content was collected or made
 # by Aditya Shakya (adi1090x), GPL3.
 
 pkgname=packarch-icons-extra
 pkgver=2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Extra icon themes for Packarch (used by no Packarch theme)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

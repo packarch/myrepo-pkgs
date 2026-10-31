@@ -6,12 +6,17 @@
 # 2.0-6, the icon themes used only by the Openbox themes are in
 # packarch-icons-openbox and the ones used by no theme in packarch-icons-extra
 # (2.0-5), so that the XFCE live ISO does not ship them. No Zafiro since 2.0-4.
+# 2.0-7: consistent folder colors in Luna-*-Dark (Luna-Antidote-Dark all blue,
+# scalable@2x links to each theme's own scalable, broken folder-drag-accept
+# link of Luna-Red-Dark fixed) and no broken symlinks in any theme (relinked
+# to the same icon elsewhere in the theme, or removed so that the inherited
+# theme provides it).
 # Files: files/ (installed as is). Most of the content was collected or made
 # by Aditya Shakya (adi1090x), GPL3.
 
 pkgname=packarch-icons
 pkgver=2.0
-pkgrel=6
+pkgrel=7
 pkgdesc="Icon themes of the XFCE desktop of Packarch (Papirus from the official package)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

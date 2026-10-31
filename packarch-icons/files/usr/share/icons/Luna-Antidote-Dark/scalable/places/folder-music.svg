@@ -7,8 +7,8 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   sodipodi:docname="folder-music.svg"
-   inkscape:version="1.0.1 (3bc2e813f5, 2020-09-07)"
+   sodipodi:docname="folder-blue-music.svg"
+   inkscape:version="1.0.2 (e86c870879, 2021-01-15)"
    id="svg8"
    version="1.1"
    viewBox="0 0 8.4666665 8.4666669"
@@ -34,7 +34,7 @@
      inkscape:window-maximized="1"
      inkscape:window-y="0"
      inkscape:window-x="0"
-     inkscape:window-height="1000"
+     inkscape:window-height="999"
      inkscape:window-width="1920"
      units="px"
      showgrid="false"
@@ -42,7 +42,7 @@
      inkscape:current-layer="layer1"
      inkscape:document-units="px"
      inkscape:cy="26.846014"
-     inkscape:cx="13.764065"
+     inkscape:cx="12.035039"
      inkscape:zoom="14.459008"
      inkscape:pageshadow="2"
      inkscape:pageopacity="0.0"
@@ -58,7 +58,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -73,7 +73,7 @@
        transform="matrix(0.26458333,0,0,0.26458333,0.25321455,3.9047208)" />
     <path
        d="m 0.52916668,1.5896163 v 0.529167 0.529166 5.291667 H 7.9375 V 2.6479493 2.1187833 H 2.6458333 v -0.529167 z"
-       style="opacity:1;fill:#ffc86a;fill-opacity:1;stroke-width:0.922756"
+       style="opacity:1;fill:#0096ff;fill-opacity:1;stroke-width:0.922756"
        id="rect840-7" />
     <path
        transform="scale(0.26458333)"
