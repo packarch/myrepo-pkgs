@@ -4,7 +4,8 @@
 # 2.0-6, so that the XFCE live ISO does not ship them): Hack (hacking),
 # Luv-Folders (spark), Luv-Folders-Dark (adaptive), Qogir-Pink-Dark
 # (pink-city); BeautyLine (cyberpunk) from aur/beautyline. They inherit from
-# packarch-icons (Packarch, Packarch-Dark) and qogir-icon-theme (Qogir-Dark).
+# packarch-icons (Packarch-Base, Packarch-Base-Dark since 2.0-2) and
+# qogir-icon-theme (Qogir-Dark).
 # Files: files/ (installed as is). Most of the content was collected or made
 # by Aditya Shakya (adi1090x), GPL3. Qogir-Pink-Dark: the folder icons
 # (places) of Qogir-Dark (Vinceliuice, GPL3) recolored in the pink of the
@@ -13,12 +14,12 @@
 
 pkgname=packarch-icons-openbox
 pkgver=2.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Icon themes of the Openbox themes of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL3')
-depends=('packarch-icons>=2.0-6' 'qogir-icon-theme' 'beautyline')
+depends=('packarch-icons>=2.0-8' 'qogir-icon-theme' 'beautyline')
 options=(!strip !emptydirs)
 
 package() {

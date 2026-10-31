@@ -1,7 +1,7 @@
 [Icon Theme]
 Name=Nordic-Folders-Green
 Comment=Folders for Nordic-green theme.
-Inherits=Numix-Apps,Packarch-Dark
+Inherits=Numix-Apps,Packarch-Base-Dark
 
 
 # Directory list

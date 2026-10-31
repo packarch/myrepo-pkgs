@@ -1,0 +1,44 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Changes the folder color of an icon theme: makes ~/.local/share/icons/
+# <theme>-<rrggbb> (inherits from the theme, recolored folders only). GTK4
+# interface, and command line used by packarch-skin (folder_color of the
+# themes) and the XFCE theme switcher (packarch-xfce-settings) to give the
+# Packarch icon theme the folder color of each theme.
+
+pkgname=packarch-folder-color
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Change the folder color of icon themes (Packarch)"
+arch=('x86_64')
+url="https://github.com/packarch/packarch-folder-color"
+license=('GPL-3.0-or-later')
+depends=('gtk4' 'libadwaita' 'gcc-libs' 'glibc')
+optdepends=('gtk-update-icon-cache: icon cache of the generated themes')
+makedepends=('cargo')
+options=(!lto)
+source=("$pkgname-$pkgver.tar.gz::https://github.com/packarch/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	cargo build --frozen --release
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	cargo test --frozen --release
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	install -Dm755 target/release/$pkgname "$pkgdir"/usr/bin/$pkgname
+	install -Dm644 data/org.packarch.FolderColor.desktop \
+		"$pkgdir"/usr/share/applications/org.packarch.FolderColor.desktop
+	install -Dm644 README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+}

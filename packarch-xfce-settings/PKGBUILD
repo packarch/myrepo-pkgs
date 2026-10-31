@@ -8,12 +8,17 @@
 #
 # Our changes:
 # - "default" theme of the switcher from the start: Arc-Dark (GTK and xfwm4),
-#   Luna-Purple-Dark icons, Qogir-Dark cursor, xfce-default.png wallpaper,
+#   Packarch icons with purple folders, Qogir-Dark cursor, xfce-default.png wallpaper,
 #   matching terminal colors (terminalrc, imported into xfconf by
 #   xfce4-terminal at first start); same values in the GTK 2/3/4 files,
 #   .icons/default and the GSettings override
 # - theme switcher: panel launcher plugin-30 (launcher-30/),
 #   ~/.config/xfcethemes, .xprofile (init-backdrop.sh)
+# - icons (1.0.9-6): Packarch with the folder color of each theme of the
+#   switcher (packarch-folder-color), Vimix-Black-Dark for gray; /etc/skel
+#   gives Packarch (blue) and init-backdrop.sh prepares the purple folders of
+#   the default theme at the first session, and replaces a former Luna-*
+#   theme by Packarch with the same color
 # - no screen blanking, sleep or locking (xfce4-power-manager,
 #   xfce4-screensaver, xfce4-session)
 # - Firefox instead of Cachy Browser (panel launcher, helpers.rc, .profile,
@@ -38,14 +43,14 @@
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=5
+pkgrel=6
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL-1.0-only')
 depends=(
   xfce4-panel xfce4-whiskermenu-plugin xfdesktop xfconf thunar
-  noto-fonts qogir-icon-theme packarch-themes packarch-icons
+  noto-fonts qogir-icon-theme packarch-themes 'packarch-icons>=2.0-8' packarch-folder-color
   packarch-backgrounds packarch-system-settings htop
 )
 optdepends=(

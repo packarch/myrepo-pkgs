@@ -1,7 +1,7 @@
 [Icon Theme]
 Name=Vimix-White-Dark
 Comment=A simple and modern icon theme.
-Inherits=Packarch-Dark
+Inherits=Packarch-Base-Dark
 Example=folder
 
 # KDE/Plasma Stuff

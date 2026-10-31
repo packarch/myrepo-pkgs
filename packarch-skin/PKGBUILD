@@ -10,15 +10,18 @@
 # the packarch.png logo of packarch-system-settings in kitty (1.0.0-14).
 # Role "polywins_inactive" (1.0.0-17): inactive windows of polywins.sh
 # (default: bar_foreground).
+# folder_color (1.0.0-18, [appearance] of theme.toml): folder color of the
+# icon theme, made in the session by packarch-folder-color --prepare (used
+# for GTK and rofi); without it, packarch-folder-color --clean.
 
 pkgname=packarch-skin
 pkgver=1.0.0
-pkgrel=17
+pkgrel=18
 pkgdesc="Theme (skin) chooser of the Packarch Openbox desktop"
 arch=('x86_64')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL3')
-depends=('gcc-libs' 'glibc')
+depends=('gcc-libs' 'glibc' 'packarch-folder-color')
 makedepends=('cargo')
 options=(!lto)
 

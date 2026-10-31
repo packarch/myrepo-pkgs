@@ -2,7 +2,7 @@
 Name=Win11-Dark
 Comment=MacOSX style icon theme for linux.
 
-Inherits=Packarch-Dark
+Inherits=Packarch-Base-Dark
 Example=folder
 
 # KDE/Plasma Stuff

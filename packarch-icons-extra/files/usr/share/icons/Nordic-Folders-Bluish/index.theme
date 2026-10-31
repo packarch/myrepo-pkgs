@@ -1,7 +1,7 @@
 [Icon Theme]
 Name=Nordic-Folders-Bluish
 Comment=Folders for Nordic-bluish theme.
-Inherits=Numix-Apps,Packarch-Dark
+Inherits=Numix-Apps,Packarch-Base-Dark
 
 # Directory list
 Directories=Places/16,Places/22,Places/32,Places/48,apps/scalable

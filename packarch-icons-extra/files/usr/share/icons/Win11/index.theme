@@ -2,7 +2,7 @@
 Name=Win11
 Comment=MacOSX style icon theme for linux.
 
-Inherits=Packarch
+Inherits=Packarch-Base
 Example=folder
 
 # KDE/Plasma Stuff

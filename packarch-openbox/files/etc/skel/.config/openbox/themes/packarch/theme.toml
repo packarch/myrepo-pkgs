@@ -58,10 +58,11 @@ dunst = "Iosevka Custom 9"
 
 [appearance]
 gtk_theme = "Packarch-Packarch"
-icon_theme = "Luna-Antidote-Dark"
+icon_theme = "Packarch"
+folder_color = "#0096ff"
 cursor_theme = "Vimix-Dark"
 color_scheme = "prefer-dark"
-rofi_icons = "Luna-Antidote-Dark"
+rofi_icons = "Packarch"
 geany_colors = "manhattan.conf"
 
 [openbox]

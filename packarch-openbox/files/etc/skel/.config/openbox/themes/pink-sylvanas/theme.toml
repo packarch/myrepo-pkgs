@@ -44,10 +44,11 @@ dunst = "JetBrains Mono 10"
 
 [appearance]
 gtk_theme = "Packarch-Pink-Sylvanas"
-icon_theme = "Luna-Purple-Dark"
+icon_theme = "Packarch"
+folder_color = "#a659ff"
 cursor_theme = "Qogirr-Dark"
 color_scheme = "prefer-dark"
-rofi_icons = "Luna-Purple-Dark"
+rofi_icons = "Packarch"
 geany_colors = "catppuccin-mocha.conf"
 
 [openbox]

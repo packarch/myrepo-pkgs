@@ -120,6 +120,11 @@ pub struct Appearance {
     pub rofi_icons: String,
     /// Geany color scheme (~/.config/geany/colorschemes)
     pub geany_colors: String,
+    /// Folder color of the icon theme, "#rrggbb": in the session,
+    /// packarch-folder-color makes the icon theme with these folders (none:
+    /// the icon theme as it is)
+    #[serde(default)]
+    pub folder_color: Option<String>,
 }
 
 #[derive(Deserialize, Debug)]

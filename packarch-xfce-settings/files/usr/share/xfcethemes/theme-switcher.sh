@@ -132,24 +132,32 @@ apply_wallpaper() {
     xfdesktop --reload >/dev/null 2>&1 || true
 }
 
-# Associe chaque thème de couleur à un thème d'icônes GTK.
+# Thème d'icônes de chaque thème de couleur : Packarch, avec la couleur de
+# dossiers du thème (packarch-folder-color génère le thème dans
+# ~/.local/share/icons et donne son nom), ou un autre thème d'icônes.
 # Les thèmes sans correspondance ci-dessous conservent le thème d'icônes actuel.
+# Aussi utilisé par init-backdrop.sh (couleurs des dossiers).
+declare -A FOLDER_COLORS=(
+    [yellow]="#ffc86a" [green]="#00d96e" [purple]="#a659ff" [red]="#ff4747"
+    [blue]="#0096ff" [default]="#a659ff"
+)
+
+icon_theme_for() {
+    local theme="$1" color
+    if [[ $theme == gray ]]; then
+        packarch-folder-color --clean >/dev/null 2>&1 || true
+        echo "Vimix-Black-Dark"
+        return 0
+    fi
+    color="${FOLDER_COLORS[$theme]:-}"
+    [[ -n $color ]] || return 0
+    packarch-folder-color --prepare Packarch "$color" 2>/dev/null || echo "Packarch"
+}
+
 apply_icon_theme() {
-    local theme="$1"
-    local icon_theme=""
-
-    case "$theme" in
-        yellow) icon_theme="Luna-Dark" ;;
-        green)  icon_theme="Luna-Green-Dark" ;;
-        purple) icon_theme="Luna-Purple-Dark" ;;
-        red)    icon_theme="Luna-Red-Dark" ;;
-        blue)   icon_theme="Luna-Antidote-Dark" ;;
-        gray)   icon_theme="Vimix-Black-Dark" ;;
-        default) icon_theme="Luna-Purple-Dark" ;;
-    esac
-
+    local icon_theme
+    icon_theme="$(icon_theme_for "$1")"
     [[ -z "$icon_theme" ]] && return 0
-
     xfconf-query -c xsettings -p /Net/IconThemeName -s "$icon_theme"
 }
 
@@ -271,4 +279,7 @@ main() {
     notify "Thème appliqué : $theme" "$(basename "$image")"
 }
 
-main "$@"
+# Sourcé par init-backdrop.sh pour icon_theme_for : pas de main
+if [[ ${BASH_SOURCE[0]} == "$0" ]]; then
+    main "$@"
+fi

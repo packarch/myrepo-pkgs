@@ -4,11 +4,11 @@
 use crate::color::{Color, Palette};
 use crate::edit::{set_block, set_line, set_xml_text, truncate_at};
 use crate::fonts::{self, Global, Part};
-use crate::theme::{Entry, Fonts, Theme};
+use crate::theme::{Appearance, Entry, Fonts, Theme};
 use crate::{bar, dry, run, spawn, xml_escape, Dirs};
 use std::fs;
+use std::process::{Command, Stdio};
 use std::path::Path;
-use std::process::Command;
 
 /// Where a theme is applied
 #[derive(Clone, Copy)]
@@ -60,6 +60,11 @@ struct Colors {
 }
 
 fn resolve(theme: &Theme) -> Result<Colors, String> {
+    if let Some(c) = &theme.appearance.folder_color
+        && !is_hex_color(c)
+    {
+        return Err(format!("folder_color : couleur #rrggbb attendue : {c}"));
+    }
     let mut defs = theme.colors.clone();
     // Defaults of the derived colors (as apply.sh computed them)
     defs.entry("alt_background".into()).or_insert("lighten(background, 0.05)".into());
@@ -122,6 +127,47 @@ fn resolve(theme: &Theme) -> Result<Colors, String> {
 /// Checks that every color of THEME resolves
 pub fn check(theme: &Theme) -> Result<(), String> {
     resolve(theme).map(|_| ())
+}
+
+/// "#rrggbb"
+fn is_hex_color(s: &str) -> bool {
+    s.len() == 7 && s.starts_with('#') && s[1..].chars().all(|c| c.is_ascii_hexdigit())
+}
+
+/// Icon theme to use: the icon theme of A with the folders of its
+/// folder_color. In the session, packarch-folder-color makes it (or gives
+/// back the icon theme itself when it is already of that color) and removes
+/// the ones it made before; without folder_color, it only removes them. The
+/// package keeps the icon theme as it is (no generated theme in /etc/skel).
+fn icon_theme_for(a: &Appearance, target: Target) -> String {
+    let keep = a.icon_theme.clone();
+    if !matches!(target, Target::Session) {
+        return keep;
+    }
+    let args: Vec<&str> = match &a.folder_color {
+        Some(c) => vec!["--prepare", &a.icon_theme, c],
+        None => vec!["--clean"],
+    };
+    if dry() {
+        println!("[dry] packarch-folder-color {}", args.join(" "));
+        return keep;
+    }
+    match Command::new("packarch-folder-color").args(&args).stderr(Stdio::null()).output() {
+        Ok(o) if o.status.success() => {
+            let id = String::from_utf8_lossy(&o.stdout).trim().to_string();
+            if a.folder_color.is_some() && !id.is_empty() { id } else { keep }
+        }
+        Ok(_) => {
+            eprintln!("packarch-skin : packarch-folder-color {} a échoué", args.join(" "));
+            keep
+        }
+        Err(_) => {
+            if a.folder_color.is_some() {
+                eprintln!("packarch-skin : commande introuvable : packarch-folder-color");
+            }
+            keep
+        }
+    }
 }
 
 /// Reads FILE, applies F, writes it back if it changed. A missing file is
@@ -341,6 +387,11 @@ pub fn apply(dirs: &Dirs, entry: &Entry, target: Target) -> Result<(), String> {
             set_line(t, "STYLE=", &format!("STYLE=\"{id}\""));
         });
     }
+    // Icon theme (with the folder color of the theme)
+    let a = &theme.appearance;
+    let icons = icon_theme_for(a, target);
+    let rofi_icons = if a.rofi_icons == a.icon_theme { &icons } else { &a.rofi_icons };
+
     let rofi = tdir.join("rofi");
     let r = &c.rofi;
     write_file(
@@ -351,7 +402,7 @@ pub fn apply(dirs: &Dirs, entry: &Entry, target: Target) -> Result<(), String> {
         ),
     );
     edit_file(&conf.join("rofi/config.rasi"), |t| {
-        set_line(t, "icon-theme:", &format!("icon-theme: \"{}\";", theme.appearance.rofi_icons));
+        set_line(t, "icon-theme:", &format!("icon-theme: \"{rofi_icons}\";"));
     });
     // Package: ~/... (the home of the package is not the one of the user;
     // rofi expands ~ in -theme)
@@ -382,7 +433,6 @@ pub fn apply(dirs: &Dirs, entry: &Entry, target: Target) -> Result<(), String> {
     }
 
     // Geany
-    let a = &theme.appearance;
     edit_file(&conf.join("geany/geany.conf"), |t| {
         set_line(t, "color_scheme=", &format!("color_scheme={}", a.geany_colors));
     });
@@ -392,7 +442,7 @@ pub fn apply(dirs: &Dirs, entry: &Entry, target: Target) -> Result<(), String> {
     match target {
         Target::Session => {
             xfconf("xsettings", "/Net/ThemeName", &a.gtk_theme);
-            xfconf("xsettings", "/Net/IconThemeName", &a.icon_theme);
+            xfconf("xsettings", "/Net/IconThemeName", &icons);
             xfconf("xsettings", "/Gtk/CursorThemeName", &a.cursor_theme);
             run("gsettings", &["set", "org.gnome.desktop.interface", "color-scheme", &scheme]);
             run("gsettings", &["set", "org.x.apps.portal", "color-scheme", &scheme]);
@@ -400,7 +450,7 @@ pub fn apply(dirs: &Dirs, entry: &Entry, target: Target) -> Result<(), String> {
         Target::Package(root) => {
             edit_file(&conf.join("xfce4/xfconf/xfce-perchannel-xml/xsettings.xml"), |t| {
                 set_xfconf_file(t, "ThemeName", &a.gtk_theme);
-                set_xfconf_file(t, "IconThemeName", &a.icon_theme);
+                set_xfconf_file(t, "IconThemeName", &icons);
                 set_xfconf_file(t, "CursorThemeName", &a.cursor_theme);
             });
             // A schema that is not installed (org.x.apps.portal without
@@ -417,12 +467,12 @@ pub fn apply(dirs: &Dirs, entry: &Entry, target: Target) -> Result<(), String> {
     // Read by the GTK applications started without xfsettingsd
     edit_file(&conf.join("gtk-3.0/settings.ini"), |t| {
         set_line(t, "gtk-theme-name=", &format!("gtk-theme-name={}", a.gtk_theme));
-        set_line(t, "gtk-icon-theme-name=", &format!("gtk-icon-theme-name={}", a.icon_theme));
+        set_line(t, "gtk-icon-theme-name=", &format!("gtk-icon-theme-name={icons}"));
         set_line(t, "gtk-cursor-theme-name=", &format!("gtk-cursor-theme-name={}", a.cursor_theme));
     });
     edit_file(&dirs.home.join(".gtkrc-2.0"), |t| {
         set_line(t, "gtk-theme-name=", &format!("gtk-theme-name=\"{}\"", a.gtk_theme));
-        set_line(t, "gtk-icon-theme-name=", &format!("gtk-icon-theme-name=\"{}\"", a.icon_theme));
+        set_line(t, "gtk-icon-theme-name=", &format!("gtk-icon-theme-name=\"{icons}\""));
         set_line(t, "gtk-cursor-theme-name=", &format!("gtk-cursor-theme-name=\"{}\"", a.cursor_theme));
     });
     edit_file(&dirs.home.join(".icons/default/index.theme"), |t| {

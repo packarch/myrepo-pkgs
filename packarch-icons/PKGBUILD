@@ -1,8 +1,9 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Icon themes of the XFCE desktop (theme switcher, LightDM greeter): Luna,
-# Luna-*-Dark, Vimix-Black(-Dark) and the themes they inherit from (Packarch,
-# Packarch-Dark, Papirus-Apps; Papirus from the official package). Since
+# Icon themes of the desktops (Openbox themes, XFCE theme switcher, LightDM
+# greeter): Packarch, Vimix-Black(-Dark) and the themes they inherit from
+# (Packarch-Base, Packarch-Base-Dark, Papirus-Apps; Papirus from the official
+# package). Since
 # 2.0-6, the icon themes used only by the Openbox themes are in
 # packarch-icons-openbox and the ones used by no theme in packarch-icons-extra
 # (2.0-5), so that the XFCE live ISO does not ship them. No Zafiro since 2.0-4.
@@ -11,12 +12,18 @@
 # link of Luna-Red-Dark fixed) and no broken symlinks in any theme (relinked
 # to the same icon elsewhere in the theme, or removed so that the inherited
 # theme provides it).
+# 2.0-8: one icon theme, Packarch (formerly Luna-Antidote-Dark, blue folders,
+# without links to Luna and without the folder-<color>-* variants), whose
+# folder color is set per user by packarch-folder-color (themes of
+# packarch-skin, XFCE theme switcher); Luna, Luna-Dark and Luna-*-Dark
+# removed; the former Packarch and Packarch-Dark (base of the other icon
+# themes) renamed Packarch-Base and Packarch-Base-Dark.
 # Files: files/ (installed as is). Most of the content was collected or made
 # by Aditya Shakya (adi1090x), GPL3.
 
 pkgname=packarch-icons
 pkgver=2.0
-pkgrel=7
+pkgrel=8
 pkgdesc="Icon themes of the XFCE desktop of Packarch (Papirus from the official package)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

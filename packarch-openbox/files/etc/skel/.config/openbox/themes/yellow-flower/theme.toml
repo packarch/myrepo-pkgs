@@ -44,10 +44,11 @@ dunst = "Iosevka Custom 9"
 
 [appearance]
 gtk_theme = "Packarch-Yellow-Flower"
-icon_theme = "Luna-Dark"
+icon_theme = "Packarch"
+folder_color = "#ffc86a"
 cursor_theme = "Qogirr-Dark"
 color_scheme = "prefer-dark"
-rofi_icons = "Luna-Dark"
+rofi_icons = "Packarch"
 geany_colors = "bouquet.conf"
 
 [openbox]

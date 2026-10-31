@@ -18,7 +18,7 @@ DialogDefault=32
 DialogSizes=16,22,32,48,64,128,256
 
 FollowsColorScheme=true
-Inherits=Packarch-Dark
+Inherits=Packarch-Base-Dark
 
 KDE-Extensions=.svg
 
