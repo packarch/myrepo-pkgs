@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Thème Hacking
-Comment=Appliquer le thème Hacking
-Exec=packarch-skin apply hacking
-Icon=/usr/share/xfcethemes/icons/hacking.png
-Terminal=false
-Type=Application
-Categories=Utility;

@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Thème Yellow Flower
-Comment=Appliquer le thème Yellow Flower
-Exec=packarch-skin apply yellow-flower
-Icon=/usr/share/xfcethemes/icons/yellow-flower.png
-Terminal=false
-Type=Application
-Categories=Utility;

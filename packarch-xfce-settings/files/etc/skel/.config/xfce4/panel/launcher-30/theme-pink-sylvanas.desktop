@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Thème Pink Sylvanas
-Comment=Appliquer le thème Pink Sylvanas
-Exec=packarch-skin apply pink-sylvanas
-Icon=/usr/share/xfcethemes/icons/pink-sylvanas.png
-Terminal=false
-Type=Application
-Categories=Utility;

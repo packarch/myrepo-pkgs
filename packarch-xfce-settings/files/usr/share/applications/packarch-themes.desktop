@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Thèmes Packarch
+Comment=Choisir le thème du bureau (fond d'écran, fenêtres, icônes, couleurs)
+Exec=packarch-skin chooser
+Icon=preferences-desktop-theme
+Terminal=false
+Categories=Settings;DesktopSettings;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;
+Keywords=thème;theme;fond;wallpaper;couleur;skin;
+OnlyShowIn=XFCE;

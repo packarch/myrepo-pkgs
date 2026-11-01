@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Thème Spark
-Comment=Appliquer le thème Spark
-Exec=packarch-skin apply spark
-Icon=/usr/share/xfcethemes/icons/spark.png
-Terminal=false
-Type=Application
-Categories=Utility;

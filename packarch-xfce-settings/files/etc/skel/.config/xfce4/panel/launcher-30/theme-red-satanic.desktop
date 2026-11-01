@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Thème Red Satanic
-Comment=Appliquer le thème Red Satanic
-Exec=packarch-skin apply red-satanic
-Icon=/usr/share/xfcethemes/icons/red-satanic.png
-Terminal=false
-Type=Application
-Categories=Utility;

@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Thème Pink City
-Comment=Appliquer le thème Pink City
-Exec=packarch-skin apply pink-city
-Icon=/usr/share/xfcethemes/icons/pink-city.png
-Terminal=false
-Type=Application
-Categories=Utility;

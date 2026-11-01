@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=Thème Packarch
-Comment=Appliquer le thème Packarch
-Exec=packarch-skin apply packarch
-Icon=/usr/share/xfcethemes/icons/packarch.png
-Terminal=false
-Type=Application
-Categories=Utility;

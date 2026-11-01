@@ -11,7 +11,8 @@
 #   /etc/lightdm/lightdm-gtk-greeter.conf, whose settings are commented out)
 # - pacman hooks, also run when this package is installed: Geany opens a new
 #   instance each time (geany -i), useless entries hidden from the
-#   application menus (packarch-hide-desktop-entries)
+#   application menus (packarch-hide-desktop-entries; "YAD settings" too in
+#   1.0-13, yad being also on the XFCE desktop for the theme chooser)
 # - cachy-update: its systray applet starts with every session
 #   (/etc/xdg/autostart of cachy-update) and the daily update check
 #   (arch-update.timer) is enabled for every user
@@ -37,7 +38,7 @@
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=12
+pkgrel=13
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

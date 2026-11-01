@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Restaurer le bouton des thèmes
+Comment=Remettre le bouton des thèmes dans le tableau de bord, ou le mettre à jour
+Exec=packarch-skin panel
+Icon=xfce4-panel
+Terminal=false
+Categories=Settings;DesktopSettings;X-XFCE-SettingsDialog;X-XFCE-PersonalSettings;
+Keywords=thème;theme;tableau de bord;panel;bouton;restaurer;
+OnlyShowIn=XFCE;

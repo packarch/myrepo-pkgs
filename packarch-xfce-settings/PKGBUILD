@@ -46,6 +46,12 @@
 #   top of its menu (panel at the bottom), runs packarch-folder-color; the
 #   launcher does not move the clicked item first any more (move-first false):
 #   packarch-skin 1.1.1 puts the current theme first and keeps this item last
+# - theme button that can be restored (1.0.9-9, packarch-skin 1.2.0): its
+#   launcher files (launcher-30/) and items are written by "packarch-skin
+#   render" from the themes (not in files/ any more); menu entries (whisker
+#   menu, settings manager) "Thèmes Packarch" (packarch-skin chooser: window
+#   with the themes, yad) and "Restaurer le bouton des thèmes" (packarch-skin
+#   panel: puts the button back before the window list, or updates it)
 #
 # Conflicts with packarch-openbox-settings (formerly packarch-openbox): both
 # ship some files of /etc/skel (GTK, Thunar, xfconf), the ISO installs one
@@ -53,21 +59,21 @@
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=8
+pkgrel=9
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL-1.0-only')
 depends=(
-  xfce4-panel xfce4-whiskermenu-plugin xfdesktop xfconf thunar xfwm4 libnotify xorg-xrandr
+  xfce4-panel xfce4-whiskermenu-plugin xfdesktop xfconf thunar xfwm4 libnotify xorg-xrandr yad
   noto-fonts packarch-system-settings htop
   # themes of packarch-skin (1.0.9-7): the same as the Openbox desktop, with
   # the same packages
-  'packarch-skin>=1.1.1' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.2.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.1.1')
+makedepends=('packarch-skin>=1.2.0')
 optdepends=(
   'firefox: web browser of the panel and the whisker menu'
   'geany: default text editor'
