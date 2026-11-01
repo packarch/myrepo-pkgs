@@ -6,15 +6,17 @@
 # Tailscale account and connects as root (ssh root@packarch-<host>). The
 # session stops by itself (systemd timer, 1 hour, "+1 h" to extend) or with
 # "Arrêter maintenant": tailscale logout, tailscaled stopped. Nothing runs
-# outside a session (tailscaled is never enabled); the cleanup service ends a
+# outside a session (the tailscaled service of the system is not used); the cleanup service ends a
 # session left open by a shutdown. No secret on the computer. The tailnet
 # policy of the person who helps must keep tag:depannage away from her other
 # devices (README).
 # 0.1.1: "Dépannage en cours" from the Tailscale activity (5 minutes), with
 # the account and device of the person who helps.
+# 0.1.2: ephemeral node (own tailscaled instance with in-memory state):
+# removed from the tailnet when the session stops.
 
 pkgname=packarch-depannage
-pkgver=0.1.1
+pkgver=0.1.2
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
