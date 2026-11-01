@@ -42,6 +42,10 @@
 #   a thumbnail of its wallpaper (icons/<theme>.png). theme-switcher.sh only
 #   maps the former colors to the nearest theme (launchers of existing
 #   users); init-backdrop.sh applies that theme once instead of a former color
+# - "Couleur des dossiers" (1.0.9-8): last item of the theme launcher, at the
+#   top of its menu (panel at the bottom), runs packarch-folder-color; the
+#   launcher does not move the clicked item first any more (move-first false):
+#   packarch-skin 1.1.1 puts the current theme first and keeps this item last
 #
 # Conflicts with packarch-openbox-settings (formerly packarch-openbox): both
 # ship some files of /etc/skel (GTK, Thunar, xfconf), the ISO installs one
@@ -49,7 +53,7 @@
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=7
+pkgrel=8
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -59,11 +63,11 @@ depends=(
   noto-fonts packarch-system-settings htop
   # themes of packarch-skin (1.0.9-7): the same as the Openbox desktop, with
   # the same packages
-  'packarch-skin>=1.1.0' 'packarch-themes>=2.0-7' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.1.1' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.1.0')
+makedepends=('packarch-skin>=1.1.1')
 optdepends=(
   'firefox: web browser of the panel and the whisker menu'
   'geany: default text editor'

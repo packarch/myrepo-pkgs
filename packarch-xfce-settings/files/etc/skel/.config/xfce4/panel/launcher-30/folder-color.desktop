@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Couleur des dossiers
+Comment=Changer la couleur des dossiers du thème d'icônes
+Exec=packarch-folder-color
+Icon=folder
+Terminal=false
+Type=Application
+Categories=Settings;
+StartupNotify=true

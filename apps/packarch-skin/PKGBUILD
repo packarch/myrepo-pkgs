@@ -7,10 +7,11 @@
 # default theme into the /etc/skel of these two packages when they are built
 # (makedepends: build.sh builds packarch-skin first).
 # Own repository since 1.1.0 (sources in myrepo-pkgs/packarch-skin/skin
-# before, up to 1.0.0-19); 1.1.0: XFCE desktop.
+# before, up to 1.0.0-19); 1.1.0: XFCE desktop; 1.1.1: "Couleur des
+# dossiers" item kept last in the theme launcher of the XFCE panel.
 
 pkgname=packarch-skin
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox and XFCE desktops"
 arch=('x86_64')

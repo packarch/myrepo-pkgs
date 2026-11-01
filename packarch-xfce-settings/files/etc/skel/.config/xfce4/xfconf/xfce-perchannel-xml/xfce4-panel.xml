@@ -39,7 +39,7 @@
   </property>
   <property name="plugins" type="empty">
     <property name="plugin-30" type="string" value="launcher">
-      <property name="move-first" type="bool" value="true"/>
+      <property name="move-first" type="bool" value="false"/>
       <property name="items" type="array">
         <value type="string" value="theme-default.desktop"/>
         <value type="string" value="theme-adaptive.desktop"/>
@@ -51,6 +51,7 @@
         <value type="string" value="theme-red-satanic.desktop"/>
         <value type="string" value="theme-spark.desktop"/>
         <value type="string" value="theme-yellow-flower.desktop"/>
+        <value type="string" value="folder-color.desktop"/>
       </property>
     </property>
     <property name="plugin-2" type="string" value="tasklist">

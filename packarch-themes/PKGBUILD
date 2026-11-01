@@ -6,6 +6,14 @@
 # GTK themes of the XFCE color switcher (Arc-Dark, Dracula, Greybird-dark,
 # Gruvbox, Juno-Mirage, Nordic, Orchis-Red-Dark), used by no theme any more,
 # moved to packarch-extra, then removed with it (still in the git history).
+# 2.0-8: xfwm4 themes (window borders on XFCE) completed: Packarch-Adaptive
+# has the xfwm4 theme of Adapta (restored from the git history; it was a
+# link to the removed Adapta theme, as were its gedit and metacity-1, now
+# removed), Packarch-Pink-Sylvanas, whose xfwm4 directory only had a themerc
+# (as the original Catppuccin-Mocha), the images of Packarch-Default
+# recolored in the colors of OB-Packarch-Pink-Sylvanas (#181825 title bar,
+# #d0283c close button, #b88ab8 pressed buttons). Packarch-Hacking has no
+# xfwm4 theme: [xfce] xfwm4_theme = "Default" in its theme.toml.
 #
 # Each theme of packarch-skin has its own GTK and Openbox themes,
 # Packarch-<Theme> and OB-Packarch-<Theme> (2.0-5), so that a change only
@@ -35,7 +43,7 @@
 
 pkgname=packarch-themes
 pkgver=2.0
-pkgrel=7
+pkgrel=8
 pkgdesc="GTK and Openbox themes of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
