@@ -37,7 +37,9 @@
 # desktops instead of 5 (7.0-30), minimized windows dimmed and in brackets in
 # the window list, no backlight or battery module without the hardware, no mpd
 # and Spotify scripts (music modules, rofi-music, ob-music, rofi-spotify;
-# media keys use playerctl).
+# media keys use playerctl). obmenu-generator also reads
+# ~/.local/share/applications (7.0-73: applications installed or hidden by the
+# user, new accounts only).
 # Icons (7.0-70): Packarch for the default, packarch, red-satanic,
 # pink-sylvanas and yellow-flower themes, with their folder_color (blue, red,
 # purple, yellow; packarch-folder-color) instead of the Luna-* themes.
@@ -52,7 +54,7 @@
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=72
+pkgrel=73
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
