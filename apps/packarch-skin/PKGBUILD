@@ -1,0 +1,44 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Theme (skin) chooser of the Packarch Openbox and XFCE desktops: applies the
+# themes described by the theme.toml files of packarch-openbox-settings
+# (~/.config/openbox/themes) and, on XFCE, their copies in
+# /usr/share/xfcethemes/themes (packarch-xfce-settings). "render" writes the
+# default theme into the /etc/skel of these two packages when they are built
+# (makedepends: build.sh builds packarch-skin first).
+# Own repository since 1.1.0 (sources in myrepo-pkgs/packarch-skin/skin
+# before, up to 1.0.0-19); 1.1.0: XFCE desktop.
+
+pkgname=packarch-skin
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="Theme (skin) chooser of the Packarch Openbox and XFCE desktops"
+arch=('x86_64')
+url="https://github.com/packarch/packarch-skin"
+license=('GPL-3.0-or-later')
+depends=('gcc-libs' 'glibc' 'packarch-folder-color')
+makedepends=('cargo')
+options=(!lto)
+source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	cargo build --frozen --release
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	cargo test --frozen --release
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	install -Dm755 target/release/$pkgname "$pkgdir"/usr/bin/$pkgname
+	install -Dm644 README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+}

@@ -7,18 +7,12 @@
 # new users), except the theme switcher and the GSettings defaults.
 #
 # Our changes:
-# - "default" theme of the switcher from the start: Arc-Dark (GTK and xfwm4),
-#   Packarch icons with purple folders, Qogir-Dark cursor, xfce-default.png wallpaper,
-#   matching terminal colors (terminalrc, imported into xfconf by
-#   xfce4-terminal at first start); same values in the GTK 2/3/4 files,
+# - "default" theme of packarch-skin from the start (render, see "themes"
+#   below): terminal colors in terminalrc (imported into xfconf by
+#   xfce4-terminal at first start), same values in the GTK 2/3/4 files,
 #   .icons/default and the GSettings override
 # - theme switcher: panel launcher plugin-30 (launcher-30/),
-#   ~/.config/xfcethemes, .xprofile (init-backdrop.sh)
-# - icons (1.0.9-6): Packarch with the folder color of each theme of the
-#   switcher (packarch-folder-color), Vimix-Black-Dark for gray; /etc/skel
-#   gives Packarch (blue) and init-backdrop.sh prepares the purple folders of
-#   the default theme at the first session, and replaces a former Luna-*
-#   theme by Packarch with the same color
+#   ~/.config/xfcethemes (.current_theme), .xprofile (init-backdrop.sh)
 # - no screen blanking, sleep or locking (xfce4-power-manager,
 #   xfce4-screensaver, xfce4-session)
 # - Firefox instead of Cachy Browser (panel launcher, helpers.rc, .profile,
@@ -38,31 +32,56 @@
 #   the whisker menu instead of the CachyOS one (1.0.9-4)
 # - htop instead of btop in the system monitor launcher of the panel (1.0.9-5)
 #
-# Conflicts with packarch-openbox: both ship some files of /etc/skel (GTK,
-# Thunar, xfconf), the ISO installs one desktop or the other.
+# - themes (1.0.9-7): the theme switcher of colors is replaced by
+#   packarch-skin, with the same themes as the Openbox desktop (names, GTK,
+#   xfwm4, icon and cursor themes, folder colors, wallpapers, terminal and
+#   Geany colors): the theme.toml files of packarch-openbox-settings are
+#   copied to /usr/share/xfcethemes/themes when the package is built, and
+#   "packarch-skin render" writes the default theme into /etc/skel. Panel
+#   launcher plugin-30: one item per theme (packarch-skin apply THEME), with
+#   a thumbnail of its wallpaper (icons/<theme>.png). theme-switcher.sh only
+#   maps the former colors to the nearest theme (launchers of existing
+#   users); init-backdrop.sh applies that theme once instead of a former color
+#
+# Conflicts with packarch-openbox-settings (formerly packarch-openbox): both
+# ship some files of /etc/skel (GTK, Thunar, xfconf), the ISO installs one
+# desktop or the other.
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=6
+pkgrel=7
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL-1.0-only')
 depends=(
-  xfce4-panel xfce4-whiskermenu-plugin xfdesktop xfconf thunar
-  noto-fonts qogir-icon-theme packarch-themes 'packarch-icons>=2.0-8' packarch-folder-color
-  packarch-backgrounds packarch-system-settings htop
+  xfce4-panel xfce4-whiskermenu-plugin xfdesktop xfconf thunar xfwm4 libnotify xorg-xrandr
+  noto-fonts packarch-system-settings htop
+  # themes of packarch-skin (1.0.9-7): the same as the Openbox desktop, with
+  # the same packages
+  'packarch-skin>=1.1.0' 'packarch-themes>=2.0-7' 'packarch-icons>=2.0-9'
+  'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
+# Writes the default theme into /etc/skel (render)
+makedepends=('packarch-skin>=1.1.0')
 optdepends=(
   'firefox: web browser of the panel and the whisker menu'
   'geany: default text editor'
   'liloucalc: calculator of the whisker menu and the calculator key'
   'xfce4-terminal: terminal with the colors of the theme'
 )
-conflicts=(cachyos-xfce-settings packarch-openbox)
+conflicts=(cachyos-xfce-settings packarch-openbox-settings packarch-openbox)
 replaces=(cachyos-xfce-settings)
 options=(!strip !emptydirs)
 
 package() {
 	cp -a "$startdir"/files/. "$pkgdir"/
+	# The themes of the Openbox desktop (theme.toml only: polybar and rofi
+	# are not used)
+	local t themes="$startdir"/../packarch-openbox-settings/files/etc/skel/.config/openbox/themes
+	for t in "$themes"/*/theme.toml; do
+		install -Dm644 "$t" "$pkgdir"/usr/share/xfcethemes/themes/"$(basename "$(dirname "$t")")"/theme.toml
+	done
+	# The first session starts with the default theme
+	packarch-skin render "$pkgdir" default
 }

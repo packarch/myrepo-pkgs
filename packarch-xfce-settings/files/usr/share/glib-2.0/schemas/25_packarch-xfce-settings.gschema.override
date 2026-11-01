@@ -1,4 +1,9 @@
+# Themes and color scheme of the default theme (default), written by packarch-skin render
 [org.gnome.desktop.interface]
-gtk-theme='Arc-Dark'
+gtk-theme='Packarch-Default'
 icon-theme='Packarch'
-cursor-theme='Qogir-Dark'
+cursor-theme='Pear-Dark'
+color-scheme='prefer-dark'
+
+[org.x.apps.portal]
+color-scheme='prefer-dark'

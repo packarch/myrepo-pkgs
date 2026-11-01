@@ -42,12 +42,15 @@
       <property name="move-first" type="bool" value="true"/>
       <property name="items" type="array">
         <value type="string" value="theme-default.desktop"/>
-        <value type="string" value="theme-blue.desktop"/>
-        <value type="string" value="theme-gray.desktop"/>
-        <value type="string" value="theme-green.desktop"/>
-        <value type="string" value="theme-purple.desktop"/>
-        <value type="string" value="theme-red.desktop"/>
-        <value type="string" value="theme-yellow.desktop"/>
+        <value type="string" value="theme-adaptive.desktop"/>
+        <value type="string" value="theme-cyberpunk.desktop"/>
+        <value type="string" value="theme-hacking.desktop"/>
+        <value type="string" value="theme-packarch.desktop"/>
+        <value type="string" value="theme-pink-city.desktop"/>
+        <value type="string" value="theme-pink-sylvanas.desktop"/>
+        <value type="string" value="theme-red-satanic.desktop"/>
+        <value type="string" value="theme-spark.desktop"/>
+        <value type="string" value="theme-yellow-flower.desktop"/>
       </property>
     </property>
     <property name="plugin-2" type="string" value="tasklist">

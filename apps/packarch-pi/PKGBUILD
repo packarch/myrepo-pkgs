@@ -9,7 +9,7 @@ url="https://github.com/packarch/packarch-pi"
 license=('GPL-3.0-or-later')
 depends=('qt6-base' 'qt6-translations' 'polkit')
 makedepends=('cmake' 'ninja' 'git' 'polkit-qt6' 'qt6-tools' 'cargo' 'lld' 'clang' 'llvm')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/Antidote1911/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=('SKIP')
 
 # Same LLVM toolchain as CachyOS (the Rust backend is linked with lld)

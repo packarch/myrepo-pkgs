@@ -1,0 +1,22 @@
+#!/usr/bin/env zsh
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Openbox Pipemenu to open applications as root
+
+# Variables and functions
+MENUS_LIBDIR='/usr/share/packarch/openbox/menulib'
+if ! . "$MENUS_LIBDIR/packarch.cfg" 2> /dev/null; then
+	echo "Error: Failed to locate packarch.cfg in $MENUS_LIBDIR" >&2
+	exit 1
+fi
+
+# cmd
+root_cmd="$HOME/.config/openbox/scripts/ob-asroot"
+
+# menu
+menuStart
+	menuItem 'Terminal (kitty)' "$root_cmd 'kitty'"
+	menuItem 'Gestionnaire de fichiers (thunar)' "$root_cmd 'dbus-run-session thunar'"
+	menuItem 'Éditeur de texte (geany)' "$root_cmd 'geany'"
+menuEnd

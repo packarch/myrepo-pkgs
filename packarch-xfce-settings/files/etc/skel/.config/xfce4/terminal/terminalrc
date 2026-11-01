@@ -35,11 +35,11 @@ BackgroundMode=TERMINAL_BACKGROUND_TRANSPARENT
 ColorBoldIsBright=TRUE
 
 ColorUseTheme=FALSE
-ColorForeground=#e8e8e8
-ColorBackground=#1c1024
+ColorForeground=#ABB2BF
+ColorBackground=#2b313c
 ColorCursorUseDefault=FALSE
-ColorCursor=#9333EA
-ColorBoldUseDefault=FALSE
+ColorCursor=#5294E2
+ColorBoldUseDefault=TRUE
 ColorBold=#9333EA
-ColorPalette=#000000;#cc0000;#4e9a06;#c4a000;#3465a4;#75507b;#06989a;#d3d7cf;#555753;#ef2929;#8ae234;#fce94f;#729fcf;#ad7fa8;#34e2e2;#eeeeec
-TabActivityColor=#9333EA
+ColorPalette=#32363D;#E06B74;#98C379;#E5C07A;#62AEEF;#C778DD;#55B6C2;#ABB2BF;#50545B;#EA757E;#A2CD83;#EFCA84;#6CB8F9;#D282E7;#5FC0CC;#B5BCC9
+TabActivityColor=#5294E2

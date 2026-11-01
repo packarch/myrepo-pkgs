@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Thème Cyberpunk
+Comment=Appliquer le thème Cyberpunk
+Exec=packarch-skin apply cyberpunk
+Icon=/usr/share/xfcethemes/icons/cyberpunk.png
+Terminal=false
+Type=Application
+Categories=Utility;

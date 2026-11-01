@@ -1,36 +1,42 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Icon themes of the desktops (Openbox themes, XFCE theme switcher, LightDM
-# greeter): Packarch, Vimix-Black(-Dark) and the themes they inherit from
-# (Packarch-Base, Packarch-Base-Dark, Papirus-Apps; Papirus from the official
-# package). Since
-# 2.0-6, the icon themes used only by the Openbox themes are in
-# packarch-icons-openbox and the ones used by no theme in packarch-icons-extra
-# (2.0-5), so that the XFCE live ISO does not ship them. No Zafiro since 2.0-4.
-# 2.0-7: consistent folder colors in Luna-*-Dark (Luna-Antidote-Dark all blue,
-# scalable@2x links to each theme's own scalable, broken folder-drag-accept
-# link of Luna-Red-Dark fixed) and no broken symlinks in any theme (relinked
-# to the same icon elsewhere in the theme, or removed so that the inherited
-# theme provides it).
+# Icon themes of the themes of packarch-skin (Openbox and XFCE desktops) and
+# of the LightDM greeter: Packarch (default, packarch, pink-sylvanas,
+# red-satanic, yellow-flower), Hack (hacking), Luv-Folders (spark),
+# Luv-Folders-Dark (adaptive), Qogir-Pink-Dark (pink-city), BeautyLine
+# (cyberpunk, aur/beautyline), and the themes they inherit from
+# (Packarch-Base, Packarch-Base-Dark, Papirus-Apps; Papirus and Qogir-Dark
+# from the official packages).
+# 2.0-9: content of packarch-icons-openbox merged (replaced): both desktops
+# use the same themes; Vimix-Black(-Dark), used by no theme since the XFCE
+# color switcher was removed, moved to packarch-extra (formerly
+# packarch-icons-extra).
 # 2.0-8: one icon theme, Packarch (formerly Luna-Antidote-Dark, blue folders,
 # without links to Luna and without the folder-<color>-* variants), whose
-# folder color is set per user by packarch-folder-color (themes of
-# packarch-skin, XFCE theme switcher); Luna, Luna-Dark and Luna-*-Dark
-# removed; the former Packarch and Packarch-Dark (base of the other icon
-# themes) renamed Packarch-Base and Packarch-Base-Dark.
+# folder color is set per user by packarch-folder-color (folder_color of the
+# themes of packarch-skin); Luna, Luna-Dark and Luna-*-Dark removed; the
+# former Packarch and Packarch-Dark (base of the other icon themes) renamed
+# Packarch-Base and Packarch-Base-Dark.
+# 2.0-7: no broken symlinks in any theme (relinked to the same icon
+# elsewhere in the theme, or removed so that the inherited theme provides it).
+# No Zafiro since 2.0-4.
 # Files: files/ (installed as is). Most of the content was collected or made
-# by Aditya Shakya (adi1090x), GPL3.
+# by Aditya Shakya (adi1090x), GPL3. Qogir-Pink-Dark: the folder icons
+# (places) of Qogir-Dark (Vinceliuice, GPL3) recolored in the pink of the
+# tokyo.png wallpaper (#6ba4e7 -> #da6e89, #5294e2 -> #d0607f, #003579 ->
+# #5c1530), the rest inherited from Qogir-Dark.
 
 pkgname=packarch-icons
 pkgver=2.0
-pkgrel=8
-pkgdesc="Icon themes of the XFCE desktop of Packarch (Papirus from the official package)"
+pkgrel=9
+pkgdesc="Icon themes of Packarch (Papirus, Qogir and BeautyLine from their packages)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL3')
-depends=('qogir-icon-theme' 'papirus-icon-theme')
-conflicts=(packarch-icons-arc packarch-icons-breeze packarch-icons-hack packarch-icons-luna packarch-icons-luv packarch-icons-nordic packarch-icons-numix packarch-icons-papirus packarch-icons-qogir packarch-icons-white packarch-icons-win11 packarch-icons-zafiro)
-replaces=(packarch-icons-arc packarch-icons-breeze packarch-icons-hack packarch-icons-luna packarch-icons-luv packarch-icons-nordic packarch-icons-numix packarch-icons-papirus packarch-icons-qogir packarch-icons-white packarch-icons-win11 packarch-icons-zafiro)
+depends=('qogir-icon-theme' 'papirus-icon-theme' 'beautyline')
+provides=(packarch-icons-openbox)
+conflicts=(packarch-icons-openbox 'packarch-icons-extra<2.0-4' packarch-icons-arc packarch-icons-breeze packarch-icons-hack packarch-icons-luna packarch-icons-luv packarch-icons-nordic packarch-icons-numix packarch-icons-papirus packarch-icons-qogir packarch-icons-white packarch-icons-win11 packarch-icons-zafiro)
+replaces=(packarch-icons-openbox packarch-icons-arc packarch-icons-breeze packarch-icons-hack packarch-icons-luna packarch-icons-luv packarch-icons-nordic packarch-icons-numix packarch-icons-papirus packarch-icons-qogir packarch-icons-white packarch-icons-win11 packarch-icons-zafiro)
 options=(!strip !emptydirs)
 
 package() {

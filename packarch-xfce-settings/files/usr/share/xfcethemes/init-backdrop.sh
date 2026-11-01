@@ -7,49 +7,36 @@
 # image intégrée (la souris XFCE). On crée donc les réglages manquants avec le
 # fond d'écran du thème courant, sans toucher à ceux qui existent déjà.
 #
-# Il prépare aussi le thème d'icônes Packarch à la couleur de dossiers du
-# thème XFCE (packarch-folder-color) : à la première session (aucun thème
-# choisi, /etc/skel donne Packarch en bleu) celle du thème "default", et à la
-# place d'un ancien thème Luna (supprimés de packarch-icons 2.0-8) celle de
-# ce thème.
+# Migration de l'ancien sélecteur de thèmes (couleurs) vers les thèmes de
+# packarch-skin : une ancienne couleur dans .current_theme est remplacée par
+# le thème le plus proche, appliqué une fois (une fois la session ouverte :
+# xfconfd, xfwm4 et le tableau de bord doivent tourner).
 
 STATE_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/xfcethemes"
 
 command -v xfconf-query >/dev/null 2>&1 || exit 0
 
-# Thème d'icônes
-if command -v packarch-folder-color >/dev/null 2>&1; then
+current="$(cat "$STATE_DIR/.current_theme" 2>/dev/null)"
+if command -v packarch-skin >/dev/null 2>&1 && [[ -n $current ]] &&
+    ! packarch-skin list | cut -f1 | grep -xF "$current" >/dev/null; then
     # shellcheck source=/usr/share/xfcethemes/theme-switcher.sh
     source "$(dirname "$(readlink -f "$0")")/theme-switcher.sh"
-    set +euo pipefail  # options de theme-switcher.sh : pas ici
-    current_icons="$(xfconf-query -c xsettings -p /Net/IconThemeName 2>/dev/null)"
-    xfce_theme="$(cat "$STATE_DIR/.current_theme" 2>/dev/null)"
-    case "$current_icons" in
-        Luna-Dark) icon_theme_for_old=yellow ;;
-        Luna-Green-Dark) icon_theme_for_old=green ;;
-        Luna-Purple-Dark) icon_theme_for_old=purple ;;
-        Luna-Red-Dark) icon_theme_for_old=red ;;
-        Luna-Antidote-Dark) icon_theme_for_old=blue ;;
-        *) icon_theme_for_old="" ;;
-    esac
-    if [[ -n $icon_theme_for_old ]]; then
-        apply_icon_theme "$icon_theme_for_old"
-    elif [[ -z $xfce_theme && $current_icons == Packarch ]]; then
-        apply_icon_theme default
-    fi
+    theme="$(theme_of "$current")"
+    echo "$theme" > "$STATE_DIR/.current_theme"
+    (sleep 10 && packarch-skin apply "$theme") >/dev/null 2>&1 &
+    disown
 fi
 
 command -v xrandr >/dev/null 2>&1 || exit 0
 
-# Fond d'écran à utiliser : celui déjà appliqué à un autre écran, sinon le
-# dernier fond du thème courant, sinon le fond du thème "default".
+# Fond d'écran à utiliser : celui déjà appliqué à un autre écran, sinon celui
+# du thème courant
 image="$(xfconf-query -c xfce4-desktop -l -v 2>/dev/null \
     | awk '$1 ~ /\/workspace0\/last-image$/ { print $2; exit }')"
 if [[ -z "$image" || ! -f "$image" ]]; then
-    theme="$(cat "$STATE_DIR/.current_theme" 2>/dev/null)"
-    image="$(cat "$STATE_DIR/.last_wallpaper/$theme" 2>/dev/null)"
+    image="$(packarch-skin wallpaper 2>/dev/null)"
 fi
-[[ -f "$image" ]] || image="/usr/share/backgrounds/xfce-default.png"
+[[ -f "$image" ]] || image="/usr/share/backgrounds/wallpaper-alt.png"
 
 count="$(xfconf-query -c xfwm4 -p /general/workspace_count 2>/dev/null || echo 4)"
 

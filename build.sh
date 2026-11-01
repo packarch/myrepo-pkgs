@@ -13,7 +13,8 @@
 # (-f: rebuild). Packages without build() (themes, configuration) are built
 # with --nodeps. Packages built here that an AUR package needs to be built
 # (gtkmm for nitrogen), or that a package without build() needs in
-# makedepends (packarch-skin for packarch-openbox, built first), are installed
+# makedepends (apps/packarch-skin for packarch-openbox-settings and
+# packarch-xfce-settings, built first), are installed (or updated, if older than required)
 # on this system as dependencies, then removed at the end. Run as a normal
 # user.
 #
@@ -46,10 +47,11 @@ if (( $# )); then
         fi
     done
 else
-    # packarch-skin first: makedepends of packarch-openbox
-    dirs+=(packarch-skin)
+    # packarch-skin first: makedepends of packarch-openbox-settings and
+    # packarch-xfce-settings
+    dirs+=(apps/packarch-skin)
     for d in */ apps/*/; do
-        [[ -f $d/PKGBUILD && $d != packarch-skin/ ]] && dirs+=("${d%/}")
+        [[ -f $d/PKGBUILD && $d != apps/packarch-skin/ ]] && dirs+=("${d%/}")
     done
     for p in "${aur_order[@]}"; do dirs+=("aur/$p"); done
     for d in aur/*/; do
@@ -96,15 +98,21 @@ add_pkg() {
 # current directory needs, and that this system lacks (makedepends: only the
 # build dependencies)
 install_local_deps() {
-    local dep file kinds='\(make\)\?depends'
+    local dep name file kinds='\(make\)\?depends'
     [[ ${1:-} == makedepends ]] && kinds=makedepends
     while read -r dep; do
-        dep="${dep%%[<>=]*}"
-        pacman -Qq "${dep}" &>/dev/null && continue
-        file="$(repo_file "${dep}")"
+        # Installed in a version that satisfies DEP (packarch-skin>=...)
+        pacman -T "${dep}" &>/dev/null && continue
+        name="${dep%%[<>=]*}"
+        file="$(repo_file "${name}")"
         [[ -n ${file} ]] || continue
-        sudo pacman -U --asdeps --noconfirm "${file}"
-        installed_deps+=("${dep}")
+        # An older version already installed is updated, and kept at the end
+        if pacman -Qq "${name}" &>/dev/null; then
+            sudo pacman -U --noconfirm "${file}"
+        else
+            sudo pacman -U --asdeps --noconfirm "${file}"
+            installed_deps+=("${name}")
+        fi
     done < <(makepkg --printsrcinfo | sed -n "s/^\s*${kinds} = //p" | sort -u)
 }
 

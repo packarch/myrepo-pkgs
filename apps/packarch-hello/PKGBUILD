@@ -13,7 +13,7 @@ makedepends=('cargo' 'git')
 # Replaces CachyOS Hello on Packarch systems (both would start at login)
 conflicts=('cachyos-hello')
 replaces=('cachyos-hello')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/Antidote1911/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
+source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=('SKIP')
 
 prepare() {

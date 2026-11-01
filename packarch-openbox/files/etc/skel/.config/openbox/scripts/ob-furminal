@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
-##
-## Fullscreen terminal
-
-kitty --class kitty_fullscreen --start-as fullscreen \
-	  -o window_padding_width=45 -o background_opacity=1.0 -o font_size=14

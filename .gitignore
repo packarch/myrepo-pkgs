@@ -15,5 +15,3 @@ aur/*/*/
 # Sources downloaded by makepkg (our applications: tarballs, git clones)
 apps/*/*.tar.*
 apps/*/*/
-# Rust build directory of packarch-skin
-packarch-skin/skin/target/

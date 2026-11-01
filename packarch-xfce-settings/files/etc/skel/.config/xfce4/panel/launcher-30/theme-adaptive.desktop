@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Thème Adaptive
+Comment=Appliquer le thème Adaptive
+Exec=packarch-skin apply adaptive
+Icon=/usr/share/xfcethemes/icons/adaptive.png
+Terminal=false
+Type=Application
+Categories=Utility;

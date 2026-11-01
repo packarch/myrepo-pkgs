@@ -6,8 +6,7 @@
 #   (/usr/share/X11/xorg.conf.d)
 # - numeric keypad on at the LightDM login screen (numlockx)
 # - dark LightDM greeter: its own GTK theme Packarch-Greeter (GTK 3 of
-#   Greybird-dark, 1.0-4: packarch-themes, the themes of the XFCE desktop, is
-#   no longer needed by the Openbox desktop), Packarch icons (1.0-12, blue folders), Qogir-Dark
+#   Greybird-dark, 1.0-4: no dependency on packarch-themes), Packarch icons (1.0-12, blue folders), Qogir-Dark
 #   cursor, wallpaper-alt.png background (lightdm-gtk-greeter.conf.d, read before
 #   /etc/lightdm/lightdm-gtk-greeter.conf, whose settings are commented out)
 # - pacman hooks, also run when this package is installed: Geany opens a new

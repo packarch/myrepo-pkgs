@@ -1,18 +1,25 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Wallpapers of the XFCE desktop: those of the theme switcher, xfce-default.png
-# and wallpaper-alt.png (LightDM greeter). Since 2.0-5, the other ones are in
-# packarch-backgrounds-openbox, so that the XFCE live ISO does not ship them.
+# Wallpapers of the themes of packarch-skin (Openbox and XFCE desktops) and
+# of the LightDM greeter (wallpaper-alt.png, also the one of the default
+# theme), in /usr/share/backgrounds.
+# 2.0-6: the wallpapers of the themes in packarch-backgrounds-openbox merged
+# (replaced); the other ones (former XFCE color switcher, xfce-default.png,
+# former Openbox themes) moved to packarch-extra.
 # Files: files/ (installed as is). Most of the content was collected or made
-# by Aditya Shakya (adi1090x), GPL3.
+# by Aditya Shakya (adi1090x), GPL3. sylvanas.jpg (2.0-4): Sylvanas
+# Windrunner, World of Warcraft artwork (Blizzard Entertainment).
 
 pkgname=packarch-backgrounds
 pkgver=2.0
-pkgrel=5
-pkgdesc="Wallpapers of the XFCE desktop of Packarch"
+pkgrel=6
+pkgdesc="Wallpapers of the Packarch themes"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL3')
+provides=(packarch-backgrounds-openbox)
+conflicts=(packarch-backgrounds-openbox)
+replaces=(packarch-backgrounds-openbox)
 options=(!strip !emptydirs)
 
 package() {

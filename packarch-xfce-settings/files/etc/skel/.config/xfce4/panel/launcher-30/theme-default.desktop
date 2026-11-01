@@ -1,7 +1,7 @@
 [Desktop Entry]
-Name=Thème Défaut
-Comment=Appliquer le thème Défaut
-Exec=/usr/share/xfcethemes/theme-switcher.sh --default
+Name=Thème Default
+Comment=Appliquer le thème Default
+Exec=packarch-skin apply default
 Icon=/usr/share/xfcethemes/icons/default.png
 Terminal=false
 Type=Application
