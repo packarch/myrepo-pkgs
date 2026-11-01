@@ -1,0 +1,56 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Temporary remote help of Packarch: a GTK4 window starts, with the password
+# of the user (pkexec), a Tailscale session with Tailscale SSH and shows the
+# login link to send to the person who helps; she opens it with her
+# Tailscale account and connects as root (ssh root@packarch-<host>). The
+# session stops by itself (systemd timer, 1 hour, "+1 h" to extend) or with
+# "Arrêter maintenant": tailscale logout, tailscaled stopped. Nothing runs
+# outside a session (tailscaled is never enabled); the cleanup service ends a
+# session left open by a shutdown. No secret on the computer. The tailnet
+# policy of the person who helps must keep tag:depannage away from her other
+# devices (README).
+
+pkgname=packarch-depannage
+pkgver=0.1.0
+pkgrel=1
+pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
+arch=('x86_64')
+url="https://github.com/packarch/packarch-depannage"
+license=('GPL-3.0-or-later')
+depends=('gtk4' 'libadwaita' 'tailscale' 'polkit' 'gcc-libs' 'glibc')
+makedepends=('cargo')
+options=(!lto)
+source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	cargo build --frozen --release
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	cargo test --frozen --release
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	install -Dm755 target/release/$pkgname "$pkgdir"/usr/bin/$pkgname
+	install -Dm644 data/org.packarch.Depannage.desktop \
+		"$pkgdir"/usr/share/applications/org.packarch.Depannage.desktop
+	install -Dm644 data/org.packarch.depannage.policy \
+		"$pkgdir"/usr/share/polkit-1/actions/org.packarch.depannage.policy
+	install -Dm644 data/packarch-depannage-cleanup.service \
+		"$pkgdir"/usr/lib/systemd/system/packarch-depannage-cleanup.service
+	# Enabled: ends a session left open by a shutdown
+	install -d "$pkgdir"/usr/lib/systemd/system/multi-user.target.wants
+	ln -s ../packarch-depannage-cleanup.service \
+		"$pkgdir"/usr/lib/systemd/system/multi-user.target.wants/packarch-depannage-cleanup.service
+	install -Dm644 README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+}
