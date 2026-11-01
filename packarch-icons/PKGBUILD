@@ -10,7 +10,7 @@
 # 2.0-9: content of packarch-icons-openbox merged (replaced): both desktops
 # use the same themes; Vimix-Black(-Dark), used by no theme since the XFCE
 # color switcher was removed, moved to packarch-extra (formerly
-# packarch-icons-extra).
+# packarch-icons-extra), then removed with it (still in the git history).
 # 2.0-8: one icon theme, Packarch (formerly Luna-Antidote-Dark, blue folders,
 # without links to Luna and without the folder-<color>-* variants), whose
 # folder color is set per user by packarch-folder-color (folder_color of the

@@ -5,7 +5,8 @@
 # theme), in /usr/share/backgrounds.
 # 2.0-6: the wallpapers of the themes in packarch-backgrounds-openbox merged
 # (replaced); the other ones (former XFCE color switcher, xfce-default.png,
-# former Openbox themes) moved to packarch-extra.
+# former Openbox themes) moved to packarch-extra, removed with it (still in
+# the git history of myrepo-pkgs).
 # Files: files/ (installed as is). Most of the content was collected or made
 # by Aditya Shakya (adi1090x), GPL3. sylvanas.jpg (2.0-4): Sylvanas
 # Windrunner, World of Warcraft artwork (Blizzard Entertainment).

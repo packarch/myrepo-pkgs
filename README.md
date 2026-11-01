@@ -11,10 +11,9 @@ installer.
 
 | Paquet | Contenu |
 |---|---|
-| `packarch-backgrounds` | les fonds d'écran des 10 thèmes de `packarch-skin` (Openbox et XFCE) et de l'écran de connexion (`wallpaper-alt.png`, aussi celui du thème `default`), dans `/usr/share/backgrounds` ; `packarch-backgrounds-openbox` fusionné en 2.0-6, les autres fonds dans `packarch-extra` |
-| `packarch-icons` | les thèmes d'icônes des thèmes de `packarch-skin` et de l'écran de connexion : **Packarch** (dossiers bleus ; la couleur des dossiers de chaque thème est appliquée par `packarch-folder-color`), Hack, Luv-Folders(-Dark), `Qogir-Pink-Dark` (dossiers roses), et ceux dont ils héritent : Packarch-Base, Packarch-Base-Dark, Papirus-Apps. BeautyLine vient de `aur/beautyline`, Qogir de `qogir-icon-theme`, Papirus de `papirus-icon-theme` (dépendances). `packarch-icons-openbox` fusionné en 2.0-9, Vimix-Black(-Dark) passés dans `packarch-extra` |
-| `packarch-extra` | ce qu'aucun thème n'utilise, installé nulle part (`sudo pacman -S packarch-extra`) : thèmes d'icônes Arc-Circle, Luna-Light, Nordic-Folders(-Bluish, -Green), Numix-Apps(-White), Vimix-Black(-Dark), Vimix-White(-Dark), White-Folders, Win11(-Dark) ; thèmes GTK de l'ancien sélecteur XFCE (Arc-Dark, Dracula, Greybird-dark, Gruvbox, Juno-Mirage, Nordic, Orchis-Red-Dark) ; anciens fonds d'écran. Anciennement `packarch-icons-extra` (2.0-4) ; dépend de `packarch-icons` (héritage) |
-| `packarch-themes` | les thèmes GTK (avec xfwm4) et Openbox des thèmes de `packarch-skin`, un de chaque par thème (`Packarch-<Thème>` et `OB-Packarch-<Thème>`) ; `packarch-themes-openbox` fusionné en 2.0-7, les anciens thèmes GTK du bureau XFCE passés dans `packarch-extra` |
+| `packarch-backgrounds` | les fonds d'écran des 10 thèmes de `packarch-skin` (Openbox et XFCE) et de l'écran de connexion (`wallpaper-alt.png`, aussi celui du thème `default`), dans `/usr/share/backgrounds` ; `packarch-backgrounds-openbox` fusionné en 2.0-6, les autres fonds supprimés |
+| `packarch-icons` | les thèmes d'icônes des thèmes de `packarch-skin` et de l'écran de connexion : **Packarch** (dossiers bleus ; la couleur des dossiers de chaque thème est appliquée par `packarch-folder-color`), Hack, Luv-Folders(-Dark), `Qogir-Pink-Dark` (dossiers roses), et ceux dont ils héritent : Packarch-Base, Packarch-Base-Dark, Papirus-Apps. BeautyLine vient de `aur/beautyline`, Qogir de `qogir-icon-theme`, Papirus de `papirus-icon-theme` (dépendances). `packarch-icons-openbox` fusionné en 2.0-9, Vimix-Black(-Dark) supprimés |
+| `packarch-themes` | les thèmes GTK (avec xfwm4) et Openbox des thèmes de `packarch-skin`, un de chaque par thème (`Packarch-<Thème>` et `OB-Packarch-<Thème>`) ; `packarch-themes-openbox` fusionné en 2.0-7, les anciens thèmes GTK du bureau XFCE supprimés |
 | `packarch-cursors` | les curseurs : Bibata, Fluentt, Future, Lyra, Pear, Qogirr, Sweet, Vimix |
 | `packarch-fonts` | toutes les polices (`/usr/share/fonts/packarch`), dont la police d'icônes `packarch` |
 | `packarch-openbox-settings` | (anciennement `packarch-openbox`, renommé en 7.0-72 comme `packarch-xfce-settings`) bureau Openbox : polybar, menus rofi, dunst, picom, kitty, 10 thèmes (`~/.config/openbox/themes/*/theme.toml`), menus et scripts (`/usr/share/packarch/openbox`), icônes de dunst, `packarch-tcma` (actions de Thunar) et `packarch-reload-theme`, en français. La configuration va dans `/etc/skel` |
@@ -28,7 +27,9 @@ installer.
 
 Les paquets de thèmes remplacent les anciens paquets séparés
 (`packarch-icons-arc`, `packarch-icons-luna`…, `packarch-gtk-theme-*`, et
-depuis la fusion `packarch-*-openbox` et `packarch-icons-extra` : `replaces`).
+depuis la fusion `packarch-*-openbox` : `replaces`). Ce qu'aucun thème
+n'utilisait (`packarch-icons-extra`, devenu `packarch-extra`) a été supprimé
+le 2026-11-01 ; il reste dans l'historique git.
 
 **Crédits** : la plupart des thèmes, icônes, curseurs, polices, fonds d'écran
 et scripts ont été rassemblés ou créés par Aditya Shakya (adi1090x), sous
