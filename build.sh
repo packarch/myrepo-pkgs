@@ -10,13 +10,16 @@
 #   aur/*/        copies of AUR PKGBUILDs (./update.sh refreshes them)
 #
 # A package already in the binary repository with the same version is skipped
-# (-f: rebuild). Packages without build() (themes, configuration) are built
-# with --nodeps. Packages built here that an AUR package needs to be built
-# (gtkmm for nitrogen), or that a package without build() needs in
-# makedepends (apps/packarch-skin for packarch-openbox-settings and
-# packarch-xfce-settings, built first), are installed (or updated, if older than required)
-# on this system as dependencies, then removed at the end. Run as a normal
-# user.
+# (-f: rebuild). Packages with build() are compiled in a clean Arch Linux
+# chroot (chroot.sh: the glibc of this CachyOS znver4 system would make them
+# require AVX-512), with the packages built here that they need installed
+# in it (gtkmm for nitrogen); a package that still requires more than
+# x86-64 baseline is not copied. Packages without build() (themes,
+# configuration) are built here with --nodeps: the packages built here that
+# they need in makedepends (apps/packarch-skin for packarch-openbox-settings
+# and packarch-xfce-settings, built first) are installed (or updated, if
+# older than required) on this system as dependencies, then removed at the
+# end. Run as a normal user (needs devtools).
 #
 # Usage: ./build.sh [-f] [PACKAGE...]   (default: all of them)
 
@@ -26,6 +29,8 @@ cd "$(dirname "$(readlink -f "$0")")"
 top="$(pwd)"
 repo="$(readlink -f ../myrepo)/x86_64"
 conf="${top}/makepkg.conf"
+# shellcheck source=chroot.sh
+source "${top}/chroot.sh"
 
 # AUR packages, dependencies first
 aur_order=(gtkmm nitrogen xfce-polkit lead-git skippy-xd-git
@@ -94,6 +99,27 @@ add_pkg() {
     echo "  + ${file##*/}"
 }
 
+# Package files of the binary repository that the PKGBUILD of the current
+# directory needs (depends and makedepends), and their own dependencies of
+# this repository (freac -> boca -> smooth), for the chroot
+local_dep_files() {
+    local -a todo
+    local -A seen=()
+    local dep name file
+    mapfile -t todo < <(makepkg --printsrcinfo | sed -n 's/^\s*\(make\)\?depends = //p')
+    while (( ${#todo[@]} )); do
+        dep="${todo[0]}"; todo=("${todo[@]:1}")
+        name="${dep%%[<>=]*}"
+        [[ -n ${seen[${name}]:-} ]] && continue
+        seen[${name}]=1
+        file="$(repo_file "${name}")"
+        [[ -n ${file} ]] || continue
+        echo "${file}"
+        mapfile -t -O "${#todo[@]}" todo < <(bsdtar -xOf "${file}" .PKGINFO | sed -n 's/^depend = //p')
+    done
+    return 0
+}
+
 # Installs the packages of the binary repository that the PKGBUILD of the
 # current directory needs, and that this system lacks (makedepends: only the
 # build dependencies)
@@ -137,20 +163,26 @@ for d in "${dirs[@]}"; do
         if ${uptodate}; then echo "  à jour"; cd "${top}"; continue; fi
     fi
     if grep -q '^build()' PKGBUILD; then
-        # Compiled package: its build dependencies are needed (the packages
-        # of this repository only for the AUR ones, e.g. gtkmm for nitrogen)
-        [[ ${d} == aur/* ]] && install_local_deps
+        # Compiled package: in the chroot, with the packages of this
+        # repository that it needs
         import_pgp_keys
-        deps=(--syncdeps --rmdeps)
+        mapfile -t local_deps < <(local_dep_files)
+        rm -f ./*.pkg.tar.zst
+        chroot_build "${local_deps[@]}"
     else
         # Files only: the dependencies are only needed at installation, the
         # build dependencies of this repository are installed
         install_local_deps makedepends
-        deps=(--nodeps)
+        makepkg --config "${conf}" --nodeps --cleanbuild --clean --force --noconfirm
     fi
-    makepkg --config "${conf}" "${deps[@]}" --cleanbuild --clean --force --noconfirm
     # Read again: pkgver() of the -git packages updates the version
     mapfile -t pkgs < <(makepkg --config "${conf}" --packagelist | grep -v -e '-debug-' -e '-docs-')
+    bad="$(check_isa_level "${pkgs[@]}")"
+    if [[ -n ${bad} ]]; then
+        printf '%s\n' "${bad}" >&2
+        echo "${d} : binaires non génériques (x86-64-v2 ou plus), non copiés" >&2
+        exit 1
+    fi
     for p in "${pkgs[@]}"; do add_pkg "${p}"; rm -f "${p}"; done
     rm -f ./*-debug-*.pkg.tar.zst ./*-docs-*.pkg.tar.zst
     cd "${top}"

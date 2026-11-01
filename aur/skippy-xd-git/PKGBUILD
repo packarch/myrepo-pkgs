@@ -5,7 +5,7 @@
 
 _pkgname="skippy-xd"
 pkgname="$_pkgname-git"
-pkgver=2026.09.13.r22.g802a9ef
+pkgver=2026.10.25.r8.ga71d912
 pkgrel=1
 pkgdesc="A full-screen task switcher for X11, similar to Overview and Exposé"
 url="https://github.com/felixfung/skippy-xd"
@@ -20,6 +20,10 @@ depends=(
   'libxext'
   'libxft'
   'libxinerama'
+  'libxi'
+  'libxrandr'
+  'libpng'
+  'zlib'
 )
 makedepends=(
   'cmake'
