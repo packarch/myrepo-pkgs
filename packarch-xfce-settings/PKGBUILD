@@ -52,6 +52,8 @@
 #   menu, settings manager) "Thèmes Packarch" (packarch-skin chooser: window
 #   with the themes, yad) and "Restaurer le bouton des thèmes" (packarch-skin
 #   panel: puts the button back before the window list, or updates it)
+# - no icons on the desktop (1.0.9-10, xfce4-desktop.xml /desktop-icons/style 0):
+#   /etc/skel, so new users only (live session and new installations)
 #
 # Conflicts with packarch-openbox-settings (formerly packarch-openbox): both
 # ship some files of /etc/skel (GTK, Thunar, xfconf), the ISO installs one
@@ -59,7 +61,7 @@
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=9
+pkgrel=10
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
