@@ -52,9 +52,12 @@
 # packarch-backgrounds-openbox merged into packarch-themes, packarch-icons
 # and packarch-backgrounds.
 
+# 7.0-74: Qogir-Pink-Dark icons (colors of origin) in the default theme, also
+# used by packarch-xfce-settings
+
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=73
+pkgrel=74
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
