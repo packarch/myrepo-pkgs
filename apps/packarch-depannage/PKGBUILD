@@ -17,12 +17,15 @@
 
 pkgname=packarch-depannage
 pkgver=0.1.4
-pkgrel=1
+pkgrel=2
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
 license=('GPL-3.0-or-later')
-depends=('gtk4' 'libadwaita' 'tailscale' 'polkit' 'gcc-libs' 'glibc')
+# maim, xdotool, wmctrl: used by the person who helps in the session of the
+# user (screenshot, clicks, closing a window), on every desktop
+depends=('gtk4' 'libadwaita' 'tailscale' 'polkit' 'gcc-libs' 'glibc'
+         'maim' 'xdotool' 'wmctrl')
 makedepends=('cargo')
 options=(!lto)
 source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
