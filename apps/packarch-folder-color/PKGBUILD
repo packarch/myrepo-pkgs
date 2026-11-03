@@ -7,7 +7,7 @@
 # Packarch icon theme the folder color of each theme.
 
 pkgname=packarch-folder-color
-pkgver=0.1.2
+pkgver=0.1.3
 pkgrel=1
 pkgdesc="Change the folder color of icon themes (Packarch)"
 arch=('x86_64')
