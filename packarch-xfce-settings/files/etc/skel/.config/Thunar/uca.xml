@@ -74,17 +74,4 @@
     <patterns>*iso</patterns>
     <other-files/>
 </action>
-<action>
-    <icon>vcs-normal</icon>
-    <name>Checksum</name>
-    <unique-id>1564041061059083-1</unique-id>
-    <command>gtkhash %f</command>
-    <description>Calculate checksums using GTKHash</description>
-    <patterns>*</patterns>
-    <audio-files/>
-    <image-files/>
-    <other-files/>
-    <text-files/>
-    <video-files/>
-</action>
 </actions>

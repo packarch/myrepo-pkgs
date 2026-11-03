@@ -56,6 +56,7 @@
 #   /etc/skel, so new users only (live session and new installations)
 # - Qogir-Pink-Dark icons in the default theme (1.0.9-11, theme.toml of
 #   packarch-openbox-settings, written into /etc/skel by the render below)
+# - no "Checksum" custom action in Thunar (1.0.9-12)
 #
 # Conflicts with packarch-openbox-settings (formerly packarch-openbox): both
 # ship some files of /etc/skel (GTK, Thunar, xfconf), the ISO installs one
@@ -63,7 +64,7 @@
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=11
+pkgrel=12
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
