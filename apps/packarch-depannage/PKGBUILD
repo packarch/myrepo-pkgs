@@ -20,9 +20,10 @@
 # loaded at startup (not visible to ldd), hence listed by hand; libnotify:
 # notifications.
 # 0.3.1: confirmation before closing the window during a session.
+# 0.3.2: named Packarch Dépannage in the menu and the window.
 
 pkgname=packarch-depannage
-pkgver=0.3.1
+pkgver=0.3.2
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
