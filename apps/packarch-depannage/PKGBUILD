@@ -14,10 +14,12 @@
 # the account and device of the person who helps.
 # 0.1.2: ephemeral node (own tailscaled instance with in-memory state):
 # removed from the tailnet when the session stops.
+# 0.2.0: chat between the user and the person who helps, in the window of
+# both; the latter goes through ssh (openssh).
 
 pkgname=packarch-depannage
-pkgver=0.1.4
-pkgrel=2
+pkgver=0.2.0
+pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
@@ -25,7 +27,7 @@ license=('GPL-3.0-or-later')
 # maim, xdotool, wmctrl: used by the person who helps in the session of the
 # user (screenshot, clicks, closing a window), on every desktop
 depends=('gtk4' 'libadwaita' 'tailscale' 'polkit' 'gcc-libs' 'glibc'
-         'maim' 'xdotool' 'wmctrl')
+         'maim' 'xdotool' 'wmctrl' 'openssh')
 makedepends=('cargo')
 options=(!lto)
 source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
