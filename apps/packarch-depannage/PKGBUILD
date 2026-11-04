@@ -1,6 +1,6 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Temporary remote help of Packarch: a GTK4 window starts, with the password
+# Temporary remote help of Packarch: a window (egui) starts, with the password
 # of the user (pkexec), a Tailscale session with Tailscale SSH and shows the
 # login link to send to the person who helps; she opens it with her
 # Tailscale account and connects as root (ssh root@packarch-<host>). The
@@ -16,9 +16,12 @@
 # removed from the tailnet when the session stops.
 # 0.2.0: chat between the user and the person who helps, in the window of
 # both; the latter goes through ssh (openssh).
+# 0.3.0: egui window instead of GTK4/libadwaita. The libraries of egui are
+# loaded at startup (not visible to ldd), hence listed by hand; libnotify:
+# notifications.
 
 pkgname=packarch-depannage
-pkgver=0.2.2
+pkgver=0.3.0
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
@@ -26,8 +29,9 @@ url="https://github.com/packarch/packarch-depannage"
 license=('GPL-3.0-or-later')
 # maim, xdotool, wmctrl: used by the person who helps in the session of the
 # user (screenshot, clicks, closing a window), on every desktop
-depends=('gtk4' 'libadwaita' 'tailscale' 'polkit' 'gcc-libs' 'glibc'
-         'maim' 'xdotool' 'wmctrl' 'openssh')
+depends=('tailscale' 'polkit' 'gcc-libs' 'glibc'
+         'maim' 'xdotool' 'wmctrl' 'openssh' 'libnotify'
+         'libglvnd' 'libxkbcommon' 'libx11' 'libxcursor' 'libxi' 'libxrandr')
 makedepends=('cargo')
 options=(!lto)
 source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
