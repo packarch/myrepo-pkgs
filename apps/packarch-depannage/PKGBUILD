@@ -18,7 +18,7 @@
 # both; the latter goes through ssh (openssh).
 
 pkgname=packarch-depannage
-pkgver=0.2.0
+pkgver=0.2.1
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
