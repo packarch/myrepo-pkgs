@@ -19,9 +19,10 @@
 # 0.3.0: egui window instead of GTK4/libadwaita. The libraries of egui are
 # loaded at startup (not visible to ldd), hence listed by hand; libnotify:
 # notifications.
+# 0.3.1: confirmation before closing the window during a session.
 
 pkgname=packarch-depannage
-pkgver=0.3.0
+pkgver=0.3.1
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
