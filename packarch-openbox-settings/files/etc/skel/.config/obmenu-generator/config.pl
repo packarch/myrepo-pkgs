@@ -61,6 +61,8 @@ our $CONFIG = {
                                                           "/usr/local/share/applications",
                                                           "$ENV{HOME}/.local/share/applications",
                                                           "/usr/share/applications/kde4",
+                                                          "/var/lib/flatpak/exports/share/applications",
+                                                          "$ENV{HOME}/.local/share/flatpak/exports/share/applications",
                                                         ],
                              gtk_rc_filename         => "~/.gtkrc-2.0",
                              icon_dirs_first         => undef,
