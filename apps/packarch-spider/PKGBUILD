@@ -4,7 +4,7 @@
 # ported to Qt only (no KDE Frameworks / libkdegames) and renamed for Packarch.
 
 pkgname=packarch-spider
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
 pkgdesc="Patience card games: Spider, Klondike, Freecell, Golf... (based on KDE's KPatience, Qt only)"
 arch=('x86_64')
