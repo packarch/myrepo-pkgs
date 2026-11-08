@@ -1,0 +1,37 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Patience card games (Spider, Klondike, Freecell, Golf...): KDE's KPatience
+# ported to Qt only (no KDE Frameworks / libkdegames) and renamed for Packarch.
+
+pkgname=packarch-spider
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Patience card games: Spider, Klondike, Freecell, Golf... (based on KDE's KPatience, Qt only)"
+arch=('x86_64')
+url="https://github.com/packarch/packarch-spider"
+# Game: GPL-2.0-or-later. Card decks and themes from libkdegames: LGPL/GPL.
+license=('GPL-2.0-or-later' 'LGPL-2.0-or-later')
+depends=('qt6-base' 'qt6-svg' 'qt6-multimedia' 'freecell-solver' 'black-hole-solver'
+         'gcc-libs' 'glibc' 'hicolor-icon-theme')
+makedepends=('cmake' 'ninja' 'gettext')
+source=("$pkgname-$pkgver.tar.gz::https://github.com/packarch/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+build() {
+	cmake -S "$pkgname-$pkgver" \
+	      -B build \
+	      -G Ninja \
+	      -DCMAKE_BUILD_TYPE=Release \
+	      -DCMAKE_INSTALL_PREFIX=/usr \
+	      -DBUILD_TESTING=ON
+	cmake --build build
+}
+
+check() {
+	QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+	install -Dm644 "$pkgname-$pkgver"/README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+}
