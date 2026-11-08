@@ -56,10 +56,14 @@
 # used by packarch-xfce-settings
 # 7.0-75: obmenu-generator also reads the Flatpak applications (system and
 # user), for new accounts
+# 7.0-76: packarch-game-fullscreen TITLE, Lutris pre-launch script (not
+# waited for) that puts a Wine/Proton game window back in fullscreen once
+# Wine has initialized the display: polybar stayed above World of Warcraft
+# until a graphics option was applied
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=75
+pkgrel=76
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

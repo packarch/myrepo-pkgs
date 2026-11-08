@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+## Put a game window in fullscreen once it is ready, so that it covers polybar
+## (Openbox session).
+##
+## Under Openbox, polybar (a dock) stays above a window that is not both
+## fullscreen and focused. Wine/Proton games (Lutris, umu: WM_CLASS
+## steam_app_default) are mapped fullscreen, but Wine removes the state while
+## it initializes the display: the game then stays under the bars until a
+## graphics option is applied. This command waits for the window, then sets
+## the fullscreen state and the focus again, a few times.
+##
+## Lutris: Configure > System options > Pre-launch script:
+##   /usr/bin/packarch-game-fullscreen "World of Warcraft"
+## with "Wait for pre-launch script completion" off (prelaunch_wait: false).
+##
+## Usage: packarch-game-fullscreen TITLE [SECONDS]
+##   TITLE    exact title of the window (a browser tab "TITLE - Wiki" does
+##            not match)
+##   SECONDS  how long to wait for the window (default 600)
+
+title="$1"
+timeout="${2:-600}"
+
+if [[ -z "$title" ]]; then
+	echo "Usage: ${0##*/} TITLE [SECONDS]" >&2
+	exit 1
+fi
+
+find_window() {
+	# wmctrl -l: id, desktop, host, then the title (may contain spaces)
+	wmctrl -l | awk -v t="$title" '{
+		id = $1; $1 = $2 = $3 = ""; sub(/^ +/, "")
+		if ($0 == t) { print id; exit }
+	}'
+}
+
+win=""
+for ((i = 0; i < timeout; i++)); do
+	win=$(find_window)
+	[[ -n "$win" ]] && break
+	sleep 1
+done
+[[ -z "$win" ]] && exit 0
+
+# Wine removes the fullscreen state during its initialization: set it again
+for delay in 3 3 5; do
+	sleep "$delay"
+	wmctrl -i -r "$win" -b add,fullscreen 2>/dev/null || exit 0
+	wmctrl -i -a "$win"
+done
