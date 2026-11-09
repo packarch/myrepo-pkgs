@@ -35,10 +35,13 @@
 #   module of Calamares; the zz-packarch-branding hook switches the systems
 #   still on the cachyos theme and generates grub.cfg again; background in
 #   8-bit PNG since 1.0-11 (GRUB shows a 16-bit PNG as colored rings)
+# - kitty without confirmation when closing a window (1.0-14):
+#   /etc/xdg/kitty/kitty.conf, read by kitty when the user has no
+#   configuration of their own (XFCE; Openbox and Sway have theirs)
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=13
+pkgrel=14
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

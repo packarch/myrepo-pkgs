@@ -60,10 +60,12 @@
 # waited for) that puts a Wine/Proton game window back in fullscreen once
 # Wine has initialized the display: polybar stayed above World of Warcraft
 # until a graphics option was applied
+# 7.0-77: kitty closes its windows without asking for confirmation
+# (confirm_os_window_close 0)
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=76
+pkgrel=77
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
