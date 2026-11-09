@@ -57,17 +57,20 @@
 # 1.0-10: rofi menus (applications, power, screenshots...) accept an item on a
 # single click (me-accept-entry MousePrimary, double click by default), like
 # the rofi configuration of Openbox
+# 1.0-11: SwayFX (cachyos repository, provides sway) instead of Sway: rounded
+# corners and shadows of the windows, from the picom settings of the theme
+# (packarch-skin 1.3.2); session hook also run for swayfx
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=10
-pkgdesc="Sway configuration of Packarch"
+pkgrel=11
+pkgdesc="Sway (SwayFX) configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL3')
 depends=(
   # Sway and the tools of the configuration
-  sway swaybg swayidle xorg-xwayland sov mako waybar rofi hyprlock hyprpicker
+  swayfx swaybg swayidle xorg-xwayland sov mako waybar rofi hyprlock hyprpicker
   grim slurp wl-clipboard jq imagemagick pulsemixer pavucontrol playerctl light
   libnotify dex xdg-terminal-exec xdg-user-dirs xorg-xhost
   xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
@@ -79,11 +82,11 @@ depends=(
   # LightDM greeter, menu hooks, cachy-update
   packarch-system-settings
   # theme chooser, GTK themes, icons, cursors and wallpapers
-  'packarch-skin>=1.3.1' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.3.2' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.3.1')
+makedepends=('packarch-skin>=1.3.2')
 optdepends=('blueman: Bluetooth manager (right click on the Bluetooth module)')
 options=(!strip !emptydirs)
 

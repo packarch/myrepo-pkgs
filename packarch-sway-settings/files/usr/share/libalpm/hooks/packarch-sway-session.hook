@@ -1,6 +1,6 @@
 # Packarch (packarch-sway-settings), d'après le hook d'Archcraft : la session
 # Sway de LightDM lance packarch-run-sway (variables de Wayland, clavier du
-# système) au lieu de sway
+# système) au lieu de sway (paquets sway et swayfx : même fichier de session)
 
 [Trigger]
 Operation = Install
@@ -8,6 +8,7 @@ Operation = Upgrade
 Type = Package
 Target = packarch-sway-settings
 Target = sway
+Target = swayfx
 
 [Action]
 Description = Session Sway de Packarch (packarch-run-sway)...

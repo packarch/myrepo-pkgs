@@ -12,6 +12,17 @@ title_align center
 gaps inner 10
 gaps outer 0
 
+##-- SwayFX : coins arrondis et ombres ---
+## Valeurs écrites par packarch-skin : réglages picom du thème (comme sous
+## Openbox). Commandes de SwayFX : la configuration ne marche plus avec Sway
+## seul (les retirer pour revenir à Sway).
+corner_radius 6
+smart_corner_radius enable
+shadows enable
+shadows_on_csd disable
+shadow_blur_radius 20
+shadow_color #00000099
+
 ##-- Couleurs ----------------------------
 set $sway_cl_col_bg #1E2128
 set $sway_cl_col_fg #ABB2BF
