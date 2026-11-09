@@ -9,10 +9,45 @@
 ## sudo -E, Thunar plantait (chargeur d'icônes glycin) et root écrivait dans
 ## le dossier personnel de l'utilisateur. dbus-run-session : bus D-Bus de
 ## session propre à root (miniatures de Thunar).
+##
+## Thème : root n'a pas de réglages GTK (Thunar tout blanc). Le thème courant
+## (sway-theme, écrit par packarch-skin) est écrit dans un settings.ini de
+## GTK du dossier d'exécution de l'utilisateur, donné à root par
+## XDG_CONFIG_DIRS, sans toucher à la configuration de root ; XDG_DATA_DIRS
+## donne aussi les thèmes d'icônes de l'utilisateur (couleur des dossiers),
+## KITTY_CONFIG_DIRECTORY sa configuration de kitty.
 
 # Mot de passe demandé par rofi (inutile avec sudo sans mot de passe)
 export SUDO_ASKPASS="$HOME/.config/sway/scripts/rofi_askpass"
 
 [[ $# -gt 0 ]] || { echo "usage : asroot 'COMMANDE'" >&2; exit 2; }
 
-exec sudo -A dbus-run-session -- sh -c "$*"
+## Thème courant
+theme="$HOME/.config/sway/sway-theme"
+get() { sed -n "s/^set \$sway_$1 //p" "$theme" 2>/dev/null | head -1; }
+gtk_theme="$(get gtk_theme)"
+icon_theme="$(get icon_theme)"
+cursor_theme="$(get cursor_theme)"
+font="$(get fonts)"
+dark=0
+[[ "$(get color_scheme)" == prefer-dark ]] && dark=1
+
+conf="${XDG_RUNTIME_DIR:-/tmp}/packarch-asroot"
+for v in gtk-3.0 gtk-4.0; do
+	mkdir -p "$conf/$v"
+	{
+		echo '[Settings]'
+		[[ -n $gtk_theme ]] && echo "gtk-theme-name=$gtk_theme"
+		[[ -n $icon_theme ]] && echo "gtk-icon-theme-name=$icon_theme"
+		[[ -n $cursor_theme ]] && echo "gtk-cursor-theme-name=$cursor_theme"
+		[[ -n $font ]] && echo "gtk-font-name=$font"
+		echo "gtk-application-prefer-dark-theme=$dark"
+	} > "$conf/$v/settings.ini"
+done
+
+exec sudo -A \
+	XDG_CONFIG_DIRS="$conf:/etc/xdg" \
+	XDG_DATA_DIRS="$HOME/.local/share:/usr/local/share:/usr/share" \
+	XCURSOR_THEME="$cursor_theme" XCURSOR_SIZE=24 \
+	KITTY_CONFIG_DIRECTORY="$HOME/.config/sway/kitty" \
+	dbus-run-session -- sh -c "$*"

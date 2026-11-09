@@ -45,10 +45,14 @@
 # (xhost +si:localuser:root at startup); asroot uses sudo without -E (with
 # the HOME and XDG_RUNTIME_DIR of the user, Thunar crashed and root wrote
 # files in the home of the user) and dbus-run-session
+# 1.0-7: root applications with the current theme (Thunar was white):
+# asroot writes a GTK settings.ini (sway-theme values) in the runtime
+# directory of the user and gives it to root by XDG_CONFIG_DIRS, with the icon
+# themes of the user (XDG_DATA_DIRS) and their kitty configuration
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=6
+pkgrel=7
 pkgdesc="Sway configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
