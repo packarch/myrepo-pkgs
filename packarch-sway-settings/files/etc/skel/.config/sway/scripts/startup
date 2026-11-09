@@ -36,6 +36,14 @@ restart mako   ~/.config/sway/scripts/notifications
 ## root peut afficher ses fenêtres sur Xwayland
 xhost +si:localuser:root >/dev/null 2>&1
 
+## Actions de Thunar en français (terminal ici, Thunar root) : quand
+## uca.xml manque ou n'est que l'exemple de Thunar (son « Open Terminal Here »
+## échoue sous Sway)
+uca="$HOME/.config/Thunar/uca.xml"
+if [[ ! -s $uca ]] || { grep -q 'Example for a custom action' "$uca" && [[ $(grep -c '<action>' "$uca") -le 1 ]]; }; then
+	mkdir -p "${uca%/*}" && cp -f /usr/share/packarch/sway/uca.xml "$uca"
+fi
+
 ## Icône du réseau dans la barre (StatusNotifierItem : --indicator ; l'entrée
 ## autostart de nm-applet est masquée dans ~/.config/autostart)
 run nm-applet --indicator

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Actions de Thunar du bureau Sway de Packarch (packarch-sway-settings),
+     copiées dans ~/.config/Thunar/uca.xml par ~/.config/sway/scripts/startup
+     quand il manque ou n'est que l'exemple de Thunar (« Open Terminal Here »,
+     qui échoue sous Sway : exo-open n'a pas de terminal) -->
+<actions>
+<action>
+	<icon>utilities-terminal</icon>
+	<name>Ouvrir un terminal ici</name>
+	<unique-id>1794265032233695-1</unique-id>
+	<command>kitty --directory %f</command>
+	<description>Ouvrir kitty dans ce dossier</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>system-file-manager</icon>
+	<name>Thunar root</name>
+	<unique-id>1794265032233695-2</unique-id>
+	<command>sh -c &apos;&quot;$HOME/.config/sway/scripts/asroot&quot; thunar &quot;$1&quot;&apos; asroot %f</command>
+	<description>Ouvrir ce dossier dans Thunar en administrateur (root)</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+</actions>
