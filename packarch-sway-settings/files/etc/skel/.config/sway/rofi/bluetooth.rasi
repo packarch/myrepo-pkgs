@@ -4,6 +4,9 @@
 
 /*****----- Configuration -----*****/
 configuration {
+	/* Packarch : un simple clic lance l'élément (double clic par défaut) */
+	me-select-entry:            "";
+	me-accept-entry:            "MousePrimary";
 	modi:                       "drun,run,filebrowser";
     show-icons:                 false;
 	drun-display-format:        "{name}";

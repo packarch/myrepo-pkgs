@@ -54,10 +54,13 @@
 # 1.0-9: workspace switcher like the polybar of the Openbox "packarch" theme:
 # 4 workspaces always shown (persistent-workspaces), one ghost each, red when
 # focused, cyan with windows, gray when empty
+# 1.0-10: rofi menus (applications, power, screenshots...) accept an item on a
+# single click (me-accept-entry MousePrimary, double click by default), like
+# the rofi configuration of Openbox
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=9
+pkgrel=10
 pkgdesc="Sway configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
