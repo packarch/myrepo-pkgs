@@ -67,56 +67,42 @@ window#waybar.geany {
 }
 
 /** ********** Sway ********** **/
+/* Bureaux : un point par bureau, comme le thème « packarch » d'Openbox.
+   Sway ne garde un bureau non affiché que s'il a des fenêtres : sans classe =
+   occupé, .persistent = vide (affiché grâce à persistent-workspaces) */
 #workspaces {
 	background-color: @background-alt;
-	color: @foreground;
-	border-radius: 0px 8px 0px 0px;
-	padding: 4px;
+	border-radius: 8px;
+	margin: 6px 0px;
+	padding: 0px 4px;
 }
 
 #workspaces button {
-	color: @foreground;
-	margin: 0px 2px;
-	padding: 2px 6px;
+	color: @cyan;
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px 5px;
+	border-radius: 8px;
+	background: none;
+	box-shadow: none;
+}
+
+#workspaces button.persistent {
+	color: @foreground-alt;
+}
+
+#workspaces button.focused,
+#workspaces button.visible.focused {
+	color: @red;
+}
+
+#workspaces button.urgent {
+	color: @green;
 }
 
 #workspaces button:hover {
 	background-color: @background;
-	color: @white;
-	border: 0px solid @background;
-	border-radius: 8px;
-	padding: 2px 6px;
-}
-
-#workspaces button.visible {
-	background-image: linear-gradient(to right, @cyan , @blue);
-}
-
-#workspaces button.focused {
-	background-color: @green;
-}
-
-#workspaces button.urgent {
-	background-color: @red;
-}
-
-#workspaces button.persistent {
-	background-color: @yellow;
-}
-
-#workspaces button.visible,
-#workspaces button.focused,
-#workspaces button.urgent,
-#workspaces button.persistent {
-	color: @background;
-	border-radius: 8px;
-	padding: 2px 6px;
-}
-
-#workspaces button.current_output {
-}
-
-#workspaces button#sway-workspace-1 {
+	color: @foreground;
 }
 
 /* If workspaces is the leftmost module, omit left margin */

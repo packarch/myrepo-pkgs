@@ -216,27 +216,23 @@
         "icon": false,
     },
 
-	// waybar-sway-workspaces
+	// waybar-sway-workspaces : 4 bureaux toujours affichés, comme le module de
+	// bureaux de polybar du thème « packarch » d'Openbox (un point par bureau ;
+	// couleurs dans style.css : actif, occupé, vide)
     "sway/workspaces": {
-         "disable-scroll": false,
-         "disable-click": false,
-         "all-outputs": true,
-         "format": "{icon}",
-         "format-icons": {
-             "1": "",
-             "2": "",
-             "3": "",
-             "4": "",
-             "5": "",
-             "6": "漣",
-             "7": "",
-             "8": "",
-             "9": "",
-             "10": "ﳴ",
-             //"urgent": "",
-             //"focused": "",
-             //"default": ""
-         },
+        "disable-scroll": false,
+        "disable-click": false,
+        "all-outputs": true,
+        "format": "{icon}",
+        "format-icons": {
+            "default": "󰊠",
+        },
+        "persistent-workspaces": {
+            "1": [],
+            "2": [],
+            "3": [],
+            "4": [],
+        },
         "smooth-scrolling-threshold": 1,
         "disable-scroll-wraparound": false,
         "enable-bar-scroll": false,

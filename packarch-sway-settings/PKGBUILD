@@ -51,10 +51,13 @@
 # themes of the user (XDG_DATA_DIRS) and their kitty configuration
 # 1.0-8: kitty.conf includes colors.conf and fonts.conf by relative paths (root
 # kitty was black: ~ is /root); root kitty (Xwayland) floating
+# 1.0-9: workspace switcher like the polybar of the Openbox "packarch" theme:
+# 4 workspaces always shown (persistent-workspaces), one ghost each, red when
+# focused, cyan with windows, gray when empty
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=8
+pkgrel=9
 pkgdesc="Sway configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
