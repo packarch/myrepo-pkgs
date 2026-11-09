@@ -12,10 +12,10 @@
 # dossiers" item kept last in the theme launcher of the XFCE panel; 1.2.0:
 # "chooser" (theme window, yad) and "panel" (puts the theme button back on
 # the XFCE panel), launcher files written by render; 1.3.0: Sway desktop
-# (packarch-sway-settings).
+# (packarch-sway-settings); 1.3.1: a single theme chooser at a time.
 
 pkgname=packarch-skin
-pkgver=1.3.0
+pkgver=1.3.1
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Sway desktops"
 arch=('x86_64')

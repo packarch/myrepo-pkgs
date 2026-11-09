@@ -53,8 +53,8 @@ set $rofi_screenshot ~/.config/sway/scripts/rofi_screenshot
 set $rofi_network ~/.config/sway/scripts/rofi_network
 set $rofi_asroot ~/.config/sway/scripts/rofi_asroot
 
-## Un seul sélecteur à la fois (bouton de la barre ou Super+t)
-set $themes flock -n "$XDG_RUNTIME_DIR/packarch-skin-chooser.lock" packarch-skin chooser
+## Un seul sélecteur à la fois : packarch-skin ≥ 1.3.1 ne l'ouvre pas deux fois
+set $themes packarch-skin chooser
 
 set $open_in_kitty ~/.config/sway/scripts/kitty -f
 

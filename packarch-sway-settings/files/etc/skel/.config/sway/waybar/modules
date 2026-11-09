@@ -149,7 +149,7 @@
          "format": "",
          "tooltip": true,
          "tooltip-format": "Thèmes Packarch (Super+t)",
-         "on-click": "flock -n \"$XDG_RUNTIME_DIR/packarch-skin-chooser.lock\" packarch-skin chooser",
+         "on-click": "packarch-skin chooser",
     },
 
 

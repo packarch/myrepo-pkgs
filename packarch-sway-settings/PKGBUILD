@@ -36,10 +36,12 @@
 # menu on the left, launchers in the center (Firefox, Thunar, kitty, and
 # Discord, FileZilla, MKVToolNix, FileBot when installed), power button on
 # the right; a single theme chooser at a time (flock)
+# 1.0-4: no flock, packarch-skin 1.3.1 opens a single chooser itself (flock
+# held its lock file, the chooser of 1.3.1 would then never open)
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Sway configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -58,11 +60,11 @@ depends=(
   # LightDM greeter, menu hooks, cachy-update
   packarch-system-settings
   # theme chooser, GTK themes, icons, cursors and wallpapers
-  'packarch-skin>=1.3.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.3.1' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.3.0')
+makedepends=('packarch-skin>=1.3.1')
 optdepends=('blueman: Bluetooth manager (right click on the Bluetooth module)')
 options=(!strip !emptydirs)
 
