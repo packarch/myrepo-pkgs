@@ -32,6 +32,10 @@ restart() {
 restart waybar ~/.config/sway/scripts/statusbar
 restart mako   ~/.config/sway/scripts/notifications
 
+## Applications lancées en administrateur (sudo thunar, scripts/asroot) :
+## root peut afficher ses fenêtres sur Xwayland
+xhost +si:localuser:root >/dev/null 2>&1
+
 ## Icône du réseau dans la barre (StatusNotifierItem : --indicator ; l'entrée
 ## autostart de nm-applet est masquée dans ~/.config/autostart)
 run nm-applet --indicator

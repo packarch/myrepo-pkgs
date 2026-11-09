@@ -46,7 +46,7 @@ run_cmd() {
 	if [[ "$1" == '--opt1' ]]; then
 		${ASROOT} "$term"
 	elif [[ "$1" == '--opt2' ]]; then
-		${ASROOT} 'dbus-run-session thunar'
+		${ASROOT} thunar
 	elif [[ "$1" == '--opt3' ]]; then
 		${ASROOT} geany
 	elif [[ "$1" == '--opt4' ]]; then

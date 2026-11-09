@@ -1,10 +1,18 @@
 #!/usr/bin/env bash
 
-# directory
-DIR="$HOME/.config/sway"
+## Packarch : lance une application graphique en administrateur (root) dans
+## la session Sway. asroot 'COMMANDE [ARGUMENTS]'
+##
+## sudo sans -E : root garde son propre environnement (HOME=/root), seul
+## DISPLAY est transmis (sudo le garde) et l'application passe par Xwayland,
+## auquel root a accès (xhost +si:localuser:root, scripts/startup). Avec
+## sudo -E, Thunar plantait (chargeur d'icônes glycin) et root écrivait dans
+## le dossier personnel de l'utilisateur. dbus-run-session : bus D-Bus de
+## session propre à root (miniatures de Thunar).
 
-# rofi sudo askpass helper
-export SUDO_ASKPASS="$DIR"/scripts/rofi_askpass
+# Mot de passe demandé par rofi (inutile avec sudo sans mot de passe)
+export SUDO_ASKPASS="$HOME/.config/sway/scripts/rofi_askpass"
 
-# execute the application
-sudo -E -A $1
+[[ $# -gt 0 ]] || { echo "usage : asroot 'COMMANDE'" >&2; exit 2; }
+
+exec sudo -A dbus-run-session -- sh -c "$*"

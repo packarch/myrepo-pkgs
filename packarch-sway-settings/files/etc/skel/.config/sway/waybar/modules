@@ -97,7 +97,7 @@
         "format": "",
         "tooltip-format": "Fichiers (clic droit : en administrateur)",
         "on-click": "thunar",
-        "on-click-right": "~/.config/sway/scripts/asroot 'dbus-run-session thunar'",
+        "on-click-right": "~/.config/sway/scripts/asroot thunar",
     },
     "custom/launch-kitty": {
         "format": "",
