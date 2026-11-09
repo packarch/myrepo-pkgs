@@ -1,0 +1,297 @@
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Configuration de Sway (Packarch), d'après celle d'Archcraft (GPL3).
+## Couleurs, fond d'écran et thèmes GTK : packarch-skin (fichiers
+## sway-theme et sway-output), à changer avec Super+t ou le bouton
+## des thèmes de la barre.
+
+##-- Touches de modification -------------
+set $mod Mod4
+set $alt Mod1
+
+##-- Police (globale) --------------------
+font pango:JetBrains Mono Medium 10
+
+##-- Fichiers de configuration -----------
+include /etc/sway/config.d/*
+include ~/.config/sway/sway-idle
+include ~/.config/sway/sway-input
+include ~/.config/sway/sway-output
+include ~/.config/sway/sway-modes
+include ~/.config/sway/sway-theme
+
+##-- Réglages généraux -------------------
+default_orientation horizontal
+swaybg_command swaybg
+swaynag_command swaynag
+workspace_layout default
+xwayland enable
+focus_follows_mouse yes
+floating_modifier $mod normal
+mouse_warping none
+popup_during_fullscreen smart
+workspace_auto_back_and_forth yes
+focus_on_window_activation smart
+show_marks yes
+
+##-- Variables ---------------------------
+set $kitty ~/.config/sway/scripts/kitty
+set $volume ~/.config/sway/scripts/volume
+set $backlight ~/.config/sway/scripts/brightness
+set $screenshot ~/.config/sway/scripts/screenshot
+set $lockscreen ~/.config/sway/scripts/current_lock
+set $colorpicker ~/.config/sway/scripts/colorpicker
+set $files thunar
+set $editor geany
+set $browser firefox
+
+set $rofi_bluetooth ~/.config/sway/scripts/rofi_bluetooth
+set $rofi_launcher ~/.config/sway/scripts/rofi_launcher
+set $rofi_powermenu ~/.config/sway/scripts/rofi_powermenu
+set $rofi_runner ~/.config/sway/scripts/rofi_runner
+set $rofi_screenshot ~/.config/sway/scripts/rofi_screenshot
+set $rofi_network ~/.config/sway/scripts/rofi_network
+set $rofi_asroot ~/.config/sway/scripts/rofi_asroot
+
+set $themes packarch-skin chooser
+
+set $open_in_kitty ~/.config/sway/scripts/kitty -f
+
+##-- Aperçu des bureaux (sov) ------------
+exec rm -f /tmp/sovpipe && mkfifo /tmp/sovpipe && tail -f /tmp/sovpipe | sov -s ~/.config/sway/sov -t 500 --holdkey=65515
+
+##-- Programmes au démarrage -------------
+## Entrées de /etc/xdg/autostart et ~/.config/autostart (cachy-update,
+## configuration de GitHub...) : une seule fois par session
+exec dex --autostart --environment sway
+exec_always ~/.config/sway/scripts/startup
+
+##-- Raccourcis --------------------------
+
+# -- Terminal : kitty --
+bindsym $mod+Return 			exec $kitty
+bindsym $mod+Shift+Return 		exec $kitty -f
+bindsym $mod+$alt+Return 		exec $kitty -F
+
+# -- Applications --
+bindsym $mod+Shift+f 			exec $files
+bindsym $mod+Shift+e 			exec $editor
+bindsym $mod+Shift+w 			exec $browser
+
+# -- Applications en terminal --
+bindsym $alt+Control+v 			exec --no-startup-id "$open_in_kitty nano"
+bindsym $alt+Control+h 			exec --no-startup-id "$open_in_kitty htop"
+
+# -- Rofi --
+bindsym $alt+F1 				exec $rofi_launcher
+bindsym $alt+F2 				exec $rofi_runner
+bindsym $mod+d	 				exec $rofi_launcher
+bindsym $mod+r	 				exec $rofi_asroot
+bindsym $mod+n 					exec $rofi_network
+bindsym $mod+x 					exec $rofi_powermenu
+bindsym $mod+s 					exec $rofi_screenshot
+bindsym $mod+b 					exec $rofi_bluetooth
+
+# -- Thèmes Packarch --
+bindsym $mod+t 					exec $themes
+
+# -- Divers --
+bindsym $mod+p 					exec $colorpicker
+
+# -- Touches de fonction --
+bindsym XF86MonBrightnessUp 	exec "$backlight --inc"
+bindsym XF86MonBrightnessDown 	exec "$backlight --dec"
+bindsym XF86AudioRaiseVolume 	exec "$volume --inc"
+bindsym XF86AudioLowerVolume 	exec "$volume --dec"
+bindsym XF86AudioMute 			exec "$volume --toggle"
+bindsym XF86AudioMicMute 		exec "$volume --toggle-mic"
+bindsym XF86AudioNext 			exec "playerctl next"
+bindsym XF86AudioPrev 			exec "playerctl previous"
+bindsym XF86AudioPlay 			exec "playerctl play-pause"
+bindsym XF86AudioStop 			exec "playerctl stop"
+
+# -- Captures d'écran --
+bindsym Print 					exec "$screenshot --now"
+bindsym $alt+Print 				exec "$screenshot --in5"
+bindsym Shift+Print 			exec "$screenshot --in10"
+bindsym Control+Print 			exec "$screenshot --win"
+bindsym $mod+Print 				exec "$screenshot --area"
+
+# -- Verrouillage --
+bindsym $alt+Control+l 			exec "$lockscreen"
+
+## -- Sway --
+
+## Fermer la fenêtre active
+##
+bindsym $mod+q kill
+bindsym $mod+c kill
+
+#------
+
+## Notification
+##
+set $send-notify exec --no-startup-id notify-send -u low -h string:x-canonical-private-synchronous:swayconfig
+
+## Partage des conteneurs
+##
+## partage horizontal
+bindsym $mod+h split horizontal, $send-notify 'Partage horizontal'
+## partage vertical
+bindsym $mod+v split vertical, $send-notify 'Partage vertical'
+## alterner
+bindsym $mod+g split toggle, $send-notify 'Mode de partage'
+
+#------
+
+## Disposition
+##
+## empilée
+bindsym $mod+Shift+s layout stacking, $send-notify 'Disposition empilée'
+## à onglets
+bindsym $mod+Shift+t layout tabbed, $send-notify 'Disposition à onglets'
+## par défaut
+bindsym $mod+Shift+d layout default, $send-notify 'Disposition par défaut'
+## alterner empilée/onglets/partage
+bindsym $mod+Shift+l layout toggle, $send-notify 'Changement de disposition'
+## alterner horizontal/vertical
+bindsym $mod+Shift+v layout toggle split, $send-notify 'Disposition horizontale/verticale'
+## plein écran
+bindsym $mod+f fullscreen toggle, $send-notify 'Plein écran'
+## flottante/en mosaïque
+bindsym $mod+space floating toggle, $send-notify 'Fenêtre flottante'
+
+#------
+
+## Focus
+##
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+## conteneur parent
+bindsym $mod+a focus parent
+## conteneur enfant
+bindsym $mod+z focus child
+## conteneur suivant
+bindsym $mod+Tab focus next
+## alterner entre fenêtres flottantes et en mosaïque
+bindsym $mod+Shift+space focus mode_toggle
+
+#------
+
+## Déplacement des conteneurs
+##
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+## au centre (fenêtres flottantes)
+bindsym $mod+$alt+c move absolute position center
+## sous le pointeur (fenêtres flottantes)
+bindsym $mod+$alt+p move position mouse
+
+#------
+
+## Taille des fenêtres
+##
+bindsym $mod+$alt+Left resize shrink width 10 px or 10 ppt
+bindsym $mod+$alt+Down resize grow height 10 px or 10 ppt
+bindsym $mod+$alt+Up resize shrink height 10 px or 10 ppt
+bindsym $mod+$alt+Right resize grow width 10 px or 10 ppt
+
+#------
+
+## Fenêtre visible sur tous les bureaux (fenêtres flottantes)
+##
+bindsym $mod+o sticky toggle, $send-notify 'Sur tous les bureaux'
+
+#------
+
+## Bordures
+##
+bindsym $mod+y border toggle, $send-notify 'Bordures'
+
+#------
+
+## Scratchpad
+##
+## mettre la fenêtre active dans le scratchpad
+bindsym $mod+minus move scratchpad, $send-notify 'Scratchpad'
+## afficher la première fenêtre du scratchpad
+bindsym $mod+Shift+minus scratchpad show
+
+#------
+
+## recharger la configuration
+bindsym $mod+Shift+c reload, $send-notify 'Configuration rechargée'
+## quitter Sway
+bindsym $mod+Shift+q exit
+
+#------
+
+## Bureaux
+##
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+## aller au bureau (avec sov) ; les chiffres du clavier français sont
+## obtenus sans Maj : codes des touches (bindcode) plutôt que leurs symboles
+bindcode --no-repeat $mod+10 workspace number $ws1; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+11 workspace number $ws2; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+12 workspace number $ws3; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+13 workspace number $ws4; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+14 workspace number $ws5; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+15 workspace number $ws6; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+16 workspace number $ws7; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+17 workspace number $ws8; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+18 workspace number $ws9; exec "echo 1 > /tmp/sovpipe"
+bindcode --no-repeat $mod+19 workspace number $ws10; exec "echo 1 > /tmp/sovpipe"
+
+bindcode --release $mod+10 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+11 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+12 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+13 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+14 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+15 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+16 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+17 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+18 exec "echo 0 > /tmp/sovpipe"
+bindcode --release $mod+19 exec "echo 0 > /tmp/sovpipe"
+
+## déplacer la fenêtre active vers le bureau
+bindcode $mod+Shift+10 move container to workspace number $ws1
+bindcode $mod+Shift+11 move container to workspace number $ws2
+bindcode $mod+Shift+12 move container to workspace number $ws3
+bindcode $mod+Shift+13 move container to workspace number $ws4
+bindcode $mod+Shift+14 move container to workspace number $ws5
+bindcode $mod+Shift+15 move container to workspace number $ws6
+bindcode $mod+Shift+16 move container to workspace number $ws7
+bindcode $mod+Shift+17 move container to workspace number $ws8
+bindcode $mod+Shift+18 move container to workspace number $ws9
+bindcode $mod+Shift+19 move container to workspace number $ws10
+
+##-- Règles ------------------------------
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [app_id="kitty-fullscreen"] fullscreen enable
+for_window [app_id="kitty-float"] floating enable
+for_window [app_id="catfish|yad|nm-connection-editor|pavucontrol|blueman-manager"] floating enable
+for_window [app_id="xfce-polkit|kvantummanager|qt5ct|qt6ct"] floating enable
+for_window [class="Yad|Xfce-polkit"] floating enable
+for_window [app_id="io.calamares.calamares"] floating enable
+for_window [app_id="packarch-hello|packarch-pi|packarch-folder-color|liloucalc"] floating enable
+for_window [app_id="thunar" title="^Renommer.*"] floating enable
+for_window [app_id="thunar" title="^Progression des opérations.*"] floating enable
+for_window [app_id="thunar" title="^Confirmer le remplacement.*"] floating enable
+for_window [app_id="viewnior|gimp"] floating enable
+for_window [class="feh|Gpicview|MPlayer"] floating enable
+for_window [class="VirtualBox Manager|qemu|Qemu-system-x86_64"] floating enable

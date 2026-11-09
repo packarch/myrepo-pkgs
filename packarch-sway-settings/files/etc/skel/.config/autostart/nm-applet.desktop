@@ -1,0 +1,14 @@
+# Packarch (packarch-sway-settings) : sous Sway, nm-applet est lancé avec
+# --indicator (icône dans la barre waybar) par ~/.config/sway/scripts/startup
+[Desktop Entry]
+Name=NetworkManager Applet
+Name[fr]=Applet NetworkManager
+Comment=Manage your network connections
+Comment[fr]=Gérer vos connexions réseau
+Icon=nm-device-wireless
+Exec=nm-applet
+Terminal=false
+Type=Application
+NoDisplay=true
+NotShowIn=KDE;GNOME;sway;
+X-GNOME-UsesNotifications=true

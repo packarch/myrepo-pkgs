@@ -1,0 +1,80 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Session Sway de Packarch (run-sway d'Archcraft) : variables d'environnement
+## de Wayland, disposition du clavier du système, puis Sway. Lancé par
+## /usr/share/wayland-sessions/sway.desktop (Exec réécrit par le hook
+## packarch-sway-session.hook).
+
+## Session Wayland
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=sway
+export XDG_CURRENT_DESKTOP=sway
+export XDG_CURRENT_SESSION=sway
+
+## GTK
+export TDESKTOP_DISABLE_GTK_INTEGRATION=1
+export CLUTTER_BACKEND=wayland
+export BEMENU_BACKEND=wayland
+export GDK_BACKEND="wayland,x11,*"
+
+## Firefox
+export MOZ_ENABLE_WAYLAND=1
+
+## Qt
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+
+## Elementary
+export ELM_DISPLAY=wl
+export ECORE_EVAS_ENGINE=wayland_egl
+export ELM_ENGINE=wayland_egl
+export ELM_ACCEL=opengl
+
+## SDL (repli sur X11 pour les jeux qui ne gèrent pas Wayland)
+export SDL_VIDEODRIVER="wayland,x11"
+
+## Java
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+## LibreOffice
+export SAL_USE_VCLPLUGIN=gtk3
+
+export NO_AT_BRIDGE=1
+export WINIT_UNIX_BACKEND=wayland
+
+## Packarch : tous les kitty de la session (lanceurs, applications
+## Terminal=true) prennent la configuration de Sway, aux couleurs du thème
+export KITTY_CONFIG_DIRECTORY="$HOME/.config/sway/kitty"
+
+## Packarch : disposition du clavier du système (localectl, réglée par
+## l'installeur), lue par Sway au démarrage (sway-input peut la remplacer)
+if command -v localectl >/dev/null; then
+    while IFS=: read -r key value; do
+        value="${value#"${value%%[![:space:]]*}"}"
+        case "${key//[[:space:]]/}" in
+            X11Layout) export XKB_DEFAULT_LAYOUT="$value" ;;
+            X11Variant) export XKB_DEFAULT_VARIANT="$value" ;;
+            X11Model) export XKB_DEFAULT_MODEL="$value" ;;
+            X11Options) export XKB_DEFAULT_OPTIONS="$value" ;;
+        esac
+    done < <(localectl status 2>/dev/null)
+fi
+
+## VirtualBox
+if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
+    export WLR_NO_HARDWARE_CURSORS=1
+fi
+
+## Variables de session D-Bus
+export DBUS_SESSION_BUS_ADDRESS
+export DBUS_SESSION_BUS_PID
+
+## Sway (pilote propriétaire NVIDIA : --unsupported-gpu)
+if lsmod | grep -qw nvidia; then
+    exec sway --unsupported-gpu
+else
+    exec sway
+fi

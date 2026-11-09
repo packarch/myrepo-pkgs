@@ -1,0 +1,10 @@
+##-- Mise en veille de l'écran -----------
+
+## Packarch : pas de verrouillage ni d'extinction de l'écran par inactivité
+## (comme sur les bureaux XFCE et Openbox). L'écran est seulement verrouillé
+## avant une mise en veille de l'ordinateur. Pour verrouiller après 5 min puis
+## éteindre l'écran 5 min plus tard, décommenter les deux lignes « timeout ».
+exec swayidle -w \
+          before-sleep "$lockscreen"
+#          timeout 300 "$lockscreen" \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \

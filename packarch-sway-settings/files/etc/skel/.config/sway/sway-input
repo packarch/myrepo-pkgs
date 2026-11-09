@@ -1,0 +1,22 @@
+##-- Clavier, souris et pavé tactile -----
+
+# Noms des périphériques : swaymsg -t get_inputs ; voir `man 5 sway-input`.
+
+## Pavé tactile / souris
+input "type:touchpad" {
+    dwt enabled
+    tap enabled
+    drag_lock disabled
+    natural_scroll disabled
+    middle_emulation enabled
+}
+
+## Clavier : disposition du système (localectl, lue par packarch-run-sway au
+## démarrage de la session : XKB_DEFAULT_LAYOUT...), pavé numérique activé
+input "type:keyboard" {
+    xkb_numlock enabled
+#    xkb_layout fr
+#    xkb_variant oss
+#    repeat_delay 300
+#    repeat_rate 30
+}

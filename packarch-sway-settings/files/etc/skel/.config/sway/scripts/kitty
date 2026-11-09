@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Kitty : kitty [-f|-F] [ARGUMENTS DE KITTY...]
+##   -f  fenêtre flottante
+##   -F  plein écran
+## Packarch : les arguments suivants sont transmis à kitty (commande à lancer)
+
+# Directory
+DIR="$HOME/.config/sway"
+CONFIG="$DIR/kitty/kitty.conf"
+
+# Virtualbox workarounds
+cmd=(kitty)
+if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
+    cmd=(env LIBGL_ALWAYS_SOFTWARE=1 kitty)
+fi
+
+case "${1:-}" in
+	-f)
+		shift
+		exec "${cmd[@]}" --class 'kitty-float' --config "$CONFIG" "$@"
+		;;
+	-F)
+		shift
+		exec "${cmd[@]}" \
+			--class 'kitty-fullscreen' \
+			--config "$CONFIG" \
+			--start-as fullscreen \
+			--override 'window_padding_width=30' \
+			--override 'font_size=14' \
+			--override 'background_opacity=0.95' \
+			"$@"
+		;;
+	*)
+		exec "${cmd[@]}" --config "$CONFIG" "$@"
+		;;
+esac

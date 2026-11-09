@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Verrouillage de l'écran (hyprlock, aux couleurs du thème)
+
+DIR="$HOME/.config/sway"
+
+pgrep -x hyprlock >/dev/null || hyprlock --config "$DIR"/hyprlock.conf &

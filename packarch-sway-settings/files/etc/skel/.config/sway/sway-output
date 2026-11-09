@@ -1,0 +1,19 @@
+##-- Écrans ------------------------------
+
+## Voir `man 5 sway-output` ; noms des écrans : swaymsg -t get_outputs
+
+## Fond d'écran de tous les écrans : celui du thème (packarch-skin)
+output * bg /usr/share/backgrounds/wallpaper-alt.png fill
+
+## Fond d'écran d'un écran précis
+#output eDP-1    bg /usr/share/backgrounds/tokyo.png fill
+
+## Plusieurs écrans
+#~ Écran du portable, 1920x1080
+#output eDP-1 resolution 1920x1080 position 0,0
+#~ Écran externe, à droite du portable, 1920x1080
+#output HDMI-A-1 resolution 1920x1080 position 1920,0
+
+## HiDPI
+#output eDP-1 scale 1
+#output HDMI-A-1 scale 2

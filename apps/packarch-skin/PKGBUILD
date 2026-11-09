@@ -1,21 +1,23 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Theme (skin) chooser of the Packarch Openbox and XFCE desktops: applies the
+# Theme (skin) chooser of the Packarch Openbox, XFCE and Sway desktops: applies the
 # themes described by the theme.toml files of packarch-openbox-settings
 # (~/.config/openbox/themes) and, on XFCE, their copies in
-# /usr/share/xfcethemes/themes (packarch-xfce-settings). "render" writes the
-# default theme into the /etc/skel of these two packages when they are built
+# /usr/share/xfcethemes/themes (packarch-xfce-settings) and, on Sway,
+# /usr/share/packarch/sway/themes (packarch-sway-settings). "render" writes the
+# default theme into the /etc/skel of these three packages when they are built
 # (makedepends: build.sh builds packarch-skin first).
 # Own repository since 1.1.0 (sources in myrepo-pkgs/packarch-skin/skin
 # before, up to 1.0.0-19); 1.1.0: XFCE desktop; 1.1.1: "Couleur des
 # dossiers" item kept last in the theme launcher of the XFCE panel; 1.2.0:
 # "chooser" (theme window, yad) and "panel" (puts the theme button back on
-# the XFCE panel), launcher files written by render.
+# the XFCE panel), launcher files written by render; 1.3.0: Sway desktop
+# (packarch-sway-settings).
 
 pkgname=packarch-skin
-pkgver=1.2.0
+pkgver=1.3.0
 pkgrel=1
-pkgdesc="Theme (skin) chooser of the Packarch Openbox and XFCE desktops"
+pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Sway desktops"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-skin"
 license=('GPL-3.0-or-later')

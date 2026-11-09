@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Programmes lancés au démarrage de Sway et à chaque rechargement de la
+## configuration (exec_always). Les entrées de /etc/xdg/autostart (cachy-update,
+## xfce-polkit, configuration de GitHub...) sont lancées une seule fois par dex
+## (config).
+
+## Helpers
+run() {
+	if ! pgrep -x "$1" >/dev/null 2>&1; then
+		"$@" >/dev/null 2>&1 &
+	fi
+}
+
+restart() {
+	local proc="$1"
+	shift
+
+	if pgrep -x "$proc" >/dev/null 2>&1; then
+		pkill -TERM -x "$proc"
+		while pgrep -x "$proc" >/dev/null 2>&1; do
+			sleep 0.1
+		done
+	fi
+
+	"$@" >/dev/null 2>&1 &
+}
+
+## Barre et notifications (couleurs du thème relues)
+restart waybar ~/.config/sway/scripts/statusbar
+restart mako   ~/.config/sway/scripts/notifications
+
+## Icône du réseau dans la barre (StatusNotifierItem : --indicator ; l'entrée
+## autostart de nm-applet est masquée dans ~/.config/autostart)
+run nm-applet --indicator
+
+exit 0

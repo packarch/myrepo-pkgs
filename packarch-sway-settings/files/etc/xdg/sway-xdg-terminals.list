@@ -1,0 +1,4 @@
+# Terminal of the applications with Terminal=true under Sway
+# (xdg-terminal-exec, used by GLib: "Launch Cachy-Update" of the cachy-update
+# tray icon, for example)
+kitty.desktop

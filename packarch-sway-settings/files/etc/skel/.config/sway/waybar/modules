@@ -1,0 +1,182 @@
+// Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+//
+// Waybar modules configuration -----------------------------
+
+{
+	// waybar-backlight
+    "backlight": {
+		"interval": 2,
+		"align": 0,
+		"rotate": 0,
+        //"device": "amdgpu_bl0",
+        "format": "{icon} {percent}%",
+        "format-icons": ["", "", "", ""],
+        "on-click": "",
+        "on-click-middle": "",
+        "on-click-right": "",
+        "on-update": "",
+        //"on-scroll-up": "light -A 5%",
+        //"on-scroll-down": "light -U 5%",
+        "smooth-scrolling-threshold": 1,
+    },
+
+	// waybar-battery
+    "battery": {
+		"interval": 60,
+		"align": 0,
+		"rotate": 0,
+		//"bat": "BAT1",
+		//"adapter": "ACAD",
+		"full-at": 100,
+		"design-capacity": false,
+        "states": {
+            "good": 95,
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-full": "{icon} Chargée",
+        //"format-good": "",
+        "format-alt": "{icon} {time}",
+        "format-icons": ["", "", "", "", ""],
+        "format-time": "{H}h {M}min",
+        "tooltip": true,
+    },
+
+	// waybar-bluetooth
+    "bluetooth": {
+        //"controller": "controller1",
+        //"format-device-preference": "",
+        "format": " {status}",
+        "format-on": " {status}",
+        "format-off": " {status}",
+        "format-disabled": " {status}",
+        "format-connected": " {device_alias}",
+        "format-connected-battery": " {device_alias}, {device_battery_percentage}%",
+        "tooltip": true,
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "~/.config/sway/scripts/rofi_bluetooth",
+        "on-click-right": "blueman-manager",
+    },
+
+	// waybar-clock
+    "clock": {
+		"interval": 60,
+		"align": 0,
+		"rotate": 0,
+        "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+        "locale": "fr_FR.UTF-8",
+        "format": " {:%H:%M}",
+        "format-alt": " {:%A %d %B %Y}"
+    },
+
+	// waybar-custom : thèmes de packarch-skin
+    "custom/themes": {
+         "format": "",
+         "tooltip": true,
+         "tooltip-format": "Thèmes Packarch (Super+t)",
+         "on-click": "packarch-skin chooser",
+    },
+
+
+	// waybar-idle-inhibitor
+    "idle_inhibitor": {
+         "format": "{icon}",
+         "format-icons": {
+             "activated": "",
+             "deactivated": ""
+         },
+         "timeout": 30
+    },
+
+
+
+	// waybar-network
+    "network": {
+		"interval": 5,
+        //"interface": "wlan*", // (Optional) To force the use of this interface, set it for netspeed to work
+        "format-wifi": " {essid}",
+        "format-ethernet": " {ipaddr}/{cidr}",
+        "format-linked": " {ifname} (pas d'IP)",
+        "format-disconnected": "睊 Déconnecté",
+        "format-disabled": "睊 Désactivé",
+        "format-alt": " {bandwidthUpBits} |  {bandwidthDownBits}",
+        "tooltip-format": " {ifname} via {gwaddr}",
+        "on-click-right": "~/.config/sway/scripts/rofi_network",
+    },
+
+	// waybar-pulseaudio
+    "pulseaudio": {
+        //"format": "{volume}% {icon} {format_source}",
+        "format": "{icon} {volume}%",
+        "format-muted": " Muet",
+        "format-bluetooth": " {volume}%",
+        "format-bluetooth-muted": " Muet",
+        "format-source": " {volume}%",
+        "format-source-muted": " Muet",
+        "format-icons": {
+            "headphone": "",
+            "hands-free": "",
+            "headset": "",
+            "phone": "",
+            "portable": "",
+            "car": "",
+            "default": ["", "", ""]
+        },
+        "scroll-step": 5.0,
+        "on-click": "pulsemixer --toggle-mute",
+        "on-click-middle": "pavucontrol",
+        "on-click-right": "pulsemixer --toggle-mute",
+        "smooth-scrolling-threshold": 1,
+    },
+
+	// waybar-sway-mode
+    "sway/mode": {
+        "format": "<span style=\"italic\">{}</span>"
+    },
+
+	// waybar-sway-window
+    "sway/window": {
+        "format": "{}",
+        "max-length": 40,
+        "icon": false,
+    },
+
+	// waybar-sway-workspaces
+    "sway/workspaces": {
+         "disable-scroll": false,
+         "disable-click": false,
+         "all-outputs": true,
+         "format": "{icon}",
+         "format-icons": {
+             "1": "",
+             "2": "",
+             "3": "",
+             "4": "",
+             "5": "",
+             "6": "漣",
+             "7": "",
+             "8": "",
+             "9": "",
+             "10": "ﳴ",
+             //"urgent": "",
+             //"focused": "",
+             //"default": ""
+         },
+        "smooth-scrolling-threshold": 1,
+        "disable-scroll-wraparound": false,
+        "enable-bar-scroll": false,
+        "disable-markup": false,
+        "current-only": false,
+    },
+
+	// waybar-tray
+    "tray": {
+        "icon-size": 16,
+        "spacing": 10
+    }
+}

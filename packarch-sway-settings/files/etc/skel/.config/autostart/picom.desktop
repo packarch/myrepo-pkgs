@@ -1,0 +1,16 @@
+# Packarch (packarch-sway-settings) : picom est un compositeur X, pas lancé
+# sous Sway (Wayland)
+[Desktop Entry]
+Version=1.0
+Type=Application
+NoDisplay=true
+Name=Picom
+GenericName=X compositor
+Comment=An X compositor
+Categories=Utility;
+TryExec=picom
+Exec=picom
+StartupNotify=false
+Terminal=false
+Icon=compton
+NotShowIn=sway;

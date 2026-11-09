@@ -35,7 +35,7 @@ source "${top}/chroot.sh"
 # AUR packages, dependencies first
 aur_order=(gtkmm nitrogen xfce-polkit lead-git skippy-xd-git
     ksuperkey betterlockscreen networkmanager-dmenu-git light beautyline filebot
-    smooth boca freac)
+    smooth boca freac sov)
 
 force=false
 [[ ${1:-} == -f ]] && { force=true; shift; }
