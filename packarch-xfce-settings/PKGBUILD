@@ -62,9 +62,12 @@
 # ship some files of /etc/skel (GTK, Thunar, xfconf), the ISO installs one
 # desktop or the other.
 
+# 1.0.9-13: Thunar custom actions in French (names and descriptions;
+# "(lien)" suffix of the created symbolic links)
+
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=12
+pkgrel=13
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
