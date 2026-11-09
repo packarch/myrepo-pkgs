@@ -25,7 +25,7 @@
 
     // Type-2
     // Packarch : comme la barre du thème « packarch » d'Openbox (menu, lanceurs, extinction)
-    "modules-left": ["custom/menu", "sway/workspaces", "sway/mode", "custom/themes", "idle_inhibitor", "sway/window"],
+    "modules-left": ["custom/menu", "sway/workspaces", "sway/mode", "custom/themes", "sway/window"],
     "modules-center": ["group/launchers"],
     "modules-right": ["pulseaudio", "backlight", "bluetooth", "network", "battery", "clock", "tray", "custom/power"],
 }

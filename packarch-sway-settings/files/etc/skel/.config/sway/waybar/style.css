@@ -144,15 +144,6 @@ window#waybar.empty #window {
 #tray > .active {
 }
 
-/** ********** Idle Inhibitor ********** **/
-#idle_inhibitor {
-    background-color: @background-alt;
-	color: @green;
-}
-#idle_inhibitor.deactivated {
-	color: @red;
-}
-
 /** ********** Pulseaudio ********** **/
 #pulseaudio {
 }
@@ -219,7 +210,6 @@ window#waybar.empty #window {
 #backlight, 
 #battery,
 #clock,
-#idle_inhibitor,
 #mode,
 #window,
 #pulseaudio,

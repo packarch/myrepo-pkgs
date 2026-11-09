@@ -65,10 +65,12 @@
 # example of Thunar, whose "Open Terminal Here" failed: no terminal for
 # exo-open): "Ouvrir un terminal ici" (kitty) and "Thunar root"; asroot
 # also takes separate arguments (paths with spaces)
+# 1.0-13: no idle inhibitor in waybar (no screen lock nor blanking on idle:
+# nothing to inhibit)
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=12
+pkgrel=13
 pkgdesc="Sway (SwayFX) configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
