@@ -244,3 +244,56 @@ window#waybar.empty #window {
 	margin: 6px 0px;
 	padding: 2px 10px;
 }
+
+/** ********** Packarch : menu, lanceurs et extinction ********** **/
+/* Comme la barre du thème « packarch » d'Openbox : une couleur par lanceur */
+#custom-menu {
+	color: @selected;
+	font-size: 16px;
+	padding: 0px 10px;
+}
+
+#launchers {
+	background-color: @background-alt;
+	border-radius: 8px;
+	margin: 6px 0px;
+	padding: 0px 6px;
+}
+
+#custom-launch-firefox,
+#custom-launch-thunar,
+#custom-launch-kitty,
+#custom-launch-discord,
+#custom-launch-filezilla,
+#custom-launch-mkvtoolnix,
+#custom-launch-filebot {
+	font-size: 15px;
+	padding: 0px 8px;
+}
+
+#custom-launch-firefox    { color: @magenta; }
+#custom-launch-thunar     { color: @blue; }
+#custom-launch-kitty      { color: @green; }
+#custom-launch-discord    { color: @cyan; }
+#custom-launch-filezilla  { color: @yellow; }
+#custom-launch-mkvtoolnix { color: @red; }
+#custom-launch-filebot    { color: @foreground; }
+
+#custom-menu:hover,
+#custom-launch-firefox:hover,
+#custom-launch-thunar:hover,
+#custom-launch-kitty:hover,
+#custom-launch-discord:hover,
+#custom-launch-filezilla:hover,
+#custom-launch-mkvtoolnix:hover,
+#custom-launch-filebot:hover,
+#custom-power:hover {
+	background-color: @background;
+	border-radius: 8px;
+}
+
+#custom-power {
+	color: @red;
+	font-size: 14px;
+	padding: 0px 12px 0px 8px;
+}

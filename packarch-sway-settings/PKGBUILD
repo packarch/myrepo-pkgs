@@ -29,10 +29,17 @@
 # packarch-xfce-settings (/usr/share/packarch/sway/icons) for the chooser.
 # No file in common with packarch-openbox-settings and packarch-xfce-settings:
 # installable next to them.
+#
+# 1.0-2: icon of the theme button of waybar (custom/themes), empty in 1.0-1:
+# waybar hid the button
+# 1.0-3: waybar like the polybar of the Openbox "packarch" theme: application
+# menu on the left, launchers in the center (Firefox, Thunar, kitty, and
+# Discord, FileZilla, MKVToolNix, FileBot when installed), power button on
+# the right; a single theme chooser at a time (flock)
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=1
+pkgrel=3
 pkgdesc="Sway configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

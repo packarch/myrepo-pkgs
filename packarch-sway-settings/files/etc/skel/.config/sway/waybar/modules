@@ -74,12 +74,82 @@
         "format-alt": " {:%A %d %B %Y}"
     },
 
+	// Packarch : menu, lanceurs et extinction du thème « packarch » d'Openbox
+    "custom/menu": {
+        "format": "󰮯",
+        "tooltip-format": "Applications (clic droit : lancer une commande)",
+        "on-click": "~/.config/sway/scripts/rofi_launcher",
+        "on-click-right": "~/.config/sway/scripts/rofi_runner",
+    },
+
+    "group/launchers": {
+        "orientation": "horizontal",
+        "modules": ["custom/launch-firefox", "custom/launch-thunar", "custom/launch-kitty", "custom/launch-discord", "custom/launch-filezilla", "custom/launch-mkvtoolnix", "custom/launch-filebot"],
+    },
+
+    "custom/launch-firefox": {
+        "format": "",
+        "tooltip-format": "Firefox (clic droit : Gmail)",
+        "on-click": "firefox",
+        "on-click-right": "firefox https://mail.google.com",
+    },
+    "custom/launch-thunar": {
+        "format": "",
+        "tooltip-format": "Fichiers (clic droit : en administrateur)",
+        "on-click": "thunar",
+        "on-click-right": "~/.config/sway/scripts/asroot 'dbus-run-session thunar'",
+    },
+    "custom/launch-kitty": {
+        "format": "",
+        "tooltip-format": "Terminal (clic droit : en administrateur)",
+        "on-click": "~/.config/sway/scripts/kitty",
+        "on-click-right": "~/.config/sway/scripts/asroot 'kitty --class kitty-float'",
+    },
+    "custom/launch-discord": {
+        "exec": "echo '󰙯'",
+        "exec-if": "command -v discord",
+        "interval": "once",
+        "format": "{}",
+        "tooltip-format": "Discord",
+        "on-click": "discord",
+    },
+    "custom/launch-filezilla": {
+        "exec": "echo ''",
+        "exec-if": "command -v filezilla",
+        "interval": "once",
+        "format": "{}",
+        "tooltip-format": "FileZilla",
+        "on-click": "filezilla",
+    },
+    "custom/launch-mkvtoolnix": {
+        "exec": "echo ''",
+        "exec-if": "command -v mkvtoolnix-gui",
+        "interval": "once",
+        "format": "{}",
+        "tooltip-format": "MKVToolNix",
+        "on-click": "mkvtoolnix-gui",
+    },
+    "custom/launch-filebot": {
+        "exec": "echo '󰚩'",
+        "exec-if": "command -v filebot",
+        "interval": "once",
+        "format": "{}",
+        "tooltip-format": "FileBot",
+        "on-click": "filebot",
+    },
+
+    "custom/power": {
+        "format": "",
+        "tooltip-format": "Éteindre, redémarrer, se déconnecter…",
+        "on-click": "~/.config/sway/scripts/rofi_powermenu",
+    },
+
 	// waybar-custom : thèmes de packarch-skin
     "custom/themes": {
-         "format": "",
+         "format": "",
          "tooltip": true,
          "tooltip-format": "Thèmes Packarch (Super+t)",
-         "on-click": "packarch-skin chooser",
+         "on-click": "flock -n \"$XDG_RUNTIME_DIR/packarch-skin-chooser.lock\" packarch-skin chooser",
     },
 
 
