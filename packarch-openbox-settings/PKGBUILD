@@ -62,10 +62,14 @@
 # until a graphics option was applied
 # 7.0-77: kitty closes its windows without asking for confirmation
 # (confirm_os_window_close 0)
+# 7.0-78: root applications with the current theme (ob-asroot: right click
+# of the polybar launchers, "Applications en root" menu, Thunar actions):
+# the GTK settings.ini of the user given to root by XDG_CONFIG_DIRS, with their
+# icon themes (XDG_DATA_DIRS) and kitty configuration (root kitty was black)
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=77
+pkgrel=78
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

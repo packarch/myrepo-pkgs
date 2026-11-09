@@ -285,6 +285,8 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 for_window [app_id="kitty-fullscreen"] fullscreen enable
 for_window [app_id="kitty-float"] floating enable
+## kitty en root (asroot) passe par Xwayland : classe X11
+for_window [class="kitty-float"] floating enable
 for_window [app_id="catfish|yad|nm-connection-editor|pavucontrol|blueman-manager"] floating enable
 for_window [app_id="xfce-polkit|kvantummanager|qt5ct|qt6ct"] floating enable
 for_window [class="Yad|Xfce-polkit"] floating enable

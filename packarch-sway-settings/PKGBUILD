@@ -49,10 +49,12 @@
 # asroot writes a GTK settings.ini (sway-theme values) in the runtime
 # directory of the user and gives it to root by XDG_CONFIG_DIRS, with the icon
 # themes of the user (XDG_DATA_DIRS) and their kitty configuration
+# 1.0-8: kitty.conf includes colors.conf and fonts.conf by relative paths (root
+# kitty was black: ~ is /root); root kitty (Xwayland) floating
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=7
+pkgrel=8
 pkgdesc="Sway configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

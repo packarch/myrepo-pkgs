@@ -1,11 +1,41 @@
 #!/usr/bin/env bash
 
 ## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Lance une application en administrateur (root) : ob-asroot 'COMMANDE'
+## (clic droit des lanceurs de polybar, menu « Applications en root »,
+## actions de Thunar par packarch-tcma).
+##
+## Packarch : application root avec le thème courant. Root n'a pas de
+## réglages GTK ni de configuration kitty (Thunar sans les icônes du thème,
+## kitty tout noir) : les settings.ini GTK de l'utilisateur (écrits par
+## packarch-skin) sont copiés dans son dossier d'exécution et donnés à root
+## par XDG_CONFIG_DIRS, avec ses thèmes d'icônes (XDG_DATA_DIRS, couleur des
+## dossiers) et sa configuration kitty, sans toucher à la configuration de
+## root. sudo sans -E : root garde HOME=/root (rien n'est écrit chez
+## l'utilisateur).
 
 DIR="$HOME/.config/openbox"
 
 ## rofi sudo askpass helper
 export SUDO_ASKPASS="$DIR"/scripts/rofi-askpass
 
+[[ $# -gt 0 ]] || { echo "usage : ob-asroot 'COMMANDE'" >&2; exit 2; }
+
+## Réglages GTK de l'utilisateur (GTK 4 : ceux de GTK 3 à défaut)
+conf="${XDG_RUNTIME_DIR:-/tmp}/packarch-asroot"
+for v in gtk-3.0 gtk-4.0; do
+	src="$HOME/.config/$v/settings.ini"
+	[[ -f $src ]] || src="$HOME/.config/gtk-3.0/settings.ini"
+	[[ -f $src ]] || continue
+	mkdir -p "$conf/$v" && cp -f "$src" "$conf/$v/settings.ini"
+done
+cursor="$(sed -n 's/^gtk-cursor-theme-name=//p' "$conf/gtk-3.0/settings.ini" 2>/dev/null)"
+
 ## execute the application
-sudo -A $1
+exec sudo -A \
+	XDG_CONFIG_DIRS="$conf:/etc/xdg" \
+	XDG_DATA_DIRS="$HOME/.local/share:/usr/local/share:/usr/share" \
+	XCURSOR_THEME="${cursor:-default}" \
+	KITTY_CONFIG_DIRECTORY="$HOME/.config/kitty" \
+	sh -c "$*"
