@@ -67,10 +67,14 @@
 # also takes separate arguments (paths with spaces)
 # 1.0-13: no idle inhibitor in waybar (no screen lock nor blanking on idle:
 # nothing to inhibit)
+# 1.0-14: rofi menus closed by a click outside them (rofi has no click-to-exit
+# under Wayland): scripts/menu puts Sway in the "Menu" mode (sway-modes) while
+# a menu is open, where a click on a window or the desktop kills rofi; a menu
+# already open is closed instead of starting a second one
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=13
+pkgrel=14
 pkgdesc="Sway (SwayFX) configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

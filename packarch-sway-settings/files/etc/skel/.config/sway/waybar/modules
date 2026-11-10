@@ -59,7 +59,7 @@
         "tooltip-format": "{controller_alias}\t{controller_address}",
         "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
         "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
-        "on-click": "~/.config/sway/scripts/rofi_bluetooth",
+        "on-click": "~/.config/sway/scripts/menu ~/.config/sway/scripts/rofi_bluetooth",
         "on-click-right": "blueman-manager",
     },
 
@@ -78,8 +78,8 @@
     "custom/menu": {
         "format": "󰮯",
         "tooltip-format": "Applications (clic droit : lancer une commande)",
-        "on-click": "~/.config/sway/scripts/rofi_launcher",
-        "on-click-right": "~/.config/sway/scripts/rofi_runner",
+        "on-click": "~/.config/sway/scripts/menu ~/.config/sway/scripts/rofi_launcher",
+        "on-click-right": "~/.config/sway/scripts/menu ~/.config/sway/scripts/rofi_runner",
     },
 
     "group/launchers": {
@@ -141,7 +141,7 @@
     "custom/power": {
         "format": "",
         "tooltip-format": "Éteindre, redémarrer, se déconnecter…",
-        "on-click": "~/.config/sway/scripts/rofi_powermenu",
+        "on-click": "~/.config/sway/scripts/menu ~/.config/sway/scripts/rofi_powermenu",
     },
 
 	// waybar-custom : thèmes de packarch-skin
@@ -167,7 +167,7 @@
         "format-disabled": "睊 Désactivé",
         "format-alt": " {bandwidthUpBits} |  {bandwidthDownBits}",
         "tooltip-format": " {ifname} via {gwaddr}",
-        "on-click-right": "~/.config/sway/scripts/rofi_network",
+        "on-click-right": "~/.config/sway/scripts/menu ~/.config/sway/scripts/rofi_network",
     },
 
 	// waybar-pulseaudio

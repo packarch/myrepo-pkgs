@@ -96,3 +96,14 @@ mode "$mode_opacity" {
     bindsym $mod+o mode "default"
 }
 bindsym $mod+Shift+o mode "$mode_opacity"
+
+##-- Menus rofi (scripts/menu) -----
+
+# Packarch : pendant un menu rofi, un clic en dehors le ferme (rofi ne voit pas
+# ces clics sous Wayland). scripts/menu remet le mode « default » ensuite.
+mode "Menu" {
+    bindsym --whole-window button1 exec pkill -x rofi
+    bindsym --whole-window button2 exec pkill -x rofi
+    bindsym --whole-window button3 exec pkill -x rofi
+    bindsym Escape exec pkill -x rofi; mode "default"
+}

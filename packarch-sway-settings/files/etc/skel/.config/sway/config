@@ -45,13 +45,15 @@ set $files thunar
 set $editor geany
 set $browser firefox
 
-set $rofi_bluetooth ~/.config/sway/scripts/rofi_bluetooth
-set $rofi_launcher ~/.config/sway/scripts/rofi_launcher
-set $rofi_powermenu ~/.config/sway/scripts/rofi_powermenu
-set $rofi_runner ~/.config/sway/scripts/rofi_runner
-set $rofi_screenshot ~/.config/sway/scripts/rofi_screenshot
-set $rofi_network ~/.config/sway/scripts/rofi_network
-set $rofi_asroot ~/.config/sway/scripts/rofi_asroot
+## Menus rofi par scripts/menu : fermés par un clic en dehors
+set $menu ~/.config/sway/scripts/menu
+set $rofi_bluetooth $menu ~/.config/sway/scripts/rofi_bluetooth
+set $rofi_launcher $menu ~/.config/sway/scripts/rofi_launcher
+set $rofi_powermenu $menu ~/.config/sway/scripts/rofi_powermenu
+set $rofi_runner $menu ~/.config/sway/scripts/rofi_runner
+set $rofi_screenshot $menu ~/.config/sway/scripts/rofi_screenshot
+set $rofi_network $menu ~/.config/sway/scripts/rofi_network
+set $rofi_asroot $menu ~/.config/sway/scripts/rofi_asroot
 
 ## Un seul sélecteur à la fois : packarch-skin ≥ 1.3.1 ne l'ouvre pas deux fois
 set $themes packarch-skin chooser

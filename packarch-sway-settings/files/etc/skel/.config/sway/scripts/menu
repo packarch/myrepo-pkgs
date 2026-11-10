@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+## Packarch : lance un menu rofi (menu COMMANDE…) en le fermant par un clic
+## en dehors. Sous Wayland, rofi ne voit pas ces clics (click-to-exit n'existe
+## que sous X11) : pendant le menu, Sway passe dans le mode « Menu »
+## (sway-modes), où un clic sur une fenêtre ou le bureau ferme rofi sans
+## atteindre la fenêtre. Les clics dans rofi et dans la barre lui restent.
+##
+## Un menu déjà ouvert (nouveau clic sur un bouton de la barre, raccourci) :
+## il est fermé, au lieu d'en lancer un second. Le second rofi refusait de
+## démarrer et ce script remettait le mode « default » alors que le premier
+## menu restait ouvert (plus de fermeture au clic).
+
+[[ $# -gt 0 ]] || { echo "usage : menu COMMANDE…" >&2; exit 2; }
+
+if pgrep -u "$UID" -x rofi >/dev/null; then
+	pkill -u "$UID" -x rofi
+	exit 0
+fi
+
+swaymsg -q mode Menu
+"$@"
+status=$?
+# Mode normal seulement quand plus aucun menu n'est ouvert
+pgrep -u "$UID" -x rofi >/dev/null || swaymsg -q mode default
+exit $status
