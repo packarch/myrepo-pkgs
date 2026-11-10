@@ -5,7 +5,7 @@
 # fork of KPatience.
 
 pkgname=packarch-spider
-pkgver=2.0.0
+pkgver=2.1.0
 pkgrel=1
 pkgdesc="Patience card games: Spider, FreeCell, Klondike, Golf... (Rust port of KPatience games)"
 arch=('x86_64')
