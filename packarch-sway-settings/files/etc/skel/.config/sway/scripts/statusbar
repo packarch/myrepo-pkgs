@@ -22,6 +22,34 @@ fi
 [[ -n $output ]] || output="$(jq -r 'first(.[] | select(.focused)) .name // empty' <<<"$outputs" 2>/dev/null)"
 [[ -n $output ]] || output="$(jq -r 'first(.[] | select(.active)) .name // empty' <<<"$outputs" 2>/dev/null)"
 
+## Bureaux 1 à 4 (persistent-workspaces du sélecteur de waybar) sur l'écran
+## de la barre, 5, 6… sur les autres : Sway affiche toujours un bureau par
+## écran, et un fantôme de la barre ne doit pas être celui de l'autre écran
+## (clic sans effet visible). Bureaux 1 à 4 déjà ouverts ailleurs : ramenés
+## sur l'écran de la barre (l'autre écran prend alors son bureau 5, 6…).
+if [[ -n $output ]]; then
+	cmds=()
+	for n in 1 2 3 4; do cmds+=("workspace $n output $output"); done
+	n=5
+	while read -r o; do
+		[[ -n $o ]] && cmds+=("workspace $n output $o") && ((n++))
+	done < <(jq -r --arg o "$output" '.[] | select(.active and .name != $o) | .name' <<<"$outputs" 2>/dev/null)
+	swaymsg "$(IFS=';'; echo "${cmds[*]}")" >/dev/null 2>&1
+
+	workspaces="$(swaymsg -t get_workspaces -r 2>/dev/null)"
+	focused="$(jq -r 'first(.[] | select(.focused)) .name // empty' <<<"$workspaces" 2>/dev/null)"
+	moved=false
+	for n in 1 2 3 4; do
+		on="$(jq -r --arg n "$n" 'first(.[] | select(.name == $n)) .output // empty' <<<"$workspaces" 2>/dev/null)"
+		if [[ -n $on && $on != "$output" ]]; then
+			swaymsg "workspace --no-auto-back-and-forth number $n; move workspace to output $output" >/dev/null 2>&1
+			moved=true
+		fi
+	done
+	$moved && [[ -n $focused ]] &&
+		swaymsg "workspace --no-auto-back-and-forth $focused" >/dev/null 2>&1
+fi
+
 if [[ -n $output ]]; then
 	run="${XDG_RUNTIME_DIR:-/tmp}/packarch-waybar"
 	mkdir -p "$run"

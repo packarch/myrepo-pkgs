@@ -92,7 +92,7 @@
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=17
+pkgrel=18
 pkgdesc="Sway (SwayFX) configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
