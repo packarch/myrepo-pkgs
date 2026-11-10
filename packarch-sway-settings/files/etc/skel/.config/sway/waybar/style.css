@@ -91,6 +91,13 @@ window#waybar.geany {
 	color: @foreground-alt;
 }
 
+/* Bureau affiché sur l'autre écran (Sway en montre toujours un par écran) :
+   pas « occupé », juste visible ailleurs */
+#workspaces button.visible {
+	color: @foreground-alt;
+	opacity: 0.6;
+}
+
 #workspaces button.focused,
 #workspaces button.visible.focused {
 	color: @red;
