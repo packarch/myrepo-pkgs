@@ -22,7 +22,8 @@
 ## Thunar de root : thunar-defaults lui donne, dans son bus D-Bus, les
 ## actions personnalisées en français (uca-root.xml : terminal ici,
 ## rechercher, modifier, comparer ; l'exemple de Thunar, « Open Terminal
-## Here », échouait) et l'action « Supprimer ».
+## Here », échouait) et l'action « Supprimer ». THUNARX_DIRS (effacée par
+## sudo) : ses greffons, sans celui du fond d'écran (packarch-run-sway).
 
 # Mot de passe demandé par rofi (inutile avec sudo sans mot de passe)
 export SUDO_ASKPASS="$HOME/.config/sway/scripts/rofi_askpass"
@@ -58,7 +59,20 @@ for v in gtk-3.0 gtk-4.0; do
 	} > "$conf/$v/settings.ini"
 done
 
+thunarx=()
+[[ -n $THUNARX_DIRS ]] && thunarx=(THUNARX_DIRS="$THUNARX_DIRS")
+
+## Accès de root à Xwayland, donné ici et pas seulement au démarrage : Sway
+## lance Xwayland à la demande et l'arrête 10 s après sa dernière fenêtre
+## (-terminate 10) ; relancé, il a perdu la liste d'accès (xhost). Mot de
+## passe demandé d'abord (sudo true ; sudo -v le demanderait même avec
+## NOPASSWD) : le temps de le taper, Xwayland s'arrêterait ; l'application
+## se connecte juste après xhost.
+sudo -A true || exit 1
+xhost +si:localuser:root >/dev/null 2>&1
+
 exec sudo -A \
+	"${thunarx[@]}" \
 	XDG_CONFIG_DIRS="$conf:/etc/xdg" \
 	XDG_DATA_DIRS="$HOME/.local/share:/usr/local/share:/usr/share" \
 	XCURSOR_THEME="$cursor_theme" XCURSOR_SIZE=24 \

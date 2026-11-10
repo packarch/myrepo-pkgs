@@ -49,6 +49,20 @@ export WINIT_UNIX_BACKEND=wayland
 ## Terminal=true) prennent la configuration de Sway, aux couleurs du thème
 export KITTY_CONFIG_DIRECTORY="$HOME/.config/sway/kitty"
 
+## Packarch : greffons de Thunar sans celui du fond d'écran
+## (thunar-wallpaper-plugin, XFCE et GNOME seulement : son « Définir comme
+## fond d'écran » échouait sous Sway, à côté de l'action de Packarch qui
+## marche). Liens vers les autres greffons dans le dossier d'exécution, à
+## chaque session (greffons ajoutés ou retirés par une mise à jour de Thunar
+## pris en compte) ; XFCE et Openbox gardent tous les greffons.
+thunarx="${XDG_RUNTIME_DIR:-/tmp/packarch-$UID}/packarch-thunarx-3"
+rm -rf "$thunarx" && mkdir -p "$thunarx" && {
+    for p in /usr/lib/thunarx-3/*.so; do
+        [[ -e $p && ${p##*/} != thunar-wallpaper-plugin.so ]] && ln -s "$p" "$thunarx/"
+    done
+    export THUNARX_DIRS="$thunarx"
+}
+
 ## Packarch : disposition du clavier du système (localectl, réglée par
 ## l'installeur), lue par Sway au démarrage (sway-input peut la remplacer)
 if command -v localectl >/dev/null; then
