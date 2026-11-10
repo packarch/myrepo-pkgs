@@ -1,37 +1,54 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Patience card games (Spider, Klondike, Freecell, Golf...): KDE's KPatience
-# ported to Qt only (no KDE Frameworks / libkdegames) and renamed for Packarch.
+# Patience card games (Spider, FreeCell, Klondike, Golf...): Rust (egui) port
+# of games of KDE's KPatience. Up to 1.0.1, this package was a Qt-only C++
+# fork of KPatience.
 
 pkgname=packarch-spider
-pkgver=1.0.1
+pkgver=2.0.0
 pkgrel=1
-pkgdesc="Patience card games: Spider, Klondike, Freecell, Golf... (based on KDE's KPatience, Qt only)"
+pkgdesc="Patience card games: Spider, FreeCell, Klondike, Golf... (Rust port of KPatience games)"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-spider"
 # Game: GPL-2.0-or-later. Card decks and themes from libkdegames: LGPL/GPL.
 license=('GPL-2.0-or-later' 'LGPL-2.0-or-later')
-depends=('qt6-base' 'qt6-svg' 'qt6-multimedia' 'freecell-solver' 'black-hole-solver'
-         'gcc-libs' 'glibc' 'hicolor-icon-theme')
-makedepends=('cmake' 'ninja' 'gettext')
-source=("$pkgname-$pkgver.tar.gz::https://github.com/packarch/${pkgname}/archive/refs/tags/v${pkgver}.tar.gz")
+# Libraries loaded at run time (dlopen) by winit and glutin
+depends=('gcc-libs' 'glibc' 'libglvnd' 'libx11' 'libxcursor' 'libxi' 'libxrender'
+         'libxkbcommon' 'libxkbcommon-x11' 'wayland' 'hicolor-icon-theme')
+makedepends=('cargo')
+source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=('SKIP')
 
+prepare() {
+	cd "$pkgname-$pkgver"
+	export RUSTUP_TOOLCHAIN=stable
+	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
 build() {
-	cmake -S "$pkgname-$pkgver" \
-	      -B build \
-	      -G Ninja \
-	      -DCMAKE_BUILD_TYPE=Release \
-	      -DCMAKE_INSTALL_PREFIX=/usr \
-	      -DBUILD_TESTING=ON
-	cmake --build build
+	cd "$pkgname-$pkgver"
+	export RUSTUP_TOOLCHAIN=stable
+	export CARGO_TARGET_DIR=target
+	cargo build --release --frozen
 }
 
 check() {
-	QT_QPA_PLATFORM=offscreen ctest --test-dir build --output-on-failure
+	cd "$pkgname-$pkgver"
+	export RUSTUP_TOOLCHAIN=stable
+	export CARGO_TARGET_DIR=target
+	cargo test --release --frozen
 }
 
 package() {
-	DESTDIR="$pkgdir" cmake --install build
-	install -Dm644 "$pkgname-$pkgver"/README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+	cd "$pkgname-$pkgver"
+	install -Dm755 target/release/$pkgname "$pkgdir"/usr/bin/$pkgname
+	install -d "$pkgdir"/usr/share/$pkgname
+	cp -r data/carddecks data/themes "$pkgdir"/usr/share/$pkgname/
+	install -Dm644 data/org.packarch.Spider.desktop \
+		"$pkgdir"/usr/share/applications/org.packarch.Spider.desktop
+	for s in 16 22 24 32 48 64 128 256; do
+		install -Dm644 data/icons/$s.png \
+			"$pkgdir"/usr/share/icons/hicolor/${s}x$s/apps/$pkgname.png
+	done
+	install -Dm644 README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
 }
