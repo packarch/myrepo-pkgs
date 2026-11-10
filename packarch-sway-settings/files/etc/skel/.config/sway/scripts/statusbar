@@ -3,8 +3,30 @@
 ## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
 ##
 ## Waybar ---------------------------------------------------
+##
+## Packarch : barre sur l'écran principal seulement ($ecran_principal de
+## sway-output ; « auto » ou écran absent : l'écran actif), comme polybar
+## sous Openbox. Configuration lancée : celle de ~/.config/sway/waybar avec
+## « output » en plus (fichier du dossier d'exécution).
 
 CONFIG="$HOME/.config/sway/waybar/config"
 STYLE="$HOME/.config/sway/waybar/style.css"
 
-exec waybar --bar main-bar --log-level error --config ${CONFIG} --style ${STYLE}
+outputs="$(swaymsg -t get_outputs -r 2>/dev/null)"
+wanted="$(sed -n 's/^[[:space:]]*set \$ecran_principal[[:space:]]\+\([^[:space:]#]*\).*/\1/p' "$HOME/.config/sway/sway-output" 2>/dev/null | tail -1)"
+output=""
+if [[ -n $wanted && $wanted != auto ]] &&
+	jq -e --arg o "$wanted" 'any(.[]; .name == $o and .active)' <<<"$outputs" >/dev/null 2>&1; then
+	output="$wanted"
+fi
+[[ -n $output ]] || output="$(jq -r 'first(.[] | select(.focused)) .name // empty' <<<"$outputs" 2>/dev/null)"
+[[ -n $output ]] || output="$(jq -r 'first(.[] | select(.active)) .name // empty' <<<"$outputs" 2>/dev/null)"
+
+if [[ -n $output ]]; then
+	run="${XDG_RUNTIME_DIR:-/tmp}/packarch-waybar"
+	mkdir -p "$run"
+	jq -n --arg inc "$CONFIG" --arg o "$output" '{include: [$inc], output: $o}' > "$run/config.jsonc"
+	CONFIG="$run/config.jsonc"
+fi
+
+exec waybar --bar main-bar --log-level error --config "${CONFIG}" --style "${STYLE}"

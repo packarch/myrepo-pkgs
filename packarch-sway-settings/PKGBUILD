@@ -71,10 +71,14 @@
 # under Wayland): scripts/menu puts Sway in the "Menu" mode (sway-modes) while
 # a menu is open, where a click on a window or the desktop kills rofi; a menu
 # already open is closed instead of starting a second one
+# 1.0-15: waybar on the main output only, like polybar on Openbox: "set
+# $ecran_principal" of sway-output ("auto", or an absent output: the output
+# focused when the session starts); scripts/statusbar adds "output" to the
+# waybar configuration (file in the runtime directory)
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=14
+pkgrel=15
 pkgdesc="Sway (SwayFX) configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

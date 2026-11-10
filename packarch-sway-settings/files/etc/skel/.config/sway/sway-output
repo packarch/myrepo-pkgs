@@ -2,6 +2,12 @@
 
 ## Voir `man 5 sway-output` ; noms des écrans : swaymsg -t get_outputs
 
+## Écran principal : le seul où s'affiche la barre waybar (comme l'écran
+## principal de polybar sous Openbox). Nom de l'écran : swaymsg -t get_outputs
+## (par exemple DP-1, HDMI-A-1). « auto » ou écran absent : l'écran actif à
+## l'ouverture de la session. Pris en compte au rechargement (Super+Maj+C).
+set $ecran_principal auto
+
 ## Fond d'écran de tous les écrans : celui du thème (packarch-skin)
 output * bg /usr/share/backgrounds/wallpaper-alt.png fill
 
