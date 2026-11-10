@@ -18,6 +18,11 @@
 ## XDG_CONFIG_DIRS, sans toucher à la configuration de root ; XDG_DATA_DIRS
 ## donne aussi les thèmes d'icônes de l'utilisateur (couleur des dossiers),
 ## KITTY_CONFIG_DIRECTORY sa configuration de kitty.
+##
+## Thunar de root : thunar-defaults lui donne, dans son bus D-Bus, les
+## actions personnalisées en français (uca-root.xml : terminal ici,
+## rechercher, modifier, comparer ; l'exemple de Thunar, « Open Terminal
+## Here », échouait) et l'action « Supprimer ».
 
 # Mot de passe demandé par rofi (inutile avec sudo sans mot de passe)
 export SUDO_ASKPASS="$HOME/.config/sway/scripts/rofi_askpass"
@@ -58,4 +63,6 @@ exec sudo -A \
 	XDG_DATA_DIRS="$HOME/.local/share:/usr/local/share:/usr/share" \
 	XCURSOR_THEME="$cursor_theme" XCURSOR_SIZE=24 \
 	KITTY_CONFIG_DIRECTORY="$HOME/.config/sway/kitty" \
-	dbus-run-session -- "${cmd[@]}"
+	dbus-run-session -- \
+	/usr/share/packarch/sway/thunar-defaults /usr/share/packarch/sway/uca-root.xml \
+	"${cmd[@]}"

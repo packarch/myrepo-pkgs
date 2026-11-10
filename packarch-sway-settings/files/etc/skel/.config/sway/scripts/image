@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+## Packarch : actions « Définir comme fond d'écran » et « Définir comme écran
+## de verrouillage » de Thunar (/usr/share/packarch/sway/uca.xml) :
+##   image --wallpaper FICHIER    fond d'écran de tous les écrans (sway-output)
+##   image --lockscreen FICHIER   fond de hyprlock (hyprlock.conf)
+## Les lignes modifiées sont celles qu'écrit packarch-skin : changer de thème
+## remet le fond d'écran et l'écran de verrouillage du thème.
+
+dir="$HOME/.config/sway"
+notify() {
+	notify-send -u "$1" -h string:x-canonical-private-synchronous:sway-image "$2"
+}
+
+file="$2"
+if [[ ! -f $file ]]; then
+	notify critical "Image introuvable : $file"
+	exit 1
+fi
+file="$(realpath -- "$file")"
+# Guillemets et retours à la ligne : impossibles dans la configuration de Sway
+if [[ $file == *'"'* || $file == *$'\n'* ]]; then
+	notify critical "Nom de fichier non pris en charge : $file"
+	exit 1
+fi
+# Pour sed : \, & et | du chemin protégés
+esc="$(printf '%s' "$file" | sed 's/[\\&|]/\\&/g')"
+
+case "$1" in
+	--wallpaper)
+		sed -i "s|^output \* bg .*|output * bg \"$esc\" fill|" "$dir/sway-output"
+		swaymsg -q output '*' bg "$file" fill
+		notify low "Fond d'écran : ${file##*/}"
+		;;
+	--lockscreen)
+		sed -i "s|^\$wallpaper = .*|\$wallpaper = $esc|" "$dir/hyprlock.conf"
+		notify low "Écran de verrouillage : ${file##*/}"
+		;;
+	*)
+		echo "usage : image --wallpaper|--lockscreen FICHIER" >&2
+		exit 2
+		;;
+esac

@@ -2,7 +2,7 @@
 ##
 ## Configuration de Sway (Packarch), d'après celle d'Archcraft (GPL3).
 ## Couleurs, fond d'écran et thèmes GTK : packarch-skin (fichiers
-## sway-theme et sway-output), à changer avec Super+t ou le bouton
+## sway-theme et sway-output), à changer avec Super+Maj+t ou le bouton
 ## des thèmes de la barre.
 
 ##-- Touches de modification -------------
@@ -41,6 +41,7 @@ set $backlight ~/.config/sway/scripts/brightness
 set $screenshot ~/.config/sway/scripts/screenshot
 set $lockscreen ~/.config/sway/scripts/current_lock
 set $colorpicker ~/.config/sway/scripts/colorpicker
+set $window_cycle ~/.config/sway/scripts/window_cycle
 set $files thunar
 set $editor geany
 set $browser firefox
@@ -77,9 +78,9 @@ bindsym $mod+Shift+Return 		exec $kitty -f
 bindsym $mod+$alt+Return 		exec $kitty -F
 
 # -- Applications --
-bindsym $mod+Shift+f 			exec $files
+bindsym $mod+t 					exec $files
 bindsym $mod+Shift+e 			exec $editor
-bindsym $mod+Shift+w 			exec $browser
+bindsym $mod+f 					exec $browser
 
 # -- Applications en terminal --
 bindsym $alt+Control+v 			exec --no-startup-id "$open_in_kitty nano"
@@ -96,7 +97,7 @@ bindsym $mod+s 					exec $rofi_screenshot
 bindsym $mod+b 					exec $rofi_bluetooth
 
 # -- Thèmes Packarch --
-bindsym $mod+t 					exec $themes
+bindsym $mod+Shift+t 			exec $themes
 
 # -- Divers --
 bindsym $mod+p 					exec $colorpicker
@@ -152,17 +153,15 @@ bindsym $mod+g split toggle, $send-notify 'Mode de partage'
 ## empilée
 bindsym $mod+Shift+s layout stacking, $send-notify 'Disposition empilée'
 ## à onglets
-bindsym $mod+Shift+t layout tabbed, $send-notify 'Disposition à onglets'
+bindsym $mod+Shift+a layout tabbed, $send-notify 'Disposition à onglets'
 ## par défaut
 bindsym $mod+Shift+d layout default, $send-notify 'Disposition par défaut'
 ## alterner empilée/onglets/partage
 bindsym $mod+Shift+l layout toggle, $send-notify 'Changement de disposition'
 ## alterner horizontal/vertical
 bindsym $mod+Shift+v layout toggle split, $send-notify 'Disposition horizontale/verticale'
-## plein écran
-bindsym $mod+f fullscreen toggle, $send-notify 'Plein écran'
-## flottante/en mosaïque
-bindsym $mod+space floating toggle, $send-notify 'Fenêtre flottante'
+## en mosaïque → flottante → plein écran → en mosaïque
+bindsym $mod+space exec $window_cycle
 
 #------
 
@@ -214,6 +213,17 @@ bindsym $mod+o sticky toggle, $send-notify 'Sur tous les bureaux'
 ## Bordures
 ##
 bindsym $mod+y border toggle, $send-notify 'Bordures'
+
+#------
+
+## Marges entre les fenêtres du bureau actif : Super + molette
+## (vers le haut : plus grandes, vers le bas : plus petites), Super + clic
+## molette : valeur d'origine ($gaps_inner de sway-theme). N'importe où sur
+## l'écran, comme avec bspwm et sxhkd
+##
+bindsym --whole-window $mod+button4 gaps inner current plus 2
+bindsym --whole-window $mod+button5 gaps inner current minus 2
+bindsym --whole-window $mod+button2 gaps inner current set $gaps_inner
 
 #------
 

@@ -1,26 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Actions de Thunar du bureau Sway de Packarch (packarch-sway-settings),
-     copiées dans ~/.config/Thunar/uca.xml par ~/.config/sway/scripts/startup
-     quand il manque ou n'est que l'exemple de Thunar (« Open Terminal Here »,
-     qui échoue sous Sway : exo-open n'a pas de terminal) -->
+     les mêmes que sous Openbox, copiées dans ~/.config/Thunar/uca.xml par
+     /usr/share/packarch/sway/thunar-defaults (scripts/startup) quand il
+     manque, n'est que l'exemple de Thunar (« Open Terminal Here », qui échoue
+     sous Sway : exo-open n'a pas de terminal) ou une version précédente de ce
+     fichier. Thunar retire ce commentaire quand on modifie les actions : le
+     fichier n'est alors plus remplacé. -->
 <actions>
 <action>
-	<icon>utilities-terminal</icon>
+	<icon>open-terminal</icon>
 	<name>Ouvrir un terminal ici</name>
 	<unique-id>1794265032233695-1</unique-id>
 	<command>kitty --directory %f</command>
-	<description>Ouvrir kitty dans ce dossier</description>
+	<description>Ouvrir un terminal dans le dossier courant</description>
 	<patterns>*</patterns>
 	<startup-notify/>
 	<directories/>
 </action>
 <action>
-	<icon>system-file-manager</icon>
-	<name>Thunar root</name>
-	<unique-id>1794265032233695-2</unique-id>
-	<command>sh -c &apos;&quot;$HOME/.config/sway/scripts/asroot&quot; thunar &quot;$1&quot;&apos; asroot %f</command>
-	<description>Ouvrir ce dossier dans Thunar en administrateur (root)</description>
+	<icon>search</icon>
+	<name>Rechercher</name>
+	<unique-id>1794265032233695-3</unique-id>
+	<command>catfish --path=%f</command>
+	<description>Rechercher des fichiers et des dossiers</description>
 	<patterns>*</patterns>
 	<directories/>
+</action>
+<action>
+	<icon>go-parent-folder</icon>
+	<name>Ouvrir en root</name>
+	<unique-id>1794265032233695-2</unique-id>
+	<command>sh -c &apos;&quot;$HOME/.config/sway/scripts/asroot&quot; thunar &quot;$1&quot;&apos; asroot %f</command>
+	<description>Ouvrir le dossier courant en root</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>document-edit-sign</icon>
+	<name>Modifier en root</name>
+	<unique-id>1794265032233695-4</unique-id>
+	<command>sh -c &apos;&quot;$HOME/.config/sway/scripts/asroot&quot; geany &quot;$1&quot;&apos; asroot %f</command>
+	<description>Modifier le fichier en root</description>
+	<patterns>*</patterns>
+	<text-files/>
+</action>
+<action>
+	<icon>kr_comparedirs</icon>
+	<name>Comparer</name>
+	<unique-id>1794265032233695-5</unique-id>
+	<command>meld %F</command>
+	<description>Comparer des fichiers et des dossiers avec meld</description>
+	<patterns>*</patterns>
+	<directories/>
+	<text-files/>
+</action>
+<action>
+	<icon>view-preview</icon>
+	<name>Définir comme fond d’écran</name>
+	<unique-id>1794265032233695-6</unique-id>
+	<command>sh -c &apos;&quot;$HOME/.config/sway/scripts/image&quot; --wallpaper &quot;$1&quot;&apos; image %f</command>
+	<description>Définir comme fond d’écran de la session</description>
+	<patterns>*</patterns>
+	<image-files/>
+</action>
+<action>
+	<icon>rotation-locked-landscape</icon>
+	<name>Définir comme écran de verrouillage</name>
+	<unique-id>1794265032233695-7</unique-id>
+	<command>sh -c &apos;&quot;$HOME/.config/sway/scripts/image&quot; --lockscreen &quot;$1&quot;&apos; image %f</command>
+	<description>Utiliser l’image en fond de l’écran de verrouillage</description>
+	<patterns>*</patterns>
+	<image-files/>
 </action>
 </actions>

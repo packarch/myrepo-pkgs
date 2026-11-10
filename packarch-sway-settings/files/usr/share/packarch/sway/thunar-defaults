@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+## Packarch : réglages de Thunar du bureau Sway, pour l'utilisateur
+## (scripts/startup) et pour root (scripts/asroot, dans son bus D-Bus) :
+##   thunar-defaults ACTIONS.xml [COMMANDE ARGUMENT…]
+##
+## - Actions personnalisées : ACTIONS.xml est copié dans
+##   ~/.config/Thunar/uca.xml quand celui-ci manque, n'est que l'exemple de
+##   Thunar (« Open Terminal Here », en anglais, qui échoue sous Sway) ou une
+##   version précédente des actions de Packarch (commentaire gardé tant que
+##   personne ne modifie les actions dans Thunar).
+## - Action « Supprimer » (sans passer par la corbeille) affichée, comme sous
+##   Openbox et XFCE, si le réglage n'a jamais été fait (un choix ultérieur
+##   dans les préférences de Thunar est gardé).
+## Puis lance COMMANDE s'il y en a une.
+
+src="$1"
+shift
+
+uca="${XDG_CONFIG_HOME:-$HOME/.config}/Thunar/uca.xml"
+if [[ -f $src ]] && {
+	[[ ! -s $uca ]] ||
+	grep -q 'Actions de Thunar du bureau Sway de Packarch' "$uca" ||
+	{ grep -q 'Example for a custom action' "$uca" && [[ $(grep -c '<action>' "$uca") -le 1 ]]; }
+}; then
+	cmp -s "$src" "$uca" || { mkdir -p "${uca%/*}" && cp -f "$src" "$uca"; }
+fi
+
+prop=/misc-show-delete-action
+xfconf-query -c thunar -p "$prop" >/dev/null 2>&1 ||
+	xfconf-query -c thunar -p "$prop" -n -t bool -s true >/dev/null 2>&1
+
+[[ $# -gt 0 ]] && exec "$@"
+exit 0

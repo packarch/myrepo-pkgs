@@ -9,7 +9,9 @@ titlebar_border_thickness 2
 titlebar_padding 6 6
 title_align center
 
-gaps inner 10
+## marges entre les fenêtres, remises par Super+clic molette (config)
+set $gaps_inner 10
+gaps inner $gaps_inner
 gaps outer 0
 
 ##-- SwayFX : coins arrondis et ombres ---

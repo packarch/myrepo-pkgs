@@ -148,7 +148,7 @@
     "custom/themes": {
          "format": "",
          "tooltip": true,
-         "tooltip-format": "Thèmes Packarch (Super+t)",
+         "tooltip-format": "Thèmes Packarch (Super+Maj+t)",
          "on-click": "packarch-skin chooser",
     },
 

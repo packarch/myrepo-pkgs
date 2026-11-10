@@ -38,10 +38,15 @@
 # - kitty without confirmation when closing a window (1.0-14):
 #   /etc/xdg/kitty/kitty.conf, read by kitty when the user has no
 #   configuration of their own (XFCE; Openbox and Sway have theirs)
+# - pacman hook 90-packarch-thunar-wallpaper (1.0-15): the "Set as wallpaper"
+#   item of Thunar (thunar-wallpaper-plugin, XFCE only) is hidden when
+#   xfdesktop is not installed (plugin renamed to *.so.disabled, put back
+#   with xfdesktop): under Openbox and Sway it failed, next to the working
+#   custom action of Packarch
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=14
+pkgrel=15
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

@@ -12,7 +12,7 @@
 #
 # Our changes: French translation, kitty only (no alacritty, foot, wofi,
 # wlogout), no Spotify/mpd modules and scripts (media keys use playerctl), no
-# pywal/light mode theme.sh (packarch-skin: Super+t or the theme button of
+# pywal/light mode theme.sh (packarch-skin: Super+Shift+t or the theme button of
 # waybar opens "packarch-skin chooser"), 24-hour clock, wallpapers of
 # packarch-backgrounds (/usr/share/backgrounds) instead of the Archcraft ones,
 # no screen lock nor blanking on idle (only before suspend), numlock on,
@@ -75,10 +75,24 @@
 # $ecran_principal" of sway-output ("auto", or an absent output: the output
 # focused when the session starts); scripts/statusbar adds "output" to the
 # waybar configuration (file in the runtime directory)
+# 1.0-16: Super+t opens Thunar and Super+f Firefox (instead of Super+Shift+f
+# and Super+Shift+w), the theme chooser moves to Super+Shift+t and the tabbed
+# layout to Super+Shift+a; Super+space cycles the focused window between
+# tiled, floating and fullscreen (scripts/window_cycle), instead of the
+# separate floating (Super+space) and fullscreen (Super+f) toggles;
+# Super+mouse wheel changes the gaps between the windows of the workspace
+# (gaps inner current, like bspwm and sxhkd), Super+middle click restores
+# them ($gaps_inner of sway-theme); the Thunar custom actions of Openbox
+# (terminal here, search, open and edit as root, compare, wallpaper and lock
+# screen image: scripts/image), also replacing the actions of the previous
+# versions while nobody changed them; root Thunar (asroot) gets its own
+# French actions (uca-root.xml: its "Open Terminal Here" example was in
+# English and failed); the "Delete" action of Thunar is shown, for the user
+# and for root, unless set otherwise (thunar-defaults)
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=15
+pkgrel=16
 pkgdesc="Sway (SwayFX) configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -92,6 +106,8 @@ depends=(
   network-manager-applet networkmanager-dmenu-git bluez-utils xfce-polkit
   # applications of the keys
   kitty thunar geany firefox viewnior htop nano yad
+  # applications of the Thunar actions
+  catfish meld xfconf
   # fonts of waybar, kitty, mako and hyprlock
   noto-fonts ttf-jetbrains-mono-nerd packarch-fonts
   # LightDM greeter, menu hooks, cachy-update

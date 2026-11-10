@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+## Packarch : Super+Espace fait tourner la fenêtre active entre trois états,
+## en mosaïque → flottante → plein écran → en mosaïque.
+## Une fenêtre flottante mise en plein écran reste flottante pour Sway : en
+## sortant du plein écran, elle est donc aussi remise en mosaïque.
+
+notify() {
+	notify-send -u low -h string:x-canonical-private-synchronous:swayconfig "$1"
+}
+
+# Fenêtre active : son type (con, floating_con) et son plein écran (0 ou 1)
+read -r type fullscreen < <(swaymsg -t get_tree | jq -r '
+	.. | objects | select(.focused == true)
+	| "\(.type) \(.fullscreen_mode // 0)"')
+
+case "$type" in
+	con|floating_con) ;;
+	*) exit 0 ;;	# bureau vide : pas de fenêtre à changer
+esac
+
+if [[ "$fullscreen" != 0 ]]; then
+	swaymsg -q 'fullscreen disable, floating disable'
+	notify 'Fenêtre en mosaïque'
+elif [[ "$type" == floating_con ]]; then
+	swaymsg -q 'fullscreen enable'
+	notify 'Plein écran'
+else
+	swaymsg -q 'floating enable'
+	notify 'Fenêtre flottante'
+fi

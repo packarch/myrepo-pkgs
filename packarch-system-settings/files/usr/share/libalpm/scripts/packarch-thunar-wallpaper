@@ -1,0 +1,23 @@
+#!/bin/sh
+# Thunar wallpaper plugin: on with xfdesktop (XFCE), off without it
+# (90-packarch-thunar-wallpaper.hook)
+
+so=/usr/lib/thunarx-3/thunar-wallpaper-plugin.so
+off="$so.disabled"
+
+# Thunar removed: nothing left to hide
+if [ ! -e /usr/bin/thunar ]; then
+	rm -f "$off"
+	exit 0
+fi
+
+if [ -e /usr/bin/xfdesktop ]; then
+	# XFCE: the plugin works there
+	if [ -e "$off" ]; then
+		if [ -e "$so" ]; then rm -f "$off"; else mv "$off" "$so"; fi
+	fi
+else
+	# A new copy (upgrade of thunar) replaces the old disabled one
+	if [ -e "$so" ]; then mv -f "$so" "$off"; fi
+fi
+exit 0

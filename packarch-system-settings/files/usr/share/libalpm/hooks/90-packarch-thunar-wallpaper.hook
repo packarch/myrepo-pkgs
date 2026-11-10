@@ -1,0 +1,19 @@
+# The "Set as wallpaper" item of Thunar (thunar-wallpaper-plugin) only works
+# under XFCE (xfdesktop): elsewhere (Openbox, Sway) it fails, next to the
+# working custom action of Packarch. The plugin is renamed to
+# thunar-wallpaper-plugin.so.disabled (Thunar only loads *.so) when xfdesktop
+# is not installed, and put back when it is; run again after each upgrade of
+# thunar, which brings the plugin back.
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = thunar
+Target = xfdesktop
+Target = packarch-system-settings
+
+[Action]
+Description = Hiding the Thunar wallpaper plugin outside XFCE...
+When = PostTransaction
+Exec = /usr/share/libalpm/scripts/packarch-thunar-wallpaper

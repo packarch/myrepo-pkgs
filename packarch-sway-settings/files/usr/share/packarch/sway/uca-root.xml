@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Actions de Thunar du bureau Sway de Packarch (packarch-sway-settings),
+     pour Thunar lancé en root (scripts/asroot) : copiées dans
+     /root/.config/Thunar/uca.xml par /usr/share/packarch/sway/thunar-defaults
+     quand il manque, n'est que l'exemple de Thunar (« Open Terminal Here »,
+     en anglais, qui échoue : exo-open n'a pas de terminal) ou une version
+     précédente de ce fichier. Thunar retire ce commentaire quand on modifie
+     les actions : le fichier n'est alors plus remplacé. -->
+<actions>
+<action>
+	<icon>open-terminal</icon>
+	<name>Ouvrir un terminal ici</name>
+	<unique-id>1794265032233696-1</unique-id>
+	<command>kitty --directory %f</command>
+	<description>Ouvrir un terminal root dans le dossier courant</description>
+	<patterns>*</patterns>
+	<startup-notify/>
+	<directories/>
+</action>
+<action>
+	<icon>search</icon>
+	<name>Rechercher</name>
+	<unique-id>1794265032233696-2</unique-id>
+	<command>catfish --path=%f</command>
+	<description>Rechercher des fichiers et des dossiers</description>
+	<patterns>*</patterns>
+	<directories/>
+</action>
+<action>
+	<icon>document-edit-sign</icon>
+	<name>Modifier</name>
+	<unique-id>1794265032233696-3</unique-id>
+	<command>geany %f</command>
+	<description>Modifier le fichier (en root)</description>
+	<patterns>*</patterns>
+	<text-files/>
+</action>
+<action>
+	<icon>kr_comparedirs</icon>
+	<name>Comparer</name>
+	<unique-id>1794265032233696-4</unique-id>
+	<command>meld %F</command>
+	<description>Comparer des fichiers et des dossiers avec meld</description>
+	<patterns>*</patterns>
+	<directories/>
+	<text-files/>
+</action>
+</actions>
