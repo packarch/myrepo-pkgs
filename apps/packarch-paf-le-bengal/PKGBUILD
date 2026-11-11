@@ -2,13 +2,13 @@
 #
 # Paf le Bengal: two gory (optional) arcade games starring Baby Kart, a big grey
 # tabby cat, and the Gremlin du Bengal (Rust, macroquad):
-#   packarch-paf-le-bengal           bat launch for distance (mines, gore)
-#   packarch-paf-le-bengal-altitude  tail spin launch, bounce up to space
+#   packarch-paf-le-bengal           Baseball: bat launch for distance (mines, gore)
+#   packarch-paf-le-bengal-altitude  Altitude: tail spin launch, bounce up to space
 
 pkgname=packarch-paf-le-bengal
-pkgver=1.0.0
+pkgver=1.0.1
 pkgrel=1
-pkgdesc="Paf le Bengal: two arcade games, Baby Kart launches the Gremlin du Bengal (distance and altitude)"
+pkgdesc="Paf le Bengal: two arcade games, Baby Kart launches the Gremlin du Bengal (Baseball and Altitude)"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-paf-le-bengal"
 license=('GPL-3.0-or-later')
