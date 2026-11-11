@@ -17,10 +17,13 @@
 # 1.4.0: themes of the user in ~/.config/packarch-skin/themes (XFCE, Sway),
 # replacing the ones of the system, "edit" command; colors of the terminal
 # cursor and selection, Sway windows and lock screen, notification timeouts
-# and shadow color read from theme.toml (optional keys) instead of fixed.
+# and shadow color read from theme.toml (optional keys) instead of fixed;
+# 1.5.0: on every desktop the themes of the user are in
+# ~/.config/<desktop>/themes (openbox, xfce4, sway), where the missing themes
+# of the system are copied (a theme already there is never replaced).
 
 pkgname=packarch-skin
-pkgver=1.4.0
+pkgver=1.5.0
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Sway desktops"
 arch=('x86_64')

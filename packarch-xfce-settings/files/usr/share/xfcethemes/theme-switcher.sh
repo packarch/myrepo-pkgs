@@ -3,7 +3,7 @@
 # theme-switcher.sh — ancien sélecteur de thèmes XFCE (couleurs blue, gray,
 # green, purple, red, yellow, default), remplacé par packarch-skin, qui
 # applique sur XFCE les mêmes thèmes que sur Openbox
-# (/usr/share/xfcethemes/themes, « packarch-skin list »).
+# (~/.config/xfce4/themes, « packarch-skin list »).
 #
 # Gardé pour les lanceurs du tableau de bord des utilisateurs existants
 # (~/.config/xfce4/panel/launcher-30/theme-<couleur>.desktop) : chaque
