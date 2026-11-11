@@ -13,10 +13,14 @@
 # "chooser" (theme window, yad) and "panel" (puts the theme button back on
 # the XFCE panel), launcher files written by render; 1.3.0: Sway desktop
 # (packarch-sway-settings); 1.3.1: a single theme chooser at a time; 1.3.2:
-# rounded corners and shadows of SwayFX from the picom settings of the theme.
+# rounded corners and shadows of SwayFX from the picom settings of the theme;
+# 1.4.0: themes of the user in ~/.config/packarch-skin/themes (XFCE, Sway),
+# replacing the ones of the system, "edit" command; colors of the terminal
+# cursor and selection, Sway windows and lock screen, notification timeouts
+# and shadow color read from theme.toml (optional keys) instead of fixed.
 
 pkgname=packarch-skin
-pkgver=1.3.2
+pkgver=1.4.0
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Sway desktops"
 arch=('x86_64')

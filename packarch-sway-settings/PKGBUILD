@@ -89,10 +89,12 @@
 # French actions (uca-root.xml: its "Open Terminal Here" example was in
 # English and failed); the "Delete" action of Thunar is shown, for the user
 # and for root, unless set otherwise (thunar-defaults)
+# 1.0-19: Geany color schemes of the themes (packarch-geany-config): Geany
+# ignored the scheme set by packarch-skin in a home without them
 
 pkgname=packarch-sway-settings
 pkgver=1.0
-pkgrel=18
+pkgrel=19
 pkgdesc="Sway (SwayFX) configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -106,6 +108,8 @@ depends=(
   network-manager-applet networkmanager-dmenu-git bluez-utils xfce-polkit
   # applications of the keys
   kitty thunar geany firefox viewnior htop nano yad
+  # Geany color schemes of the themes
+  packarch-geany-config
   # applications of the Thunar actions
   catfish meld xfconf
   # fonts of waybar, kitty, mako and hyprlock

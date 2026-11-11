@@ -1,0 +1,25 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Geany color schemes of the Packarch themes (geany_colors of their
+# theme.toml: manhattan, dracula, hack, spark...), for the Openbox, XFCE and
+# Sway desktops. Formerly in /etc/skel/.config/geany/colorschemes of
+# packarch-openbox-settings (up to 7.0-78): only new accounts of the Openbox
+# desktop had them, and Geany ignored the scheme set by packarch-skin on Sway
+# and XFCE. They go to /usr/share/geany/colorschemes, read by Geany for
+# every account. The schemes of Geany itself (bespin, darcula, tango-dark...)
+# are not shipped again: the copies of packarch-openbox-settings were the
+# same or older versions of them.
+
+pkgname=packarch-geany-config
+pkgver=1.0
+pkgrel=1
+pkgdesc="Geany color schemes of the Packarch themes"
+arch=('any')
+url="https://github.com/packarch/myrepo-pkgs"
+license=('GPL3')
+depends=(geany)
+options=(!strip !emptydirs)
+
+package() {
+	cp -a "$startdir"/files/. "$pkgdir"/
+}

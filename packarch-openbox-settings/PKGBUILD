@@ -3,10 +3,11 @@
 # Openbox configuration of Packarch: polybar, rofi menus, dunst,
 # picom, kitty and 10 themes, switched with packarch-skin. Based on the
 # Openbox configuration of Aditya Shakya (adi1090x), GPL3, with the skeleton
-# files it relies on (dunst, picom, rofi, GTK, xfconf, Thunar) and the Geany
-# color schemes. The configuration goes to /etc/skel (copied to the home of
-# new users), with the default theme already applied to it at build time
-# (packarch-skin render, 7.0-32; before, at the first login). Menus,
+# files it relies on (dunst, picom, rofi, GTK, xfconf, Thunar); the Geany
+# color schemes are in packarch-geany-config (7.0-79). The configuration goes
+# to /etc/skel (copied to the home of new users), with the default theme
+# already applied to it at build time (packarch-skin render, 7.0-32; before,
+# at the first login). Menus,
 # pipemenus, dunst icons and the packarch-tcma (Thunar actions) and
 # packarch-reload-theme commands go to /usr (packarch-openbox-extras before
 # 7.0-16). /etc/lightdm/lightdm.conf.d/60-packarch-openbox.conf makes Openbox
@@ -66,10 +67,13 @@
 # of the polybar launchers, "Applications en root" menu, Thunar actions):
 # the GTK settings.ini of the user given to root by XDG_CONFIG_DIRS, with their
 # icon themes (XDG_DATA_DIRS) and kitty configuration (root kitty was black)
+# 7.0-79: Geany color schemes moved to packarch-geany-config
+# (/usr/share/geany/colorschemes, for every account and the Sway and XFCE
+# desktops) from /etc/skel/.config/geany/colorschemes
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=78
+pkgrel=79
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -84,6 +88,8 @@ depends=(
   python-lxml lead-git skippy-xd-git
   # optional dependencies used by the configuration (keys, menus, scripts)
   kitty thunar geany firefox viewnior betterlockscreen
+  # Geany color schemes of the themes (7.0-79)
+  packarch-geany-config
   ksuperkey networkmanager-dmenu-git ffmpeg maim xclip xcolor
   xfce4-power-manager xorg-xsetroot yad picom
   # Noto Sans: GTK and Openbox fonts of the themes (7.0-39)

@@ -64,10 +64,12 @@
 
 # 1.0.9-13: Thunar custom actions in French (names and descriptions;
 # "(lien)" suffix of the created symbolic links)
+# 1.0.9-14: Geany (default text editor) with the color schemes of the themes
+# (packarch-geany-config): Geany ignored the scheme set by packarch-skin
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=13
+pkgrel=14
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -75,6 +77,8 @@ license=('GPL-1.0-only')
 depends=(
   xfce4-panel xfce4-whiskermenu-plugin xfdesktop xfconf thunar xfwm4 libnotify xorg-xrandr yad
   noto-fonts packarch-system-settings htop
+  # default text editor, with the color schemes of the themes (1.0.9-14)
+  geany packarch-geany-config
   # themes of packarch-skin (1.0.9-7): the same as the Openbox desktop, with
   # the same packages
   'packarch-skin>=1.2.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
@@ -84,7 +88,6 @@ depends=(
 makedepends=('packarch-skin>=1.2.0')
 optdepends=(
   'firefox: web browser of the panel and the whisker menu'
-  'geany: default text editor'
   'liloucalc: calculator of the whisker menu and the calculator key'
   'xfce4-terminal: terminal with the colors of the theme'
 )
