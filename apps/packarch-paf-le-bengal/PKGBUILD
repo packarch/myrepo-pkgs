@@ -1,0 +1,59 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Paf le Bengal: two gory (optional) arcade games starring Baby Kart, a big grey
+# tabby cat, and the Gremlin du Bengal (Rust, macroquad):
+#   packarch-paf-le-bengal           bat launch for distance (mines, gore)
+#   packarch-paf-le-bengal-altitude  tail spin launch, bounce up to space
+
+pkgname=packarch-paf-le-bengal
+pkgver=1.0.0
+pkgrel=1
+pkgdesc="Paf le Bengal: two arcade games, Baby Kart launches the Gremlin du Bengal (distance and altitude)"
+arch=('x86_64')
+url="https://github.com/packarch/packarch-paf-le-bengal"
+license=('GPL-3.0-or-later')
+# Libraries loaded at run time (dlopen) by miniquad
+depends=('gcc-libs' 'glibc' 'libglvnd' 'libx11' 'libxi' 'libxkbcommon' 'wayland'
+         'hicolor-icon-theme')
+optdepends=('libdecor: window decorations on Wayland')
+makedepends=('cargo')
+source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	export RUSTUP_TOOLCHAIN=stable
+	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	export RUSTUP_TOOLCHAIN=stable
+	export CARGO_TARGET_DIR=target
+	cargo build --release --frozen
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	export RUSTUP_TOOLCHAIN=stable
+	export CARGO_TARGET_DIR=target
+	cargo test --release --frozen
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	for bin in $pkgname $pkgname-altitude; do
+		install -Dm755 target/release/$bin "$pkgdir"/usr/bin/$bin
+		install -Dm644 data/icons/$bin.svg \
+			"$pkgdir"/usr/share/icons/hicolor/scalable/apps/$bin.svg
+		for s in 16 22 24 32 48 64 128 256; do
+			install -Dm644 data/icons/$bin/$s.png \
+				"$pkgdir"/usr/share/icons/hicolor/${s}x$s/apps/$bin.png
+		done
+	done
+	for app in PafLeBengal PafLeBengalAltitude; do
+		install -Dm644 data/org.packarch.$app.desktop \
+			"$pkgdir"/usr/share/applications/org.packarch.$app.desktop
+	done
+	install -Dm644 README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+}
