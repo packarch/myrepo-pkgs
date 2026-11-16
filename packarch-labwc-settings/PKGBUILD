@@ -68,10 +68,16 @@
 # theme): scripts/statusbar finds the sensor as cpu-temp.sh of Openbox did
 # (k10temp, zenpower, coretemp: "hwmon-path"), waybar read thermal_zone0
 # ; value green, orange from 75 °C, red from 90 °C
+# 1.0-6: "Applications en root" of the menu is a submenu again, as on
+# Openbox (kitty, thunar, geany by scripts/asroot): the item opened rofi
+# and looked like an empty menu; rofi_asroot stays on Super+r
+# Screen recorder menu back, as pa-record on Openbox: scripts/record
+# (pipemenu, wf-recorder and slurp; sound of the computer), new dependency
+# wf-recorder
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=5
+pkgrel=6
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -79,7 +85,7 @@ license=('GPL3')
 depends=(
   # labwc and the Wayland tools of the configuration
   labwc labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
-  hyprlock hyprpicker grim slurp wl-clipboard wlr-randr wlopm jq imagemagick
+  hyprlock hyprpicker grim slurp wf-recorder wl-clipboard wlr-randr wlopm jq imagemagick
   pulsemixer pavucontrol playerctl light libnotify dex xdg-terminal-exec
   xdg-user-dirs xorg-xhost nwg-look wdisplays
   xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk

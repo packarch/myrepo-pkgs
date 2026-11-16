@@ -20,9 +20,19 @@
     </item>
     <separator />
     <menu id="applications" label="Applications" icon="applications-all" execute="labwc-menu-generator -p -I -t 'kitty -e'" />
-    <item label="Applications en root" icon="dialog-password">
-      <action name="Execute" command="sh -c '~/.config/labwc/scripts/menu ~/.config/labwc/scripts/rofi_asroot'" />
-    </item>
+    <!-- Comme sous Openbox (pipemenu pa-asroot) ; le menu rofi des
+         applications en root reste au raccourci de rc.xml -->
+    <menu id="asroot" label="Applications en root" icon="dialog-password">
+      <item label="Terminal (kitty)" icon="utilities-terminal">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/asroot &quot;kitty --class kitty-float --directory /root&quot;'" />
+      </item>
+      <item label="Gestionnaire de fichiers (thunar)" icon="system-file-manager">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/asroot thunar'" />
+      </item>
+      <item label="Éditeur de texte (geany)" icon="accessories-text-editor">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/asroot geany'" />
+      </item>
+    </menu>
     <menu id="favoris" label="Favoris Internet" icon="bookmarks" execute="sh -c '~/.config/labwc/scripts/bookmarks'" />
     <menu id="captures" label="Capture d’écran" icon="applets-screenshooter">
       <item label="Capturer le bureau">
@@ -41,6 +51,7 @@
         <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --in10'" />
       </item>
     </menu>
+    <menu id="record" label="Enregistreur d’écran" icon="media-record" execute="sh -c '~/.config/labwc/scripts/record'" />
     <separator />
     <menu id="preferences" label="Préférences" icon="preferences-system">
       <item label="Thèmes Packarch" icon="preferences-desktop-theme">
