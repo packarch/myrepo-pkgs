@@ -136,9 +136,14 @@
       "tooltip": false
     },
     "temperature": {
+      "hwmon-path": "@cpu-temp@",
       "interval": 10,
-      "critical-threshold": 85,
-      "format": "<span color='@magenta@'></span> {temperatureC}°C"
+      "warning-threshold": 75,
+      "critical-threshold": 90,
+      "format": "<span color='@magenta@'></span> <span color='@green@'>{temperatureC}°C</span>",
+      "format-warning": "<span color='@magenta@'></span> <span color='#ff8c1a'>{temperatureC}°C</span>",
+      "format-critical": "<span color='@magenta@'></span> <span color='@red@'>{temperatureC}°C</span>",
+      "tooltip-format": "Processeur : {temperatureC}°C"
     },
     "modules-left": [
       "custom/menu",

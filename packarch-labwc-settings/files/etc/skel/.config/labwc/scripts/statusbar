@@ -11,7 +11,10 @@
 ## écran actif). Configuration lancée : celle du thème avec "@output@"
 ## remplacé par cet écran et "@marge15@" par 15 % de sa largeur (barre
 ## flottante de spark), dans le dossier d'exécution. Les bureaux de labwc
-## sont communs à tous les écrans.
+## sont communs à tous les écrans. "@cpu-temp@" (module temperature) :
+## capteur du processeur (k10temp, zenpower, coretemp...), cherché à chaque
+## lancement car le numéro de hwmon change d'un démarrage à l'autre ; ligne
+## retirée s'il n'y en a pas (waybar lit alors thermal_zone0).
 
 CONFIG="$HOME/.config/labwc/waybar/config"
 STYLE="$HOME/.config/labwc/waybar/style.css"
@@ -33,13 +36,43 @@ width="$(jq -r --arg o "$output" 'first(.[] | select(.name == $o)) as $s
 [[ $width =~ ^[0-9]+$ ]] || width=1920
 marge=$(( width * 15 / 100 ))
 
+# Capteur de température du processeur, comme polybar/scripts/cpu-temp.sh
+# d'Openbox : k10temp/zenpower (AMD), coretemp (Intel), cpu_thermal (ARM),
+# Tctl, Tdie ou Package id 0 s'ils sont nommés, sinon une zone thermique
+cpu_sensor() {
+	local h l
+	for h in /sys/class/hwmon/hwmon*; do
+		case "$(cat "$h/name" 2>/dev/null)" in
+			k10temp|zenpower|coretemp|cpu_thermal) ;;
+			*) continue ;;
+		esac
+		for l in "$h"/temp*_label; do
+			case "$(cat "$l" 2>/dev/null)" in
+				Tctl|Tdie|"Package id 0") echo "${l%_label}_input"; return ;;
+			esac
+		done
+		[[ -r $h/temp1_input ]] && { echo "$h/temp1_input"; return; }
+	done
+	for h in /sys/class/thermal/thermal_zone*; do
+		case "$(cat "$h/type" 2>/dev/null)" in
+			x86_pkg_temp|cpu-thermal|acpitz) echo "$h/temp"; return ;;
+		esac
+	done
+}
+cputemp="$(cpu_sensor)"
+if [[ -n $cputemp ]]; then
+	temp=(-e "s|\"@cpu-temp@\"|\"$cputemp\"|g")
+else
+	temp=(-e '/"@cpu-temp@"/d')
+fi
+
 run="${XDG_RUNTIME_DIR:-/tmp}/packarch-waybar"
 mkdir -p "$run"
 if [[ -n $output ]]; then
-	sed -e "s/\"@output@\"/\"${output//\//\\/}\"/g" -e "s/\"@marge15@\"/$marge/g" "$CONFIG" > "$run/config.jsonc"
+	sed "${temp[@]}" -e "s/\"@output@\"/\"${output//\//\\/}\"/g" -e "s/\"@marge15@\"/$marge/g" "$CONFIG" > "$run/config.jsonc"
 else
 	# Écran inconnu : barre sur tous les écrans
-	sed -e '/"@output@"/d' -e "s/\"@marge15@\"/$marge/g" "$CONFIG" > "$run/config.jsonc"
+	sed "${temp[@]}" -e '/"@output@"/d' -e "s/\"@marge15@\"/$marge/g" "$CONFIG" > "$run/config.jsonc"
 fi
 
 # waybar lit le @import "./colors.css" de style.css depuis le dossier courant

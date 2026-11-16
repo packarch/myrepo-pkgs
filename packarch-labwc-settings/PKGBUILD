@@ -64,10 +64,14 @@
 # ~/.config/labwc/waybar), root kitty of the button in /root; launchers of
 # optional applications (discord, filezilla, mkvtoolnix, filebot of the
 # packarch theme) shown: their exec wrote nothing and waybar hid them
+# 1.0-5: temperature of the processor shown (bottom left of the packarch
+# theme): scripts/statusbar finds the sensor as cpu-temp.sh of Openbox did
+# (k10temp, zenpower, coretemp: "hwmon-path"), waybar read thermal_zone0
+# ; value green, orange from 75 °C, red from 90 °C
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=4
+pkgrel=5
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

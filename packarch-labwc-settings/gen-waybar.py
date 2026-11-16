@@ -37,7 +37,14 @@ def m_disk(icon="󰋊", color="magenta"):
             "tooltip-format": "/ : {used} utilisés sur {total}"}
 
 def m_temp(icon="\uf2c9", color="magenta"):
-    return {"interval": 10, "critical-threshold": 85, "format": f"{sp(color, icon)} {{temperatureC}}°C"}
+    # @cpu-temp@ : capteur du processeur, trouvé par scripts/statusbar (ligne
+    # retirée s'il n'y en a pas : waybar lit alors thermal_zone0)
+    # Valeur en vert, orange à partir de 75 °C, rouge à partir de 90 °C
+    # (orange : pas de couleur orange dans les thèmes)
+    val = lambda c: f"{sp(color, icon)} <span color='{c}'>{{temperatureC}}°C</span>"
+    return {"hwmon-path": "@cpu-temp@", "interval": 10, "warning-threshold": 75, "critical-threshold": 90,
+            "format": val("@green@"), "format-warning": val("#ff8c1a"), "format-critical": val("@red@"),
+            "tooltip-format": "Processeur : {temperatureC}°C"}
 
 def m_backlight(color="cyan", bar=False):
     icons = bar_icons("󰃠", color) if bar else ["󰃞", "󰃟", "󰃝", "󰃠"]
