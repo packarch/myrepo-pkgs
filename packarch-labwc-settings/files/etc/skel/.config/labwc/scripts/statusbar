@@ -75,6 +75,27 @@ else
 	sed "${temp[@]}" -e '/"@output@"/d' -e "s/\"@marge15@\"/$marge/g" "$CONFIG" > "$run/config.jsonc"
 fi
 
+# Pas de rétroéclairage (PC de bureau, écran externe) : module backlight
+# retiré, avec le séparateur (point, tiret) qui le suit, ou qui le précède en
+# fin de liste ; les flèches (thème adaptive, dégradés enchaînés) restent.
+# Polybar le masquait de lui-même sous Openbox, waybar affiche « 0% ».
+if ! compgen -G '/sys/class/backlight/*' >/dev/null; then
+	nobl="$(sed '/^[[:space:]]*\/\//d' "$run/config.jsonc" | jq '
+		def sep: type == "string" and test("^custom/(sep|dot)");
+		def drop:
+			. as $m
+			| (index("backlight")) as $i
+			| if $i == null then $m
+			  elif ($i + 1 < ($m | length)) and ($m[$i + 1] | sep) then $m[:$i] + $m[$i + 2:]
+			  elif $i > 0 and ($m[$i - 1] | sep) and ($i + 1 == ($m | length)) then $m[:$i - 1] + $m[$i + 1:]
+			  else $m[:$i] + $m[$i + 1:] end;
+		def fix: with_entries(if (.key | test("^modules-")) or (.value | type == "object" and has("modules"))
+			then (if .key | test("^modules-") then .value |= drop else .value.modules |= drop end)
+			else . end);
+		if type == "array" then map(fix) else fix end' 2>/dev/null)" &&
+		[[ -n $nobl ]] && printf '%s\n' "$nobl" > "$run/config.jsonc"
+fi
+
 # waybar lit le @import "./colors.css" de style.css depuis le dossier courant
 cd "$(dirname "$STYLE")" || exit 1
 exec waybar --log-level error --config "$run/config.jsonc" --style "${STYLE}"

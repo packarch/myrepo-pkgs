@@ -76,10 +76,13 @@
 # wf-recorder
 # 1.0-7: Qt applications follow the GTK theme (QT_QPA_PLATFORMTHEME=gtk3 in
 # packarch-run-labwc, as packarch-qt.sh of Openbox): MKVToolNix was light
+# 1.0-8: no backlight (desktop computer): scripts/statusbar removes the
+# backlight module and its separator from the bar (waybar showed "0%",
+# polybar hid it on Openbox)
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=7
+pkgrel=8
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
