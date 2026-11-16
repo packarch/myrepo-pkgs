@@ -4,11 +4,14 @@
 ##
 ## Waybar ---------------------------------------------------
 ##
-## Packarch : barre sur l'écran principal seulement (ecran_principal de
+## Packarch : barre du thème courant (~/.config/labwc/waybar/config, copiée
+## de themes/ID/waybar par packarch-skin, comme polybar sous Openbox), sur
+## l'écran principal seulement (ecran_principal de
 ## ~/.config/labwc/statusbar.conf ; « auto » ou écran absent : le premier
-## écran actif), comme polybar sous Openbox. Configuration lancée : celle de
-## ~/.config/labwc/waybar avec « output » en plus (fichier du dossier
-## d'exécution). Les bureaux de labwc sont communs à tous les écrans.
+## écran actif). Configuration lancée : celle du thème avec "@output@"
+## remplacé par cet écran et "@marge15@" par 15 % de sa largeur (barre
+## flottante de spark), dans le dossier d'exécution. Les bureaux de labwc
+## sont communs à tous les écrans.
 
 CONFIG="$HOME/.config/labwc/waybar/config"
 STYLE="$HOME/.config/labwc/waybar/style.css"
@@ -22,11 +25,23 @@ if [[ -n $wanted && $wanted != auto ]] &&
 fi
 [[ -n $output ]] || output="$(jq -r 'first(.[] | select(.enabled)) .name // empty' <<<"$outputs" 2>/dev/null)"
 
+# Largeur logique de l'écran (mode courant, échelle, rotation)
+width="$(jq -r --arg o "$output" 'first(.[] | select(.name == $o)) as $s
+	| ($s.modes[] | select(.current)) as $m
+	| (if ($s.transform // "normal" | test("90|270")) then $m.height else $m.width end) / ($s.scale // 1)
+	| floor' <<<"$outputs" 2>/dev/null)"
+[[ $width =~ ^[0-9]+$ ]] || width=1920
+marge=$(( width * 15 / 100 ))
+
+run="${XDG_RUNTIME_DIR:-/tmp}/packarch-waybar"
+mkdir -p "$run"
 if [[ -n $output ]]; then
-	run="${XDG_RUNTIME_DIR:-/tmp}/packarch-waybar"
-	mkdir -p "$run"
-	jq -n --arg inc "$CONFIG" --arg o "$output" '{include: [$inc], output: $o}' > "$run/config.jsonc"
-	CONFIG="$run/config.jsonc"
+	sed -e "s/\"@output@\"/\"${output//\//\\/}\"/g" -e "s/\"@marge15@\"/$marge/g" "$CONFIG" > "$run/config.jsonc"
+else
+	# Écran inconnu : barre sur tous les écrans
+	sed -e '/"@output@"/d' -e "s/\"@marge15@\"/$marge/g" "$CONFIG" > "$run/config.jsonc"
 fi
 
-exec waybar --log-level error --config "${CONFIG}" --style "${STYLE}"
+# waybar lit le @import "./colors.css" de style.css depuis le dossier courant
+cd "$(dirname "$STYLE")" || exit 1
+exec waybar --log-level error --config "$run/config.jsonc" --style "${STYLE}"

@@ -48,10 +48,19 @@
 # 1.0-2: "Favoris Internet" submenu of the right-click menu, as in the
 # Openbox desktop (scripts/bookmarks pipemenu, ~/.config/labwc/favoris.txt
 # in the NAME:ADDRESS format of the Openbox favoris.txt)
+# 1.0-3: each theme has its own waybar bar, as its polybar bar on Openbox
+# (positions, heights, modules, pills, separators, icons and colors of the
+# modules; packarch-skin 1.7.0 copies themes/ID/waybar to
+# ~/.config/labwc/waybar with the colors of the theme). The bars are made by
+# gen-waybar.py (in this directory, not installed: ./gen-waybar.py
+# files/etc/skel/.config/labwc/themes); scripts/statusbar fills the main
+# output and the 15 % margins of the floating bar of spark, and starts
+# waybar from its directory (@import of colors.css). Button of the theme
+# chooser (packarch-skin chooser) next to the menu of the packarch theme
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -76,11 +85,11 @@ depends=(
   packarch-system-settings
   # theme chooser, GTK and Openbox (window) themes, icons, cursors and
   # wallpapers
-  'packarch-skin>=1.6.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.7.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.6.0')
+makedepends=('packarch-skin>=1.7.0')
 optdepends=(
   'blueman: Bluetooth manager (right click on the Bluetooth module)'
   'kanshi: screen configuration kept (~/.config/kanshi/config, started by autostart)'

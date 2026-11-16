@@ -1,0 +1,99 @@
+/* Style de la barre waybar du thème « cyberpunk » (labwc), d'après sa
+   barre polybar sous Openbox. Couleurs et police : colors.css, écrit par
+   packarch-skin. */
+
+@import "./colors.css";
+
+* {
+	border: none;
+	border-radius: 0;
+	min-height: 0;
+	box-shadow: none;
+	text-shadow: none;
+}
+
+window#waybar {
+	background-color: @background;
+	color: @foreground;
+}
+
+tooltip {
+	background-color: @background;
+	border: 1px solid @background-alt;
+}
+tooltip label {
+	color: @foreground;
+}
+
+button {
+	background: none;
+	border-radius: 0;
+}
+
+#workspaces button,
+#taskbar button {
+	padding: 0px 6px;
+	color: @foreground-alt;
+	background: none;
+}
+#workspaces button:hover,
+#taskbar button:hover {
+	background: none;
+	color: @foreground;
+}
+#taskbar button.active {
+	color: @foreground;
+}
+#taskbar button.minimized {
+	opacity: 0.6;
+}
+#workspaces button.urgent {
+	color: @green;
+}
+
+#battery.critical:not(.charging) {
+	color: @red;
+}
+#tray > .needs-attention {
+	-gtk-icon-effect: highlight;
+}
+
+#cpu, #memory, #disk, #temperature, #backlight, #battery, #bluetooth,
+#network, #pulseaudio, #clock, #tray, #custom-updates,
+#custom-menu, #custom-power {
+	padding: 0px 8px;
+}
+
+/* Bordure de 6 px de la couleur de la barre, trait noir contre les fenêtres */
+window#waybar.main {
+	border-bottom: 1px solid #000000;
+}
+window#waybar.bottom {
+	border-top: 1px solid #000000;
+}
+
+/* Pastilles (LD/RD de polybar) */
+#workspaces, #taskbar, #battery, #tray, #custom-power, #custom-menu, #clock {
+	background-color: @background-alt;
+	border-radius: 13px;
+	margin: 6px 0px;
+	padding: 0px 10px;
+}
+#workspaces { padding: 0px 4px; }
+#taskbar { padding: 0px 4px; }
+window#waybar.empty #taskbar { background-color: transparent; }
+#workspaces button { padding: 0px 5px; color: @accent; }
+#workspaces button.active { color: @green; }
+#custom-menu { font-size: 15px; padding: 0px 9px; }
+#custom-power { padding: 0px 11px; }
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty { font-size: 14px; padding: 0px 8px; }
+
+/* Points (dot, dot-alt) */
+#custom-dot {
+	color: @background-alt;
+	padding: 0px 6px;
+}
+#custom-dot-alt {
+	color: @foreground-alt;
+	padding: 0px 6px;
+}
