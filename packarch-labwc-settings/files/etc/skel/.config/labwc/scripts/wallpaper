@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+## Packarch : fond d'écran de tous les écrans (swaybg), celui du fichier
+## ~/.config/labwc/wallpaper (écrit par packarch-skin, ou par l'action
+## « Définir comme fond d'écran » de Thunar : scripts/image). Le nouveau
+## swaybg est lancé avant l'arrêt de l'ancien : pas d'écran noir entre les
+## deux.
+
+file="$(head -n 1 "$HOME/.config/labwc/wallpaper" 2>/dev/null)"
+[[ -f $file ]] || file=/usr/share/backgrounds/wallpaper-alt.png
+
+old="$(pgrep -u "$UID" -x swaybg)"
+swaybg -m fill -i "$file" >/dev/null 2>&1 &
+if [[ -n $old ]]; then
+	sleep 0.5
+	kill $old 2>/dev/null
+fi
+exit 0

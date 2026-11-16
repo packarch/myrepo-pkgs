@@ -1,0 +1,33 @@
+# Démarrage de la session labwc (Packarch), lancé par labwc après la lecture
+# de sa configuration (une fois par session ; pas à Ctrl+Maj+r).
+
+# Thèmes GTK, d'icônes et de curseur du thème courant (packarch-theme, écrit
+# par packarch-skin) : GTK sous Wayland lit GSettings
+gtk_theme= icon_theme= cursor_theme= color_scheme= font=
+. ~/.config/labwc/packarch-theme 2>/dev/null
+schema=org.gnome.desktop.interface
+[ -n "$gtk_theme" ] && gsettings set $schema gtk-theme "$gtk_theme"
+[ -n "$icon_theme" ] && gsettings set $schema icon-theme "$icon_theme"
+[ -n "$cursor_theme" ] && gsettings set $schema cursor-theme "$cursor_theme"
+gsettings set $schema cursor-size 24
+[ -n "$color_scheme" ] && gsettings set $schema color-scheme "$color_scheme"
+[ -n "$font" ] && gsettings set $schema font-name "$font"
+
+# Écrans : configuration de kanshi, s'il y en a une (~/.config/kanshi/config)
+[ -f ~/.config/kanshi/config ] && command -v kanshi >/dev/null && kanshi >/dev/null 2>&1 &
+
+# Fond d'écran (swaybg), barre (waybar), notifications (mako), actions de
+# Thunar : relancés aussi par packarch-skin à chaque changement de thème
+~/.config/labwc/scripts/startup
+
+# Entrées de /etc/xdg/autostart et ~/.config/autostart (cachy-update,
+# xfce-polkit, configuration de GitHub...)
+dex --autostart --environment labwc >/dev/null 2>&1 &
+
+# Pas de verrouillage ni d'extinction de l'écran par inactivité (comme sur
+# les bureaux XFCE et Openbox) : l'écran est seulement verrouillé avant une
+# mise en veille. Pour verrouiller après 5 min puis éteindre l'écran 5 min
+# plus tard, ajouter avant « before-sleep » :
+#   timeout 300 ~/.config/labwc/scripts/current_lock \
+#   timeout 600 'wlopm --off \*' resume 'wlopm --on \*' \
+swayidle -w before-sleep ~/.config/labwc/scripts/current_lock >/dev/null 2>&1 &

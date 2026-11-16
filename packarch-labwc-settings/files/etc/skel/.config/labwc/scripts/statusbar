@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Waybar ---------------------------------------------------
+##
+## Packarch : barre sur l'écran principal seulement (ecran_principal de
+## ~/.config/labwc/statusbar.conf ; « auto » ou écran absent : le premier
+## écran actif), comme polybar sous Openbox. Configuration lancée : celle de
+## ~/.config/labwc/waybar avec « output » en plus (fichier du dossier
+## d'exécution). Les bureaux de labwc sont communs à tous les écrans.
+
+CONFIG="$HOME/.config/labwc/waybar/config"
+STYLE="$HOME/.config/labwc/waybar/style.css"
+
+outputs="$(wlr-randr --json 2>/dev/null)"
+wanted="$(sed -n 's/^[[:space:]]*ecran_principal[[:space:]]*=[[:space:]]*\([^[:space:]#]*\).*/\1/p' "$HOME/.config/labwc/statusbar.conf" 2>/dev/null | tail -1)"
+output=""
+if [[ -n $wanted && $wanted != auto ]] &&
+	jq -e --arg o "$wanted" 'any(.[]; .name == $o and .enabled)' <<<"$outputs" >/dev/null 2>&1; then
+	output="$wanted"
+fi
+[[ -n $output ]] || output="$(jq -r 'first(.[] | select(.enabled)) .name // empty' <<<"$outputs" 2>/dev/null)"
+
+if [[ -n $output ]]; then
+	run="${XDG_RUNTIME_DIR:-/tmp}/packarch-waybar"
+	mkdir -p "$run"
+	jq -n --arg inc "$CONFIG" --arg o "$output" '{include: [$inc], output: $o}' > "$run/config.jsonc"
+	CONFIG="$run/config.jsonc"
+fi
+
+exec waybar --log-level error --config "${CONFIG}" --style "${STYLE}"

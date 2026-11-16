@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Menu du bureau labwc de Packarch (clic droit sur le bureau, Super+Espace),
+  comme celui d'Openbox. Voir `man 5 labwc-menu`. Applications : menu généré
+  par labwc-menu-generator ; styles : menu de packarch-skin.
+-->
+<openbox_menu>
+  <menu id="root-menu" label="Packarch">
+    <item label="Terminal" icon="utilities-terminal">
+      <action name="Execute" command="sh -c '~/.config/labwc/scripts/kitty'" />
+    </item>
+    <item label="Gestionnaire de fichiers" icon="system-file-manager">
+      <action name="Execute" command="thunar" />
+    </item>
+    <item label="Navigateur web" icon="web-browser">
+      <action name="Execute" command="firefox" />
+    </item>
+    <item label="Éditeur de texte" icon="accessories-text-editor">
+      <action name="Execute" command="geany" />
+    </item>
+    <separator />
+    <menu id="applications" label="Applications" icon="applications-all" execute="labwc-menu-generator -p -I -t 'kitty -e'" />
+    <item label="Applications en root" icon="dialog-password">
+      <action name="Execute" command="sh -c '~/.config/labwc/scripts/menu ~/.config/labwc/scripts/rofi_asroot'" />
+    </item>
+    <menu id="captures" label="Capture d’écran" icon="applets-screenshooter">
+      <item label="Capturer le bureau">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --now'" />
+      </item>
+      <item label="Capturer une zone">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --area'" />
+      </item>
+      <item label="Capturer un écran">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --win'" />
+      </item>
+      <item label="Capturer dans 5 s">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --in5'" />
+      </item>
+      <item label="Capturer dans 10 s">
+        <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --in10'" />
+      </item>
+    </menu>
+    <separator />
+    <menu id="preferences" label="Préférences" icon="preferences-system">
+      <item label="Thèmes Packarch" icon="preferences-desktop-theme">
+        <action name="Execute" command="packarch-skin chooser" />
+      </item>
+      <menu id="styles" label="Changer de style" execute="packarch-skin openbox-menu" />
+      <item label="Couleur des dossiers">
+        <action name="Execute" command="packarch-folder-color" />
+      </item>
+      <item label="Apparence (GTK)">
+        <action name="Execute" command="nwg-look" />
+      </item>
+      <separator />
+      <item label="Écrans">
+        <action name="Execute" command="wdisplays" />
+      </item>
+      <item label="Paramètres audio">
+        <action name="Execute" command="pavucontrol" />
+      </item>
+      <item label="Réseau">
+        <action name="Execute" command="nm-connection-editor" />
+      </item>
+      <separator />
+      <menu id="labwc-config" label="labwc">
+        <item label="Modifier rc.xml">
+          <action name="Execute" command="sh -c 'geany ~/.config/labwc/rc.xml'" />
+        </item>
+        <item label="Modifier menu.xml">
+          <action name="Execute" command="sh -c 'geany ~/.config/labwc/menu.xml'" />
+        </item>
+        <item label="Modifier autostart">
+          <action name="Execute" command="sh -c 'geany ~/.config/labwc/autostart'" />
+        </item>
+        <item label="Modifier environment">
+          <action name="Execute" command="sh -c 'geany ~/.config/labwc/environment'" />
+        </item>
+        <separator />
+        <item label="Recharger la configuration">
+          <action name="Reconfigure" />
+        </item>
+      </menu>
+    </menu>
+    <separator />
+    <item label="Verrouiller l’écran" icon="system-lock-screen">
+      <action name="Execute" command="sh -c '~/.config/labwc/scripts/current_lock'" />
+    </item>
+    <menu id="systeme" label="Système" icon="system-shutdown">
+      <item label="Se déconnecter" icon="system-log-out">
+        <action name="Exit" />
+      </item>
+      <item label="Mettre en veille" icon="system-suspend">
+        <action name="Execute" command="systemctl suspend" />
+      </item>
+      <item label="Redémarrer" icon="system-reboot">
+        <action name="Execute" command="systemctl reboot" />
+      </item>
+      <item label="Éteindre" icon="system-shutdown">
+        <action name="Execute" command="systemctl poweroff" />
+      </item>
+    </menu>
+  </menu>
+</openbox_menu>

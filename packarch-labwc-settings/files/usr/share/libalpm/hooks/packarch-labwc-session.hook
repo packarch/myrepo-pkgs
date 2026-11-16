@@ -1,0 +1,15 @@
+# Packarch (packarch-labwc-settings) : la session labwc de LightDM lance
+# packarch-run-labwc (variables de Wayland, clavier du système) au lieu de
+# labwc
+
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = packarch-labwc-settings
+Target = labwc
+
+[Action]
+Description = Session labwc de Packarch (packarch-run-labwc)...
+When = PostTransaction
+Exec = /usr/bin/sed -i -e 's|^Exec=.*|Exec=/usr/bin/packarch-run-labwc|' /usr/share/wayland-sessions/labwc.desktop

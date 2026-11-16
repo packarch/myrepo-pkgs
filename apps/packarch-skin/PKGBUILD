@@ -1,12 +1,12 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Theme (skin) chooser of the Packarch Openbox, XFCE and Sway desktops: applies the
-# themes described by the theme.toml files of packarch-openbox-settings
-# (~/.config/openbox/themes) and, on XFCE, their copies in
-# /usr/share/xfcethemes/themes (packarch-xfce-settings) and, on Sway,
-# /usr/share/packarch/sway/themes (packarch-sway-settings). "render" writes the
-# default theme into the /etc/skel of these three packages when they are built
-# (makedepends: build.sh builds packarch-skin first).
+# Theme (skin) chooser of the Packarch Openbox, XFCE and labwc desktops: applies
+# the themes described by the theme.toml files of packarch-openbox-settings
+# (~/.config/openbox/themes) and their copies of packarch-xfce-settings
+# (~/.config/xfce4/themes) and packarch-labwc-settings
+# (~/.config/labwc/themes). "render" writes the default theme into the
+# /etc/skel of these three packages when they are built (makedepends:
+# build.sh builds packarch-skin first).
 # Own repository since 1.1.0 (sources in myrepo-pkgs/packarch-skin/skin
 # before, up to 1.0.0-19); 1.1.0: XFCE desktop; 1.1.1: "Couleur des
 # dossiers" item kept last in the theme launcher of the XFCE panel; 1.2.0:
@@ -20,12 +20,16 @@
 # and shadow color read from theme.toml (optional keys) instead of fixed;
 # 1.5.0: on every desktop the themes of the user are in
 # ~/.config/<desktop>/themes (openbox, xfce4, sway), where the missing themes
-# of the system are copied (a theme already there is never replaced).
+# of the system are copied (a theme already there is never replaced);
+# 1.6.0: labwc desktop (packarch-labwc-settings) instead of Sway: Openbox
+# window theme, buttons, fonts, rounded corners and shadows in rc.xml and
+# themerc-override, waybar, rofi, mako, kitty, hyprlock and GTK colors and
+# themes; "openbox-menu" also on labwc; the Sway desktop is removed.
 
 pkgname=packarch-skin
-pkgver=1.5.0
+pkgver=1.6.0
 pkgrel=1
-pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Sway desktops"
+pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and labwc desktops"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-skin"
 license=('GPL-3.0-or-later')

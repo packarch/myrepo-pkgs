@@ -22,9 +22,12 @@
 # 0.3.1: confirmation before closing the window during a session.
 # 0.3.2: named Packarch Dépannage in the menu and the window.
 # 0.3.3: version in the window title, duplicate header section removed.
+# 0.3.4: session-run and info under Sway (Wayland).
+# 0.3.5: labwc instead of Sway (LABWC_PID, Wayland socket of the labwc
+# session), the Sway desktop of Packarch is removed.
 
 pkgname=packarch-depannage
-pkgver=0.3.4
+pkgver=0.3.5
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')

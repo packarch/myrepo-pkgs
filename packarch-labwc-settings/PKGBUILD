@@ -1,0 +1,109 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# labwc configuration of Packarch: a Wayland stacking compositor with the
+# look and feel of Openbox, with the 10 themes of the Openbox and XFCE
+# desktops applied by packarch-skin (labwc desktop since packarch-skin
+# 1.6.0). labwc reads the Openbox window themes (OB-Packarch-*, openbox-3
+# directory of packarch-themes), its rc.xml and menu.xml follow the Openbox
+# format: the keys and menu are the ones of the Openbox desktop of Packarch.
+# The Wayland tools are those of the former Sway desktop of Packarch
+# (packarch-sway-settings, replaced by this package), based on the GPL3 Sway
+# configuration of Aditya Shakya (archcraft-sway-free,
+# https://github.com/archcraft-os/archcraft-sway): waybar (labwc workspaces
+# with ext/workspaces, window list with wlr/taskbar), rofi menus, mako
+# notifications, hyprlock, swaybg (wallpaper), swayidle (lock before
+# suspend), grim and slurp (screenshots), hyprpicker, kitty (the only
+# terminal); nwg-look (GTK settings) and wdisplays (screens) in the menu. The
+# configuration goes to /etc/skel/.config/labwc, with the default theme
+# already applied to it at build time (packarch-skin render).
+#
+# What packarch-skin writes: window theme, title bar buttons (Openbox
+# titleLayout converted), fonts, rounded corners and shadows (picom settings
+# of the theme) in rc.xml and themerc-override, wallpaper (wallpaper, shown by
+# scripts/wallpaper), cursor (environment), GTK/icon/cursor themes
+# (packarch-theme, set again with gsettings by autostart and given to root by
+# scripts/asroot), colors of waybar, rofi, mako, kitty and hyprlock; then
+# labwc --reconfigure and scripts/startup (swaybg, waybar and mako
+# relaunched).
+#
+# Session: packarch-run-labwc (Wayland variables, keyboard layout of the
+# system read with localectl, kitty configuration of the session, Thunar
+# plugins without the wallpaper one), set as the Exec of labwc.desktop by the
+# packarch-labwc-session hook; labwc is the default session of LightDM
+# (60-packarch-labwc.conf); kitty for Terminal=true applications
+# (/etc/xdg/labwc-xdg-terminals.list, xdg-terminal-exec); XDG autostart with
+# dex (cachy-update, xfce-polkit, GitHub setup; picom and plain nm-applet
+# hidden under labwc by ~/.config/autostart). Rofi menus are closed by a
+# click on a window or the desktop (pkill rofi in the mouse bindings: rofi
+# does not see these clicks under Wayland) or by starting them again
+# (scripts/menu). No screen lock nor blanking on idle (only before suspend),
+# numlock on.
+#
+# The themes are the theme.toml files of packarch-openbox-settings, copied to
+# /etc/skel/.config/labwc/themes, with the thumbnails of
+# packarch-xfce-settings (/usr/share/packarch/labwc/icons) for the chooser.
+# No file in common with packarch-openbox-settings and packarch-xfce-settings:
+# installable next to them.
+
+pkgname=packarch-labwc-settings
+pkgver=1.0
+pkgrel=1
+pkgdesc="labwc configuration of Packarch"
+arch=('any')
+url="https://github.com/packarch/myrepo-pkgs"
+license=('GPL3')
+depends=(
+  # labwc and the Wayland tools of the configuration
+  labwc labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
+  hyprlock hyprpicker grim slurp wl-clipboard wlr-randr wlopm jq imagemagick
+  pulsemixer pavucontrol playerctl light libnotify dex xdg-terminal-exec
+  xdg-user-dirs xorg-xhost nwg-look wdisplays
+  xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
+  network-manager-applet networkmanager-dmenu-git bluez-utils xfce-polkit
+  # applications of the keys and menu
+  kitty thunar geany firefox viewnior htop nano yad
+  # Geany color schemes of the themes
+  packarch-geany-config
+  # applications of the Thunar actions
+  catfish meld xfconf
+  # fonts of waybar, kitty, mako and hyprlock
+  noto-fonts ttf-jetbrains-mono-nerd packarch-fonts
+  # LightDM greeter, menu hooks, cachy-update
+  packarch-system-settings
+  # theme chooser, GTK and Openbox (window) themes, icons, cursors and
+  # wallpapers
+  'packarch-skin>=1.6.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
+)
+# Writes the default theme into /etc/skel (render)
+makedepends=('packarch-skin>=1.6.0')
+optdepends=(
+  'blueman: Bluetooth manager (right click on the Bluetooth module)'
+  'kanshi: screen configuration kept (~/.config/kanshi/config, started by autostart)'
+)
+# The Sway desktop of Packarch is replaced by this one (same Wayland tools,
+# files of /etc/skel/.config/autostart in common)
+replaces=(packarch-sway-settings)
+conflicts=(packarch-sway-settings)
+options=(!strip !emptydirs)
+
+package() {
+	cp -a "$startdir"/files/. "$pkgdir"/
+	# The themes of the Openbox desktop (theme.toml only: polybar and rofi
+	# layouts are not used), with the thumbnails of the XFCE theme launcher
+	local t id themes="$startdir"/../packarch-openbox-settings/files/etc/skel/.config/openbox/themes
+	local icons="$startdir"/../packarch-xfce-settings/files/usr/share/xfcethemes/icons
+	for t in "$themes"/*/theme.toml; do
+		id="$(basename "$(dirname "$t")")"
+		install -Dm644 "$t" "$pkgdir"/etc/skel/.config/labwc/themes/"$id"/theme.toml
+		if [[ -f "$icons/$id.png" ]]; then
+			install -Dm644 "$icons/$id.png" "$pkgdir"/usr/share/packarch/labwc/icons/"$id".png
+		fi
+	done
+	install -Dm644 /dev/stdin "$pkgdir"/usr/share/licenses/"$pkgname"/NOTICE <<-EOF
+		Wayland tools configuration based on archcraft-sway-free by Aditya
+		Shakya (adi1090x), GPL-3.0: https://github.com/archcraft-os/archcraft-sway
+	EOF
+	# The first session starts with the default theme
+	packarch-skin render "$pkgdir" default
+}
