@@ -74,10 +74,12 @@
 # Screen recorder menu back, as pa-record on Openbox: scripts/record
 # (pipemenu, wf-recorder and slurp; sound of the computer), new dependency
 # wf-recorder
+# 1.0-7: Qt applications follow the GTK theme (QT_QPA_PLATFORMTHEME=gtk3 in
+# packarch-run-labwc, as packarch-qt.sh of Openbox): MKVToolNix was light
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=6
+pkgrel=7
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
