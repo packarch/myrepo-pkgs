@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+##
+## Pipemenu labwc « Favoris Internet » : favoris de ~/.config/labwc/favoris.txt,
+## un par ligne sous la forme NOM:ADRESSE (ex. « Google:https://www.google.fr »).
+## Les lignes vides et celles commençant par # sont ignorées ; une ligne « - »
+## ajoute un séparateur. L'adresse est ouverte par xdg-open (navigateur par
+## défaut). Même format que le menu Openbox de Packarch.
+
+file="${XDG_CONFIG_HOME:-$HOME/.config}/labwc/favoris.txt"
+
+# Échappement XML (attributs entre guillemets) ; « & » littéral dans les
+# remplacements (bash 5.2 y met sinon le texte trouvé)
+shopt -u patsub_replacement 2>/dev/null
+xml() {
+	local s="${1//&/&amp;}"
+	s="${s//</&lt;}"; s="${s//>/&gt;}"; s="${s//\"/&quot;}"; s="${s//\'/&apos;}"
+	printf '%s' "$s"
+}
+
+# Entre apostrophes pour le shell de la commande du menu
+quote() {
+	printf "'%s'" "${1//\'/\'\\\'\'}"
+}
+
+item() {
+	printf '  <item label="%s"><action name="Execute" command="%s" /></item>\n' \
+		"$(xml "$1")" "$(xml "$2")"
+}
+
+echo '<openbox_pipe_menu>'
+count=0
+if [[ -r "$file" ]]; then
+	while IFS= read -r line || [[ -n "$line" ]]; do
+		line="${line%$'\r'}"
+		[[ "$line" =~ ^[[:space:]]*(#|$) ]] && continue
+		if [[ "$line" =~ ^[[:space:]]*-[[:space:]]*$ ]]; then
+			echo '  <separator />'
+			continue
+		fi
+		# NOM:ADRESSE, coupé au premier « : » (l'adresse a les siens)
+		[[ "$line" == *:* ]] || continue
+		name="${line%%:*}"
+		url="${line#*:}"
+		name="${name#"${name%%[![:space:]]*}"}"; name="${name%"${name##*[![:space:]]}"}"
+		url="${url#"${url%%[![:space:]]*}"}"; url="${url%"${url##*[![:space:]]}"}"
+		[[ -n "$name" && -n "$url" ]] || continue
+		item "$name" "xdg-open $(quote "$url")"
+		count=$((count+1))
+	done < "$file"
+fi
+(( count )) || echo '  <separator label="Aucun favori" />'
+echo '  <separator />'
+item 'Modifier les favoris' "sh -c 'mkdir -p \"\$(dirname \"\$1\")\" && touch \"\$1\" && geany \"\$1\"' sh $(quote "$file")"
+echo '</openbox_pipe_menu>'

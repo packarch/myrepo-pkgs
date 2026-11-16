@@ -23,6 +23,7 @@
     <item label="Applications en root" icon="dialog-password">
       <action name="Execute" command="sh -c '~/.config/labwc/scripts/menu ~/.config/labwc/scripts/rofi_asroot'" />
     </item>
+    <menu id="favoris" label="Favoris Internet" icon="bookmarks" execute="sh -c '~/.config/labwc/scripts/bookmarks'" />
     <menu id="captures" label="Capture d’écran" icon="applets-screenshooter">
       <item label="Capturer le bureau">
         <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --now'" />
@@ -75,6 +76,9 @@
         </item>
         <item label="Modifier environment">
           <action name="Execute" command="sh -c 'geany ~/.config/labwc/environment'" />
+        </item>
+        <item label="Modifier les favoris Internet">
+          <action name="Execute" command="sh -c 'geany ~/.config/labwc/favoris.txt'" />
         </item>
         <separator />
         <item label="Recharger la configuration">

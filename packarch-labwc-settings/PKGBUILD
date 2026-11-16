@@ -44,10 +44,14 @@
 # packarch-xfce-settings (/usr/share/packarch/labwc/icons) for the chooser.
 # No file in common with packarch-openbox-settings and packarch-xfce-settings:
 # installable next to them.
+#
+# 1.0-2: "Favoris Internet" submenu of the right-click menu, as in the
+# Openbox desktop (scripts/bookmarks pipemenu, ~/.config/labwc/favoris.txt
+# in the NAME:ADDRESS format of the Openbox favoris.txt)
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
