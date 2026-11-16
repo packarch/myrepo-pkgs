@@ -24,6 +24,11 @@ if [[ -f $src ]] && {
 	{ grep -q 'Example for a custom action' "$uca" && [[ $(grep -c '<action>' "$uca") -le 1 ]]; }
 }; then
 	cmp -s "$src" "$uca" || { mkdir -p "${uca%/*}" && cp -f "$src" "$uca"; }
+elif [[ -f $src ]] && grep -q 'packarch-tcma' "$uca" && ! command -v packarch-tcma >/dev/null; then
+	# Actions du bureau Openbox (packarch-tcma, retiré avec
+	# packarch-openbox-settings) : inutilisables, remplacées ; l'ancien
+	# fichier est gardé dans uca.xml.openbox
+	cp -f "$uca" "$uca.openbox" && cp -f "$src" "$uca"
 fi
 
 prop=/misc-show-delete-action

@@ -181,13 +181,13 @@
     "custom/launch-kitty": {
       "tooltip-format": "Terminal (clic droit : en administrateur)",
       "on-click": "~/.config/labwc/scripts/kitty",
-      "on-click-right": "~/.config/labwc/scripts/asroot 'kitty --class kitty-float'",
+      "on-click-right": "~/.config/labwc/scripts/asroot 'kitty --class kitty-float --directory /root'",
       "format": "<span color='@green@'></span>"
     },
     "custom/launch-discord": {
       "tooltip-format": "Discord",
       "on-click": "discord",
-      "exec": "echo",
+      "exec": "echo installé",
       "exec-if": "command -v discord",
       "interval": "once",
       "format": "<span color='@cyan@'>󰙯</span>"
@@ -195,7 +195,7 @@
     "custom/launch-filezilla": {
       "tooltip-format": "FileZilla",
       "on-click": "filezilla",
-      "exec": "echo",
+      "exec": "echo installé",
       "exec-if": "command -v filezilla",
       "interval": "once",
       "format": "<span color='@yellow@'></span>"
@@ -203,7 +203,7 @@
     "custom/launch-mkvtoolnix": {
       "tooltip-format": "MKVToolNix",
       "on-click": "mkvtoolnix-gui",
-      "exec": "echo",
+      "exec": "echo installé",
       "exec-if": "command -v mkvtoolnix-gui",
       "interval": "once",
       "format": "<span color='@red@'></span>"
@@ -211,7 +211,7 @@
     "custom/launch-filebot": {
       "tooltip-format": "FileBot",
       "on-click": "filebot",
-      "exec": "echo",
+      "exec": "echo installé",
       "exec-if": "command -v filebot",
       "interval": "once",
       "format": "<span color='@bright-blue@'>󰚩</span>"

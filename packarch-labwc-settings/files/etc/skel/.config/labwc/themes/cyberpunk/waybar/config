@@ -224,7 +224,7 @@
     "custom/launch-kitty": {
       "tooltip-format": "Terminal (clic droit : en administrateur)",
       "on-click": "~/.config/labwc/scripts/kitty",
-      "on-click-right": "~/.config/labwc/scripts/asroot 'kitty --class kitty-float'",
+      "on-click-right": "~/.config/labwc/scripts/asroot 'kitty --class kitty-float --directory /root'",
       "format": "<span color='@green@'></span>"
     },
     "pulseaudio": {

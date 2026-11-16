@@ -57,10 +57,17 @@
 # output and the 15 % margins of the floating bar of spark, and starts
 # waybar from its directory (@import of colors.css). Button of the theme
 # chooser (packarch-skin chooser) next to the menu of the packarch theme
+# 1.0-4: thunar-defaults also replaces the Thunar actions of Openbox
+# (packarch-tcma, removed with packarch-openbox-settings: terminal, as root
+# and wallpaper actions failed), old file kept in uca.xml.openbox;
+# scripts/kitty starts in $HOME (the waybar button opened kitty in
+# ~/.config/labwc/waybar), root kitty of the button in /root; launchers of
+# optional applications (discord, filezilla, mkvtoolnix, filebot of the
+# packarch theme) shown: their exec wrote nothing and waybar hid them
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=3
+pkgrel=4
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

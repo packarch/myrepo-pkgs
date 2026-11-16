@@ -130,7 +130,7 @@ def m_text(text):
 LAUNCHERS = {
     "firefox": ("\uf269", "Firefox (clic droit : Gmail)", "firefox", "firefox https://mail.google.com", None),
     "thunar": ("\uf07b", "Fichiers (clic droit : en administrateur)", "thunar", f"{S}/asroot thunar", None),
-    "kitty": ("\uf120", "Terminal (clic droit : en administrateur)", f"{S}/kitty", f"{S}/asroot 'kitty --class kitty-float'", None),
+    "kitty": ("\uf120", "Terminal (clic droit : en administrateur)", f"{S}/kitty", f"{S}/asroot 'kitty --class kitty-float --directory /root'", None),
     "discord": ("󰙯", "Discord", "discord", None, "discord"),
     "filezilla": ("\uf0ec", "FileZilla", "filezilla", None, "filezilla"),
     "mkvtoolnix": ("\uf008", "MKVToolNix", "mkvtoolnix-gui", None, "mkvtoolnix-gui"),
@@ -144,8 +144,10 @@ def m_launch(app, color):
     if right:
         m["on-click-right"] = right
     if need:
-        # Seulement si l'application est installée
-        m.update({"exec": "echo", "exec-if": f"command -v {need}", "interval": "once"})
+        # Seulement si l'application est installée. exec doit écrire un
+        # texte (non affiché : format n'a que l'icône) : waybar masque un
+        # module custom dont la sortie est vide
+        m.update({"exec": "echo installé", "exec-if": f"command -v {need}", "interval": "once"})
     m["format"] = sp(color, icon)
     return m
 

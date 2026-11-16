@@ -5,7 +5,11 @@
 ## Kitty : kitty [-f|-F] [ARGUMENTS DE KITTY...]
 ##   -f  fenêtre flottante
 ##   -F  plein écran
-## Packarch : les arguments suivants sont transmis à kitty (commande à lancer)
+## Packarch : les arguments suivants sont transmis à kitty (commande à lancer).
+## Le terminal s'ouvre dans le dossier personnel : lancé depuis waybar, il
+## héritait de son dossier courant (~/.config/labwc/waybar, scripts/statusbar)
+
+cd -- "$HOME" || exit 1
 
 # Directory
 DIR="$HOME/.config/labwc"
