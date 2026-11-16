@@ -79,10 +79,12 @@
 # 1.0-8: no backlight (desktop computer): scripts/statusbar removes the
 # backlight module and its separator from the bar (waybar showed "0%",
 # polybar hid it on Openbox)
+# 1.0-9: menu bar of Thunar hidden by default (thunar-defaults), as on
+# Openbox and XFCE
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=8
+pkgrel=9
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
