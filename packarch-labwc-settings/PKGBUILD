@@ -91,10 +91,12 @@
 # 1.0-11: icons for every entry of the menu (screenshots, preferences,
 # labwc submenu) and of the screen recorder and bookmarks pipemenus, names
 # found in the 6 icon themes of the Packarch themes
+# 1.0-12: menus up to 360 px wide (menu.width.max in themerc-override,
+# outside the lines of packarch-skin): labels were cut at 200 px
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=11
+pkgrel=12
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

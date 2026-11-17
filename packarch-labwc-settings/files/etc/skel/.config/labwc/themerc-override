@@ -9,3 +9,7 @@ window.active.shadow.color: #00000099
 window.inactive.shadow.size: 20
 window.inactive.shadow.color: #00000099
 # -- packarch-skin : fin --
+
+# Menus assez larges pour les libellés longs (« Gestionnaire de fichiers »,
+# « Enregistrer une zone (sans le son) ») : 200 px par défaut, tronqués
+menu.width.max: 360
