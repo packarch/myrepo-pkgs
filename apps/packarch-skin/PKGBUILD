@@ -27,7 +27,7 @@
 # themes; "openbox-menu" also on labwc; the Sway desktop is removed.
 
 pkgname=packarch-skin
-pkgver=1.7.0
+pkgver=1.7.1
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and labwc desktops"
 arch=('x86_64')

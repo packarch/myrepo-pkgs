@@ -1,0 +1,336 @@
+From 788261edfa245a206b980e9d94dbe46772854ccc Mon Sep 17 00:00:00 2001
+From: Antidote1911 <antidote1911@gmail.com>
+Date: Tue, 17 Nov 2026 07:45:43 +0100
+Subject: [PATCH] menu: rounded corners and drop-shadow (Packarch)
+
+New theme options, off by default (labwc unchanged without them):
+menu.corner.radius (clamped to menu.border.width), menu.shadow.size and
+menu.shadow.color. Border, fill and shadow are drawn in one scaled_buffer
+per menu, rendered again for the scale of the output; only the menu
+accepts input, not its shadow.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ include/menu/menu-background.h |  25 +++++
+ include/theme.h                |   4 +
+ src/menu/menu-background.c     | 191 +++++++++++++++++++++++++++++++++
+ src/menu/menu.c                |   8 ++
+ src/menu/meson.build           |   1 +
+ src/theme.c                    |  14 +++
+ 6 files changed, 243 insertions(+)
+ create mode 100644 include/menu/menu-background.h
+ create mode 100644 src/menu/menu-background.c
+
+diff --git a/include/menu/menu-background.h b/include/menu/menu-background.h
+new file mode 100644
+index 00000000..53df8f67
+--- /dev/null
++++ b/include/menu/menu-background.h
+@@ -0,0 +1,25 @@
++/* SPDX-License-Identifier: GPL-2.0-only */
++#ifndef LABWC_MENU_BACKGROUND_H
++#define LABWC_MENU_BACKGROUND_H
++#include <stdbool.h>
++
++struct wlr_scene_tree;
++struct theme;
++
++/*
++ * Packarch: true if the theme asks for rounded corners or a drop-shadow
++ * around menus (menu.corner.radius, menu.shadow.size); otherwise menus
++ * keep the plain background of labwc.
++ */
++bool menu_background_is_custom(struct theme *theme);
++
++/*
++ * Packarch: background of a menu of width x height (layout pixels), drawn
++ * in one auto-scaling buffer: border and fill with rounded corners, and a
++ * drop-shadow around them. The buffer extends menu.shadow.size beyond the
++ * menu on every side; only the menu itself accepts input.
++ */
++void menu_background_create(struct wlr_scene_tree *parent,
++	struct theme *theme, int width, int height);
++
++#endif /* LABWC_MENU_BACKGROUND_H */
+diff --git a/include/theme.h b/include/theme.h
+index 2fb499a9..66254270 100644
+--- a/include/theme.h
++++ b/include/theme.h
+@@ -142,6 +142,10 @@ struct theme {
+ 	int menu_max_width;
+ 	int menu_border_width;
+ 	float menu_border_color[4];
++	/* Packarch: rounded corners and drop-shadow of menus */
++	int menu_corner_radius;
++	int menu_shadow_size;
++	float menu_shadow_color[4];
+ 
+ 	int menu_items_padding_x;
+ 	int menu_items_padding_y;
+diff --git a/src/menu/menu-background.c b/src/menu/menu-background.c
+new file mode 100644
+index 00000000..90d5a4f2
+--- /dev/null
++++ b/src/menu/menu-background.c
+@@ -0,0 +1,191 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Packarch: menu background with rounded corners and a drop-shadow.
++ *
++ * The border, the fill and the shadow are rendered together into one
++ * scaled_buffer, so that they are drawn again for the scale of the output
++ * (no gap between the border and the fill at fractional scales). The menu
++ * items are drawn on top of the fill and stay inside the border, so only
++ * the background needs rounded corners as long as the radius is not larger
++ * than menu.border.width (the radius is clamped to it).
++ */
++#include "menu/menu-background.h"
++#include <assert.h>
++#include <math.h>
++#include <string.h>
++#include <cairo.h>
++#include <wlr/types/wlr_scene.h>
++#include "buffer.h"
++#include "common/macros.h"
++#include "common/mem.h"
++#include "config/rcxml.h"
++#include "scaled-buffer/scaled-buffer.h"
++#include "ssd.h"
++#include "theme.h"
++
++struct menu_background {
++	int width;   /* of the menu, without the shadow */
++	int height;
++	int radius;
++	int border_width;
++	int shadow_size;
++	float border_color[4];
++	float fill_color[4];
++	float shadow_color[4];
++};
++
++bool
++menu_background_is_custom(struct theme *theme)
++{
++	return theme->menu_corner_radius > 0 || theme->menu_shadow_size > 0;
++}
++
++/* Signed distance from (x, y) to a rounded box centered on (0, 0) */
++static double
++rounded_box_distance(double x, double y, double half_w, double half_h,
++		double radius)
++{
++	double qx = fabs(x) - (half_w - radius);
++	double qy = fabs(y) - (half_h - radius);
++	double outside = hypot(MAX(qx, 0.0), MAX(qy, 0.0));
++	double inside = MIN(MAX(qx, qy), 0.0);
++	return outside + inside - radius;
++}
++
++static double
++clamp01(double v)
++{
++	return v < 0.0 ? 0.0 : (v > 1.0 ? 1.0 : v);
++}
++
++static struct lab_data_buffer *
++_create_buffer(struct scaled_buffer *scaled_buffer, double scale)
++{
++	struct menu_background *self = scaled_buffer->data;
++	int s = self->shadow_size;
++
++	struct lab_data_buffer *buffer = buffer_create_cairo(
++		self->width + 2 * s, self->height + 2 * s, scale);
++	if (!buffer) {
++		return NULL;
++	}
++	cairo_surface_t *surface = buffer->surface;
++	cairo_surface_flush(surface);
++	int px_w = cairo_image_surface_get_width(surface);
++	int px_h = cairo_image_surface_get_height(surface);
++	int stride = cairo_image_surface_get_stride(surface);
++	uint8_t *data = cairo_image_surface_get_data(surface);
++
++	/* Everything below in device pixels */
++	double f = (double)px_w / (double)(self->width + 2 * s);
++	double shadow = s * f;
++	double half_w = self->width * f / 2.0;
++	double half_h = self->height * f / 2.0;
++	double border = self->border_width * f;
++	double radius = MIN(self->radius * f, MIN(half_w, half_h));
++
++	/* Same Gaussian dropoff as the window drop-shadows (theme.c) */
++	double inset = shadow * SSD_SHADOW_INSET;
++	double total = shadow + inset;
++	double variance = 0.3 * 0.3;
++
++	for (int py = 0; py < px_h; py++) {
++		uint32_t *row = (uint32_t *)(data + py * stride);
++		double y = py + 0.5 - shadow - half_h;
++		for (int px = 0; px < px_w; px++) {
++			double x = px + 0.5 - shadow - half_w;
++			double d = rounded_box_distance(x, y, half_w, half_h, radius);
++
++			/* Coverage of the menu and of its fill (antialiased) */
++			double cov = clamp01(0.5 - d);
++			double cov_fill = border > 0.0 ? clamp01(0.5 - (d + border)) : cov;
++
++			/* Premultiplied: border, then fill, then shadow below */
++			double c[4];
++			for (int i = 0; i < 4; i++) {
++				c[i] = self->border_color[i] * (cov - cov_fill)
++					+ self->fill_color[i] * cov_fill;
++			}
++			if (shadow > 0.0 && cov < 1.0) {
++				double dn = (MAX(d, 0.0) + inset) / total;
++				double a = d < shadow ? exp(-(dn * dn) / variance) : 0.0;
++				for (int i = 0; i < 4; i++) {
++					c[i] += self->shadow_color[i] * a * (1.0 - cov);
++				}
++			}
++
++			/* CAIRO_FORMAT_ARGB32, native endian */
++			row[px] = (uint32_t)(clamp01(c[3]) * 255.0 + 0.5) << 24
++				| (uint32_t)(clamp01(c[0]) * 255.0 + 0.5) << 16
++				| (uint32_t)(clamp01(c[1]) * 255.0 + 0.5) << 8
++				| (uint32_t)(clamp01(c[2]) * 255.0 + 0.5);
++		}
++	}
++	cairo_surface_mark_dirty(surface);
++	return buffer;
++}
++
++static void
++_destroy(struct scaled_buffer *scaled_buffer)
++{
++	free(scaled_buffer->data);
++}
++
++static bool
++_equal(struct scaled_buffer *scaled_buffer_a,
++		struct scaled_buffer *scaled_buffer_b)
++{
++	struct menu_background *a = scaled_buffer_a->data;
++	struct menu_background *b = scaled_buffer_b->data;
++	return !memcmp(a, b, sizeof(*a));
++}
++
++static const struct scaled_buffer_impl impl = {
++	.create_buffer = _create_buffer,
++	.destroy = _destroy,
++	.equal = _equal,
++};
++
++/*
++ * Only the menu accepts input, not its shadow. node.data holds the node
++ * descriptors of labwc, so the shadow size is read from the theme (menus
++ * are created again when the theme changes).
++ */
++static bool
++accepts_input(struct wlr_scene_buffer *scene_buffer, double *sx, double *sy)
++{
++	int s = rc.theme->menu_shadow_size;
++	return *sx >= s && *sx < scene_buffer->dst_width - s
++		&& *sy >= s && *sy < scene_buffer->dst_height - s;
++}
++
++void
++menu_background_create(struct wlr_scene_tree *parent, struct theme *theme,
++		int width, int height)
++{
++	struct menu_background *self = znew(*self);
++	self->width = width;
++	self->height = height;
++	self->border_width = theme->menu_border_width;
++	/* Items are inset by the border: corners beyond it would cut them */
++	self->radius = MIN(theme->menu_corner_radius,
++		MAX(theme->menu_border_width, 0));
++	self->shadow_size = theme->menu_shadow_size;
++	memcpy(self->border_color, theme->menu_border_color,
++		sizeof(self->border_color));
++	memcpy(self->fill_color, theme->menu_items_bg_color,
++		sizeof(self->fill_color));
++	memcpy(self->shadow_color, theme->menu_shadow_color,
++		sizeof(self->shadow_color));
++
++	struct scaled_buffer *scaled_buffer =
++		scaled_buffer_create(parent, &impl, /* drop_buffer */ true);
++	scaled_buffer->data = self;
++	struct wlr_scene_buffer *scene_buffer = scaled_buffer->scene_buffer;
++	scene_buffer->point_accepts_input = accepts_input;
++	wlr_scene_node_set_position(&scene_buffer->node,
++		-self->shadow_size, -self->shadow_size);
++	scaled_buffer_request_update(scaled_buffer,
++		width + 2 * self->shadow_size, height + 2 * self->shadow_size);
++	wlr_scene_node_lower_to_bottom(&scene_buffer->node);
++}
+diff --git a/src/menu/menu.c b/src/menu/menu.c
+index 2d1e0ff1..ca6c611a 100644
+--- a/src/menu/menu.c
++++ b/src/menu/menu.c
+@@ -26,6 +26,7 @@
+ #include "common/xml.h"
+ #include "config/rcxml.h"
+ #include "labwc.h"
++#include "menu/menu-background.h"
+ #include "node.h"
+ #include "output.h"
+ #include "scaled-buffer/scaled-font-buffer.h"
+@@ -541,6 +542,13 @@ menu_create_scene(struct menu *menu)
+ 	}
+ 	menu->size.height = item_y + theme->menu_border_width;
+ 
++	/* Packarch: rounded corners and drop-shadow */
++	if (menu_background_is_custom(theme)) {
++		menu_background_create(menu->scene_tree, theme,
++			menu->size.width, menu->size.height);
++		return;
++	}
++
+ 	struct lab_scene_rect_options opts = {
+ 		.border_colors = (float *[1]) {theme->menu_border_color},
+ 		.nr_borders = 1,
+diff --git a/src/menu/meson.build b/src/menu/meson.build
+index 51306a44..69bd9253 100644
+--- a/src/menu/meson.build
++++ b/src/menu/meson.build
+@@ -1,3 +1,4 @@
+ labwc_sources += files(
+   'menu.c',
++  'menu-background.c',
+ )
+diff --git a/src/theme.c b/src/theme.c
+index 71e577ce..de781909 100644
+--- a/src/theme.c
++++ b/src/theme.c
+@@ -581,6 +581,9 @@ theme_builtin(struct theme *theme)
+ 	theme->menu_max_width = 200;
+ 	theme->menu_border_width = INT_MIN;
+ 	theme->menu_border_color[0] = FLT_MIN;
++	theme->menu_corner_radius = 0;
++	theme->menu_shadow_size = 0;
++	parse_hexstr("#00000060", theme->menu_shadow_color);
+ 
+ 	theme->menu_items_padding_x = 7;
+ 	theme->menu_items_padding_y = 4;
+@@ -904,6 +907,17 @@ entry(struct theme *theme, const char *key, const char *value)
+ 	if (match_glob(key, "menu.border.color")) {
+ 		parse_color(value, theme->menu_border_color);
+ 	}
++	if (match_glob(key, "menu.corner.radius")) {
++		theme->menu_corner_radius = get_int_if_positive(
++			value, "menu.corner.radius");
++	}
++	if (match_glob(key, "menu.shadow.size")) {
++		theme->menu_shadow_size = get_int_if_positive(
++			value, "menu.shadow.size");
++	}
++	if (match_glob(key, "menu.shadow.color")) {
++		parse_color(value, theme->menu_shadow_color);
++	}
+ 
+ 	if (match_glob(key, "menu.items.padding.x")) {
+ 		theme->menu_items_padding_x = get_int_if_positive(
+-- 
+2.56.1
+

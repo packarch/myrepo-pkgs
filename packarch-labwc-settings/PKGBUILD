@@ -103,17 +103,21 @@
 # /usr/share/packarch/labwc/menu-icons) or feather glyphs (no icons,
 # feather font after the menu font, set again by scripts/startup after a
 # theme change)
+# 1.0-15: labwc-packarch (labwc with rounded and shadowed menus, replaces
+# labwc) instead of labwc; packarch-skin 1.7.1 writes the menus of each
+# theme in themerc-override (background lighter than the windows, rounded
+# corners and shadow)
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=14
+pkgrel=15
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL3')
 depends=(
   # labwc and the Wayland tools of the configuration
-  labwc labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
+  labwc-packarch labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
   hyprlock hyprpicker grim slurp wf-recorder wl-clipboard wlr-randr wlopm jq imagemagick
   pulsemixer pavucontrol playerctl light libnotify dex xdg-terminal-exec
   xdg-user-dirs xorg-xhost nwg-look wdisplays waypaper
@@ -131,11 +135,11 @@ depends=(
   packarch-system-settings
   # theme chooser, GTK and Openbox (window) themes, icons, cursors and
   # wallpapers
-  'packarch-skin>=1.7.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.7.1' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.7.0')
+makedepends=('packarch-skin>=1.7.1')
 optdepends=(
   'blueman: Bluetooth manager (right click on the Bluetooth module)'
   'kanshi: screen configuration kept (~/.config/kanshi/config, started by autostart)'

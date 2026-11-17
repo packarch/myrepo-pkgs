@@ -1,0 +1,78 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+# Based on the labwc package of Arch Linux (Peter Jung, Lex Black)
+#
+# labwc with rounded corners and a drop-shadow on the menus, which labwc
+# does not do (refused upstream: labwc/labwc#2352, #3681). The patch (fork:
+# branch "packarch" of ~/Documents/develop/packarch/labwc-packarch) adds
+# three theme options, off by default: menu.corner.radius (clamped to
+# menu.border.width), menu.shadow.size and menu.shadow.color, written by
+# packarch-skin in themerc-override. Border, fill and shadow are drawn in one
+# auto-scaling buffer per menu; the shadow does not take clicks.
+#
+# Each new labwc (or wlroots soname) needs the patch rebased: pkgver follows
+# labwc, pkgrel is ours.
+
+pkgname=labwc-packarch
+pkgver=0.20.3
+pkgrel=1
+pkgdesc='stacking wayland compositor with look and feel from openbox (Packarch: rounded and shadowed menus)'
+url="https://github.com/labwc/labwc"
+arch=('x86_64')
+license=('GPL-2.0-only')
+depends=(
+  cairo
+  glib2
+  glibc
+  libinput
+  libpng
+  librsvg
+  libsfdo
+  libwlroots-0.20.so
+  libxcb
+  libxkbcommon
+  libxml2
+  pango
+  pixman
+  seatd
+  ttf-font
+  wayland
+)
+makedepends=(
+  git
+  libcap
+  meson
+  scdoc
+  wayland-protocols
+  xorg-xwayland
+)
+optdepends=(
+  "bemenu: default launcher via Alt+F3"
+  "xorg-xwayland: X11 application support"
+)
+provides=("labwc=${pkgver}")
+conflicts=(labwc)
+source=("git+https://github.com/labwc/labwc#tag=${pkgver}"
+        0001-menu-rounded-corners-and-drop-shadow.patch)
+b2sums=('9fc8149b66f27e7cfe62ccdf69c78e50346483d5d884cfd71971b16f86322b68c43cbb0551f415b59b7dbce127200e248965c2d5a6e212d7bf8a650d80265756'
+        '17e825e04023c482b2500606e03b2bbac367252f1e190ca213b542cc15076797e3ceec1c24f8a157c9b2d545c8742617c1efb71d83f25bdfcbbe8af708f36eb7')
+
+prepare() {
+  cd labwc
+  # Committed and tagged: labwc --version gives "0.20.3-packarch" (git
+  # describe of meson.build), not "0.20.3-dirty"
+  git -c user.name=Packarch -c user.email=packarch@localhost \
+    am -q "$srcdir"/0001-menu-rounded-corners-and-drop-shadow.patch
+  git -c user.name=Packarch -c user.email=packarch@localhost \
+    tag -a -m Packarch "${pkgver}-packarch"
+}
+
+build() {
+  arch-meson -Dman-pages=enabled labwc build
+  meson compile -C build
+}
+
+package() {
+  meson install -C build --destdir "$pkgdir"
+  # Allow high-priority Vulkan queues (and future SCHED_RR) without root
+  setcap cap_sys_nice=+ep "$pkgdir/usr/bin/labwc"
+}
