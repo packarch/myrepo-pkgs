@@ -107,10 +107,13 @@
 # labwc) instead of labwc; packarch-skin 1.7.1 writes the menus of each
 # theme in themerc-override (background lighter than the windows, rounded
 # corners and shadow)
+# 1.0-16: the session hook also triggers on labwc-packarch (its
+# labwc.desktop said Exec=labwc again: no packarch-run-labwc, so no keyboard
+# layout of the system, qwerty instead of azerty)
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=15
+pkgrel=16
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

@@ -8,6 +8,7 @@ Operation = Upgrade
 Type = Package
 Target = packarch-labwc-settings
 Target = labwc
+Target = labwc-packarch
 
 [Action]
 Description = Session labwc de Packarch (packarch-run-labwc)...
