@@ -93,10 +93,14 @@
 # found in the 6 icon themes of the Packarch themes
 # 1.0-12: menus up to 360 px wide (menu.width.max in themerc-override,
 # outside the lines of packarch-skin): labels were cut at 200 px
+# 1.0-13: "Infos système" pipemenu in Système, as pa-sysinfo on Openbox
+# (scripts/sysinfo: a click copies the line with wl-copy; resolution of
+# every output with wlr-randr, labwc as compositor, one line per GPU, IP of
+# the default route, not of a VPN); menus up to 500 px
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=12
+pkgrel=13
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

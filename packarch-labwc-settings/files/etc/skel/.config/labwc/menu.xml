@@ -105,6 +105,9 @@
       <action name="Execute" command="sh -c '~/.config/labwc/scripts/current_lock'" />
     </item>
     <menu id="systeme" label="Système" icon="system-shutdown">
+      <!-- Comme sous Openbox (pipemenu pa-sysinfo) : un clic copie la ligne -->
+      <menu id="sysinfo" label="Infos système" icon="hwinfo" execute="sh -c '~/.config/labwc/scripts/sysinfo'" />
+      <separator />
       <item label="Se déconnecter" icon="system-log-out">
         <action name="Exit" />
       </item>
