@@ -61,6 +61,9 @@
       <item label="Couleur des dossiers">
         <action name="Execute" command="packarch-folder-color" />
       </item>
+      <item label="Changer de fond d’écran" icon="preferences-desktop-wallpaper">
+        <action name="Execute" command="waypaper" />
+      </item>
       <item label="Apparence (GTK)">
         <action name="Execute" command="nwg-look" />
       </item>

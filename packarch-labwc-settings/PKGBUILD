@@ -81,10 +81,17 @@
 # polybar hid it on Openbox)
 # 1.0-9: menu bar of Thunar hidden by default (thunar-defaults), as on
 # Openbox and XFCE
+# 1.0-10: wallpaper chooser, as nitrogen on Openbox: "Changer de fond
+# d'écran" in Préférences of the menu starts waypaper (new dependency;
+# /etc/skel/.config/waypaper/config.ini: wallpapers of
+# /usr/share/backgrounds, swaybg); its post_command saves the image, mode
+# and color in ~/.config/labwc/wallpaper (scripts/image, also for the
+# Thunar action), read again by scripts/wallpaper at session start; same
+# wallpaper on every output, as on Openbox
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=9
+pkgrel=10
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -94,7 +101,7 @@ depends=(
   labwc labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
   hyprlock hyprpicker grim slurp wf-recorder wl-clipboard wlr-randr wlopm jq imagemagick
   pulsemixer pavucontrol playerctl light libnotify dex xdg-terminal-exec
-  xdg-user-dirs xorg-xhost nwg-look wdisplays
+  xdg-user-dirs xorg-xhost nwg-look wdisplays waypaper
   xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
   network-manager-applet networkmanager-dmenu-git bluez-utils xfce-polkit
   # applications of the keys and menu

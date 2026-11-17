@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
 
 ## Packarch : fond d'écran de tous les écrans (swaybg), celui du fichier
-## ~/.config/labwc/wallpaper (écrit par packarch-skin, ou par l'action
-## « Définir comme fond d'écran » de Thunar : scripts/image). Le nouveau
-## swaybg est lancé avant l'arrêt de l'ancien : pas d'écran noir entre les
-## deux.
+## ~/.config/labwc/wallpaper, comme bg-saved.cfg de nitrogen sous Openbox :
+##   ligne 1 : image (écrite par packarch-skin, par « Changer de fond
+##             d'écran » du menu, waypaper, ou par l'action « Définir comme
+##             fond d'écran » de Thunar : scripts/image)
+##   ligne 2 : mode, facultatif (fill, fit, stretch, center, tile ; fill par
+##             défaut, celui des thèmes)
+##   ligne 3 : couleur autour de l'image, facultative (#000000 par défaut)
+## Le nouveau swaybg est lancé avant l'arrêt de l'ancien : pas d'écran noir
+## entre les deux.
 
-file="$(head -n 1 "$HOME/.config/labwc/wallpaper" 2>/dev/null)"
+file= mode= color=
+{ read -r file; read -r mode; read -r color; } < "$HOME/.config/labwc/wallpaper" 2>/dev/null
 [[ -f $file ]] || file=/usr/share/backgrounds/wallpaper-alt.png
+[[ $mode =~ ^(fill|fit|stretch|center|tile)$ ]] || mode=fill
+[[ $color =~ ^#[0-9A-Fa-f]{6}$ ]] || color='#000000'
 
 old="$(pgrep -u "$UID" -x swaybg)"
-swaybg -m fill -i "$file" >/dev/null 2>&1 &
+swaybg -m "$mode" -c "$color" -i "$file" >/dev/null 2>&1 &
 if [[ -n $old ]]; then
 	sleep 0.5
 	kill $old 2>/dev/null

@@ -2,7 +2,10 @@
 
 ## Packarch : actions « Définir comme fond d'écran » et « Définir comme écran
 ## de verrouillage » de Thunar (/usr/share/packarch/labwc/uca.xml) :
-##   image --wallpaper FICHIER    fond d'écran de tous les écrans (wallpaper)
+##   image --wallpaper FICHIER [MODE [COULEUR]]
+##                                fond d'écran de tous les écrans (wallpaper) ;
+##                                MODE et COULEUR : ceux de waypaper (menu
+##                                « Changer de fond d'écran », post_command)
 ##   image --lockscreen FICHIER   fond de hyprlock (hyprlock.conf)
 ## Les fichiers modifiés sont ceux qu'écrit packarch-skin : changer de thème
 ## remet le fond d'écran et l'écran de verrouillage du thème.
@@ -26,7 +29,11 @@ fi
 
 case "$1" in
 	--wallpaper)
-		printf '%s\n' "$file" > "$dir/wallpaper"
+		# Mode et couleur de swaybg (fill et noir par défaut)
+		mode="${3,,}" color="$4"
+		[[ $mode =~ ^(fill|fit|stretch|center|tile)$ ]] || mode=fill
+		[[ $color =~ ^#[0-9A-Fa-f]{6}$ ]] || color='#000000'
+		printf '%s\n%s\n%s\n' "$file" "$mode" "$color" > "$dir/wallpaper"
 		"$dir/scripts/wallpaper"
 		notify low "Fond d'écran : ${file##*/}"
 		;;
@@ -37,7 +44,7 @@ case "$1" in
 		notify low "Écran de verrouillage : ${file##*/}"
 		;;
 	*)
-		echo "usage : image --wallpaper|--lockscreen FICHIER" >&2
+		echo "usage : image --wallpaper FICHIER [MODE [COULEUR]] | --lockscreen FICHIER" >&2
 		exit 2
 		;;
 esac

@@ -529,9 +529,12 @@
     </device>
   </libinput>
 
-  <!-- Sélecteur de thèmes au centre de l'écran -->
+  <!-- Sélecteur de thèmes et de fond d'écran (waypaper) au centre de l'écran -->
   <windowRules>
     <windowRule identifier="yad" title="Thèmes Packarch">
+      <action name="AutoPlace" policy="center" />
+    </windowRule>
+    <windowRule title="Waypaper">
       <action name="AutoPlace" policy="center" />
     </windowRule>
   </windowRules>
