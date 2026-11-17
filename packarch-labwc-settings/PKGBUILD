@@ -88,10 +88,13 @@
 # and color in ~/.config/labwc/wallpaper (scripts/image, also for the
 # Thunar action), read again by scripts/wallpaper at session start; same
 # wallpaper on every output, as on Openbox
+# 1.0-11: icons for every entry of the menu (screenshots, preferences,
+# labwc submenu) and of the screen recorder and bookmarks pipemenus, names
+# found in the 6 icon themes of the Packarch themes
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=10
+pkgrel=11
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

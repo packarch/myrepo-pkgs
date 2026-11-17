@@ -35,19 +35,19 @@
     </menu>
     <menu id="favoris" label="Favoris Internet" icon="bookmarks" execute="sh -c '~/.config/labwc/scripts/bookmarks'" />
     <menu id="captures" label="Capture d’écran" icon="applets-screenshooter">
-      <item label="Capturer le bureau">
+      <item label="Capturer le bureau" icon="user-desktop">
         <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --now'" />
       </item>
-      <item label="Capturer une zone">
+      <item label="Capturer une zone" icon="edit-select">
         <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --area'" />
       </item>
-      <item label="Capturer un écran">
+      <item label="Capturer un écran" icon="video-display">
         <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --win'" />
       </item>
-      <item label="Capturer dans 5 s">
+      <item label="Capturer dans 5 s" icon="chronometer">
         <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --in5'" />
       </item>
-      <item label="Capturer dans 10 s">
+      <item label="Capturer dans 10 s" icon="chronometer">
         <action name="Execute" command="sh -c '~/.config/labwc/scripts/screenshot --in10'" />
       </item>
     </menu>
@@ -57,45 +57,45 @@
       <item label="Thèmes Packarch" icon="preferences-desktop-theme">
         <action name="Execute" command="packarch-skin chooser" />
       </item>
-      <menu id="styles" label="Changer de style" execute="packarch-skin openbox-menu" />
-      <item label="Couleur des dossiers">
+      <menu id="styles" label="Changer de style" icon="preferences-desktop-theme-applications" execute="packarch-skin openbox-menu" />
+      <item label="Couleur des dossiers" icon="preferences-desktop-color">
         <action name="Execute" command="packarch-folder-color" />
       </item>
       <item label="Changer de fond d’écran" icon="preferences-desktop-wallpaper">
         <action name="Execute" command="waypaper" />
       </item>
-      <item label="Apparence (GTK)">
+      <item label="Apparence (GTK)" icon="preferences-desktop-theme-global">
         <action name="Execute" command="nwg-look" />
       </item>
       <separator />
-      <item label="Écrans">
+      <item label="Écrans" icon="preferences-desktop-display">
         <action name="Execute" command="wdisplays" />
       </item>
-      <item label="Paramètres audio">
+      <item label="Paramètres audio" icon="multimedia-volume-control">
         <action name="Execute" command="pavucontrol" />
       </item>
-      <item label="Réseau">
+      <item label="Réseau" icon="preferences-system-network">
         <action name="Execute" command="nm-connection-editor" />
       </item>
       <separator />
-      <menu id="labwc-config" label="labwc">
-        <item label="Modifier rc.xml">
+      <menu id="labwc-config" label="labwc" icon="labwc">
+        <item label="Modifier rc.xml" icon="document-edit">
           <action name="Execute" command="sh -c 'geany ~/.config/labwc/rc.xml'" />
         </item>
-        <item label="Modifier menu.xml">
+        <item label="Modifier menu.xml" icon="document-edit">
           <action name="Execute" command="sh -c 'geany ~/.config/labwc/menu.xml'" />
         </item>
-        <item label="Modifier autostart">
+        <item label="Modifier autostart" icon="document-edit">
           <action name="Execute" command="sh -c 'geany ~/.config/labwc/autostart'" />
         </item>
-        <item label="Modifier environment">
+        <item label="Modifier environment" icon="document-edit">
           <action name="Execute" command="sh -c 'geany ~/.config/labwc/environment'" />
         </item>
-        <item label="Modifier les favoris Internet">
+        <item label="Modifier les favoris Internet" icon="document-edit">
           <action name="Execute" command="sh -c 'geany ~/.config/labwc/favoris.txt'" />
         </item>
         <separator />
-        <item label="Recharger la configuration">
+        <item label="Recharger la configuration" icon="view-refresh">
           <action name="Reconfigure" />
         </item>
       </menu>

@@ -71,7 +71,7 @@ record() {
 item() {
 	local cmd="${2//&/&amp;}"
 	cmd="${cmd//\"/&quot;}"
-	printf '  <item label="%s"><action name="Execute" command="%s" /></item>\n' "$1" "$cmd"
+	printf '  <item label="%s" icon="%s"><action name="Execute" command="%s" /></item>\n' "$1" "$3" "$cmd"
 }
 
 case "${1:-}" in
@@ -85,13 +85,13 @@ case "${1:-}" in
 		self="sh -c '~/.config/labwc/scripts/record"
 		echo '<openbox_pipe_menu>'
 		if pgrep -u "$UID" -x wf-recorder >/dev/null; then
-			item 'Arrêter l’enregistrement' "$self --stop'"
+			item 'Arrêter l’enregistrement' "$self --stop'" media-playback-stop
 			echo '  <separator />'
 		fi
-		item 'Enregistrer un écran (avec le son)' "$self --screen'"
-		item 'Enregistrer un écran (sans le son)' "$self --screen-na'"
-		item 'Enregistrer une zone (avec le son)' "$self --area'"
-		item 'Enregistrer une zone (sans le son)' "$self --area-na'"
+		item 'Enregistrer un écran (avec le son)' "$self --screen'" video-display
+		item 'Enregistrer un écran (sans le son)' "$self --screen-na'" video-display
+		item 'Enregistrer une zone (avec le son)' "$self --area'" edit-select
+		item 'Enregistrer une zone (sans le son)' "$self --area-na'" edit-select
 		echo '</openbox_pipe_menu>'
 		;;
 	*)

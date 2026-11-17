@@ -23,7 +23,7 @@ quote() {
 }
 
 item() {
-	printf '  <item label="%s"><action name="Execute" command="%s" /></item>\n' \
+	printf '  <item label="%s" icon="web-browser"><action name="Execute" command="%s" /></item>\n' \
 		"$(xml "$1")" "$(xml "$2")"
 }
 
