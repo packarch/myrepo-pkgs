@@ -79,6 +79,9 @@
       </item>
       <separator />
       <menu id="labwc-config" label="labwc" icon="labwc">
+        <!-- Comme sous Openbox (pipemenu pa-ob-menu) -->
+        <menu id="menu-style" label="Style du menu" icon="preferences-desktop-icons" execute="sh -c '~/.config/labwc/scripts/menu-style'" />
+        <separator />
         <item label="Modifier rc.xml" icon="document-edit">
           <action name="Execute" command="sh -c 'geany ~/.config/labwc/rc.xml'" />
         </item>

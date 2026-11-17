@@ -97,10 +97,16 @@
 # (scripts/sysinfo: a click copies the line with wl-copy; resolution of
 # every output with wlr-randr, labwc as compositor, one line per GPU, IP of
 # the default route, not of a VPN); menus up to 500 px
+# 1.0-14: "Style du menu" pipemenu in Préférences > labwc, as pa-ob-menu on
+# Openbox (scripts/menu-style): icons of the icon theme, the 4 icon sets of
+# the Openbox menu (crayon, delta, kecil, you, in
+# /usr/share/packarch/labwc/menu-icons) or feather glyphs (no icons,
+# feather font after the menu font, set again by scripts/startup after a
+# theme change)
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=13
+pkgrel=14
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -152,6 +158,11 @@ package() {
 		if [[ -f "$icons/$id.png" ]]; then
 			install -Dm644 "$icons/$id.png" "$pkgdir"/usr/share/packarch/labwc/icons/"$id".png
 		fi
+	done
+	# Icon sets of the menu of the Openbox desktop (scripts/menu-style)
+	local set
+	for set in "$startdir"/../packarch-openbox-settings/files/usr/share/packarch/openbox/icons/*/; do
+		install -Dm644 -t "$pkgdir"/usr/share/packarch/labwc/menu-icons/"$(basename "$set")" "$set"*.png
 	done
 	install -Dm644 /dev/stdin "$pkgdir"/usr/share/licenses/"$pkgname"/NOTICE <<-EOF
 		Wayland tools configuration based on archcraft-sway-free by Aditya

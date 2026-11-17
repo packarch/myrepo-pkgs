@@ -34,6 +34,10 @@ restart() {
 restart waybar ~/.config/labwc/scripts/statusbar
 restart mako   ~/.config/labwc/scripts/notifications
 
+## Style « Glyphes » du menu : police feather remise après un changement de
+## thème (packarch-skin réécrit la police du menu)
+~/.config/labwc/scripts/menu-style --refresh
+
 ## Applications lancées en administrateur (scripts/asroot) : root peut
 ## afficher ses fenêtres sur Xwayland
 xhost +si:localuser:root >/dev/null 2>&1
