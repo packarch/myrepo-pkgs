@@ -15,3 +15,4 @@ aur/*/*/
 # Sources downloaded by makepkg (our applications: tarballs, git clones)
 apps/*/*.tar.*
 apps/*/*/
+labwc-packarch/labwc/
