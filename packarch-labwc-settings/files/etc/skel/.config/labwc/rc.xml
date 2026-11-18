@@ -84,8 +84,11 @@
     </fields>
   </windowSwitcher>
 
+  <!-- Bord de la zone utile (sous waybar) quasi infranchissable : une fenêtre
+       glissée trop haut ne passe plus sous la barre, sa barre de titre
+       reste attrapable. -->
   <resistance>
-    <screenEdgeStrength>20</screenEdgeStrength>
+    <screenEdgeStrength>10000</screenEdgeStrength>
     <windowEdgeStrength>20</windowEdgeStrength>
   </resistance>
 

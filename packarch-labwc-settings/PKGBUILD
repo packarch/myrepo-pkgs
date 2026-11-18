@@ -113,7 +113,7 @@
 
 pkgname=packarch-labwc-settings
 pkgver=1.0
-pkgrel=16
+pkgrel=17
 pkgdesc="labwc configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
