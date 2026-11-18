@@ -18,7 +18,8 @@
 # existing accounts), set as the Exec of packarch.desktop by the
 # packarch-session hook; Packarch is the default session of LightDM
 # (60-packarch-rwdesktop.conf). labwc itself (labwc-packarch) is not removed:
-# its session and ~/.config/labwc stay usable.
+# its session (packarch-run-labwc, packarch-labwc-session hook) and
+# ~/.config/labwc stay usable.
 #
 # 1.0-1: first version, from packarch-labwc-settings 1.0-16
 # 1.0-2: no longer replaces packarch-labwc-settings: installed on request only
@@ -26,10 +27,14 @@
 #        session lost its packarch-run-labwc)
 # 1.0-3: labwc session kept as a fallback: its Exec is set back to labwc
 #        (packarch-labwc-plain.hook)
+# 1.0-4: labwc session started again by packarch-run-labwc (keyboard layout of
+#        the system: labwc alone was in qwerty), with the Thunar files of
+#        ~/.config/labwc/scripts/startup (/usr/share/packarch/labwc), taken
+#        from packarch-labwc-settings (packarch-labwc-session.hook)
 
 pkgname=packarch-rwdesktop-settings
 pkgver=1.0
-pkgrel=3
+pkgrel=4
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

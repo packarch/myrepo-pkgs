@@ -1,0 +1,18 @@
+# Packarch (packarch-rwdesktop-settings) : la session labwc reste utilisable
+# en secours. Elle lance packarch-run-labwc (variables de Wayland, clavier du
+# système, kitty et greffons de Thunar de la session), repris de
+# packarch-labwc-settings que ce paquet remplace : avec labwc seul, la
+# session était en qwerty. Rien n'est fait si labwc n'est pas installé.
+
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = packarch-rwdesktop-settings
+Target = labwc
+Target = labwc-packarch
+
+[Action]
+Description = Session labwc de secours (packarch-run-labwc)...
+When = PostTransaction
+Exec = /usr/bin/find /usr/share/wayland-sessions -maxdepth 1 -name labwc.desktop -exec /usr/bin/sed -i -e "s|^Exec=.*|Exec=/usr/bin/packarch-run-labwc|" {} +
