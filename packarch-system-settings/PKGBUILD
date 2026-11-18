@@ -45,10 +45,12 @@
 #   custom action of Packarch
 # - 1.0-16: comments of the kitty configuration and of the Thunar hook: the
 #   labwc desktop of Packarch replaces the Sway one
+# - 1.0-17: URLs of /etc/os-release on the Packarch repository (renamed from
+#   CachyOS-Packarch)
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=16
+pkgrel=17
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

@@ -1,4 +1,4 @@
-# chroot.sh — sourced by build.sh (and by calamares/build.sh of CachyOS-Packarch):
+# chroot.sh — sourced by build.sh (and by calamares/build.sh of Packarch):
 # builds compiled packages in a clean Arch Linux chroot (devtools), so that
 # they run on any x86-64 processor.
 #
