@@ -36,9 +36,11 @@
 #          such as Nounours Player on two monitors)
 # 1.3.2-1: windows with rounded corners no longer lag (their surfaces were
 #          seen as hidden and got one frame callback per second)
+# 1.3.3-1: smooth video in every player (a commit released by its sync point
+#          now triggers a redraw; events flushed to clients every loop turn)
 
 pkgname=packarch-desktop
-pkgver=1.3.2
+pkgver=1.3.3
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
