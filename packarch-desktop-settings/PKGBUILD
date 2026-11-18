@@ -34,19 +34,23 @@
 #        fallback session any more; files in /usr/share/packarch/desktop;
 #        scripts of the waybar bars in ~/.config/packarch/scripts (they were
 #        still in ~/.config/labwc/scripts)
+# 1.1-2: XDG autostart entries started by systemd (packarch-session.target of
+#        packarch-desktop >= 1.2.1) instead of dex: stopped at the end of the
+#        session (the cachy-update applet survived it); packarch-run comments
+#        out the dex line of the autostart of existing accounts
 
 pkgname=packarch-desktop-settings
 pkgver=1.1
-pkgrel=1
+pkgrel=2
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
 license=('GPL3')
 depends=(
   # packarch and the Wayland tools of the configuration
-  packarch-desktop labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
+  'packarch-desktop>=1.2.1' labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
   hyprlock hyprpicker grim slurp wf-recorder wl-clipboard wlr-randr wlopm jq imagemagick
-  pulsemixer pavucontrol playerctl light libnotify dex xdg-terminal-exec
+  pulsemixer pavucontrol playerctl light libnotify xdg-terminal-exec
   xdg-user-dirs xorg-xhost nwg-look wdisplays waypaper
   xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
   network-manager-applet networkmanager-dmenu-git bluez-utils xfce-polkit

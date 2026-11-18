@@ -6,7 +6,7 @@
 ## chaque changement de thème (packarch-skin apply) : fond d'écran, barre et
 ## notifications, avec les couleurs du thème relues. Les entrées de
 ## /etc/xdg/autostart (cachy-update, xfce-polkit, configuration de GitHub...)
-## sont lancées une seule fois, par dex dans autostart.
+## sont lancées une seule fois, par systemd (packarch-session.target).
 
 ## Helpers
 run() {

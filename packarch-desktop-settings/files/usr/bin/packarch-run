@@ -100,6 +100,14 @@ if [[ ! -f $HOME/.config/packarch/rc.xml && -d /etc/skel/.config/packarch ]]; th
     cp -a -n /etc/skel/.config/packarch/. "$HOME/.config/packarch/"
 fi
 
+## Entrées XDG autostart lancées par systemd depuis packarch-desktop 1.2.1
+## (packarch-session.target) : la ligne dex des anciens autostart les
+## lançait une seconde fois, elle est mise en commentaire
+autostart="$HOME/.config/packarch/autostart"
+if [[ -f $autostart ]] && grep -q '^dex --autostart' "$autostart"; then
+    sed -i 's/^dex --autostart/# Lancées par systemd (packarch-session.target) : &/' "$autostart"
+fi
+
 ## Packarch, son journal dans ~/.local/state/packarch.log (le précédent en
 ## packarch.log.old)
 log="${XDG_STATE_HOME:-$HOME/.local/state}/packarch.log"

@@ -20,9 +20,9 @@ gsettings set $schema cursor-size 24
 # Thunar : relancés aussi par packarch-skin à chaque changement de thème
 ~/.config/packarch/scripts/startup
 
-# Entrées de /etc/xdg/autostart et ~/.config/autostart (cachy-update,
-# xfce-polkit, configuration de GitHub...)
-dex --autostart --environment packarch >/dev/null 2>&1 &
+# Les entrées de /etc/xdg/autostart et ~/.config/autostart (cachy-update,
+# xfce-polkit, configuration de GitHub...) sont lancées par systemd
+# (packarch-session.target), et arrêtées par lui à la fin de la session
 
 # Pas de verrouillage ni d'extinction de l'écran par inactivité (comme sur
 # les bureaux XFCE et Openbox) : l'écran est seulement verrouillé avant une
