@@ -1,0 +1,15 @@
+## Variables d'environnement de la session Packarch, relues par packarch à
+## chaque rechargement (Ctrl+Maj+r). Une variable par ligne, NOM=valeur.
+## Voir `man packarch`.
+##
+## La disposition du clavier est celle du système (localectl, lue par
+## packarch-run au démarrage de la session) ; pour la changer ici :
+# XKB_DEFAULT_LAYOUT=fr
+# XKB_DEFAULT_VARIANT=oss
+
+## Curseur du thème courant (écrit par packarch-skin)
+XCURSOR_THEME=Pear-Dark
+XCURSOR_SIZE=24
+
+## Les applications GTK4 sans méthode de saisie gardent les touches mortes
+GTK_IM_MODULE=simple

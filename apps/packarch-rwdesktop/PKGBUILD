@@ -1,0 +1,63 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# packarch: the Wayland stacking compositor of the Packarch desktop (Rust,
+# Smithay): windows decorated by the compositor with Openbox themes, rounded
+# corners and shadows, Openbox menus (menu.xml, pipemenus) rounded and
+# shadowed, rc.xml in the Openbox format, sober animations, XWayland, the
+# protocols of waybar, hyprlock, swayidle, grim, wlr-randr, wlopm and the
+# portals. Configuration of the Packarch desktop: packarch-rwdesktop-settings.
+#
+# 1.0.0-1: first version
+# 1.0.0-2: frame only when the client asks for it, cursor on the cursor plane
+# 1.0.0-3: DRM planes of each output in the log
+# 1.1.0-1: sharp X11 applications at fractional scales (xwaylandSharp),
+#          quarter tiling (SnapToEdge combine="yes"), magnifier (ZoomIn,
+#          ZoomOut, ToggleMagnify)
+
+pkgname=packarch-rwdesktop
+pkgver=1.1.0
+pkgrel=1
+pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
+arch=('x86_64')
+url="https://github.com/packarch/packarch-rwdesktop"
+license=('MIT OR Apache-2.0')
+depends=(
+  'gcc-libs' 'glibc' 'libdrm' 'libglvnd' 'libinput' 'libxkbcommon' 'mesa'
+  'seatd' 'systemd-libs' 'xorg-xwayland'
+)
+optdepends=(
+  'dbus: separate D-Bus bus when another session of the user is running'
+  'xdg-desktop-portal-wlr: screenshots and screen sharing (packarch-portals.conf)'
+  'xdg-desktop-portal-gtk: file chooser and other portals (packarch-portals.conf)'
+)
+makedepends=('cargo')
+options=(!lto)
+source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+sha256sums=('SKIP')
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	cargo build --frozen --release
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	cargo test --frozen --release
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	install -Dm755 target/release/packarch "$pkgdir"/usr/bin/packarch
+	install -Dm644 data/packarch.desktop "$pkgdir"/usr/share/wayland-sessions/packarch.desktop
+	install -Dm644 data/packarch-portals.conf "$pkgdir"/usr/share/xdg-desktop-portal/packarch-portals.conf
+	install -Dm644 docs/packarch.1 "$pkgdir"/usr/share/man/man1/packarch.1
+	install -Dm644 README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+	install -Dm644 docs/cahier-des-charges.md "$pkgdir"/usr/share/doc/$pkgname/cahier-des-charges.md
+	install -Dm644 LICENSE-MIT "$pkgdir"/usr/share/licenses/$pkgname/LICENSE-MIT
+	install -Dm644 LICENSE-APACHE "$pkgdir"/usr/share/licenses/$pkgname/LICENSE-APACHE
+}

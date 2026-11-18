@@ -25,9 +25,11 @@
 # 0.3.4: session-run and info under Sway (Wayland).
 # 0.3.5: labwc instead of Sway (LABWC_PID, Wayland socket of the labwc
 # session), the Sway desktop of Packarch is removed.
+# 0.3.6: Packarch desktop (packarch compositor: PACKARCH_PID, Wayland socket
+# of the packarch session).
 
 pkgname=packarch-depannage
-pkgver=0.3.5
+pkgver=0.3.6
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')

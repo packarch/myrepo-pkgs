@@ -25,11 +25,14 @@
 # window theme, buttons, fonts, rounded corners and shadows in rc.xml and
 # themerc-override, waybar, rofi, mako, kitty, hyprlock and GTK colors and
 # themes; "openbox-menu" also on labwc; the Sway desktop is removed.
+# 1.8.0: Packarch desktop (packarch compositor, packarch-rwdesktop-settings):
+# the same files as labwc in ~/.config/packarch, reloaded by
+# packarch --reconfigure
 
 pkgname=packarch-skin
-pkgver=1.7.2
+pkgver=1.8.0
 pkgrel=1
-pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and labwc desktops"
+pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE, labwc and Packarch desktops"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-skin"
 license=('GPL-3.0-or-later')

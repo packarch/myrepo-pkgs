@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+
+## Packarch : réglages de Thunar du bureau labwc, pour l'utilisateur
+## (scripts/startup) et pour root (scripts/asroot, dans son bus D-Bus) :
+##   thunar-defaults ACTIONS.xml [COMMANDE ARGUMENT…]
+##
+## - Actions personnalisées : ACTIONS.xml est copié dans
+##   ~/.config/Thunar/uca.xml quand celui-ci manque, n'est que l'exemple de
+##   Thunar (« Open Terminal Here », en anglais, qui échoue sous labwc) ou une
+##   version précédente des actions de Packarch (commentaire gardé tant que
+##   personne ne modifie les actions dans Thunar).
+## - Action « Supprimer » (sans passer par la corbeille) affichée et barre de
+##   menu cachée, comme sous Openbox et XFCE, si le réglage n'a jamais été
+##   fait (un choix ultérieur dans Thunar est gardé).
+## Puis lance COMMANDE s'il y en a une.
+
+src="$1"
+shift
+
+uca="${XDG_CONFIG_HOME:-$HOME/.config}/Thunar/uca.xml"
+if [[ -f $src ]] && {
+	[[ ! -s $uca ]] ||
+	grep -q 'Actions de Thunar du bureau labwc de Packarch' "$uca" ||
+	{ grep -q 'Example for a custom action' "$uca" && [[ $(grep -c '<action>' "$uca") -le 1 ]]; }
+}; then
+	cmp -s "$src" "$uca" || { mkdir -p "${uca%/*}" && cp -f "$src" "$uca"; }
+elif [[ -f $src ]] && grep -q 'packarch-tcma' "$uca" && ! command -v packarch-tcma >/dev/null; then
+	# Actions du bureau Openbox (packarch-tcma, retiré avec
+	# packarch-openbox-settings) : inutilisables, remplacées ; l'ancien
+	# fichier est gardé dans uca.xml.openbox
+	cp -f "$uca" "$uca.openbox" && cp -f "$src" "$uca"
+fi
+
+# default PROPRIÉTÉ VALEUR : réglage booléen fait seulement s'il ne l'a jamais
+# été (un choix ultérieur dans Thunar est gardé)
+default() {
+	xfconf-query -c thunar -p "$1" >/dev/null 2>&1 ||
+		xfconf-query -c thunar -p "$1" -n -t bool -s "$2" >/dev/null 2>&1
+}
+default /misc-show-delete-action true
+# Barre de menu cachée (Ctrl+M), comme sous Openbox et XFCE
+default /last-menubar-visible false
+
+[[ $# -gt 0 ]] && exec "$@"
+exit 0

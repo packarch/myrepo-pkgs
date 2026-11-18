@@ -1,0 +1,7 @@
+# Thème courant (default), écrit par packarch-skin : relu par autostart
+# (gsettings) et scripts/asroot
+gtk_theme='Packarch-Default'
+icon_theme='Qogir-Pink-Dark'
+cursor_theme='Pear-Dark'
+color_scheme='prefer-dark'
+font='Noto Sans 10'

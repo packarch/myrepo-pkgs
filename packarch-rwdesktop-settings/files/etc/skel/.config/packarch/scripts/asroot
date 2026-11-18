@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+## Packarch : lance une application graphique en administrateur (root) dans
+## la session Packarch : asroot 'COMMANDE [ARGUMENTS]' (passée à sh -c) ou
+## asroot COMMANDE ARGUMENT… (arguments séparés : chemins avec des espaces,
+## action « Thunar root » de Thunar)
+##
+## sudo sans -E : root garde son propre environnement (HOME=/root), seul
+## DISPLAY est transmis (sudo le garde) et l'application passe par Xwayland,
+## auquel root a accès (xhost +si:localuser:root, scripts/startup). Avec
+## sudo -E, Thunar plantait (chargeur d'icônes glycin) et root écrivait dans
+## le dossier personnel de l'utilisateur. dbus-run-session : bus D-Bus de
+## session propre à root (miniatures de Thunar).
+##
+## Thème : root n'a pas de réglages GTK (Thunar tout blanc). Le thème courant
+## (packarch-theme, écrit par packarch-skin) est écrit dans un settings.ini de
+## GTK du dossier d'exécution de l'utilisateur, donné à root par
+## XDG_CONFIG_DIRS, sans toucher à la configuration de root ; XDG_DATA_DIRS
+## donne aussi les thèmes d'icônes de l'utilisateur (couleur des dossiers),
+## KITTY_CONFIG_DIRECTORY sa configuration de kitty.
+##
+## Thunar de root : thunar-defaults lui donne, dans son bus D-Bus, les
+## actions personnalisées en français (uca-root.xml : terminal ici,
+## rechercher, modifier, comparer ; l'exemple de Thunar, « Open Terminal
+## Here », échouait) et l'action « Supprimer ». THUNARX_DIRS (effacée par
+## sudo) : ses greffons, sans celui du fond d'écran (packarch-run).
+
+# Mot de passe demandé par rofi (inutile avec sudo sans mot de passe)
+export SUDO_ASKPASS="$HOME/.config/packarch/scripts/rofi_askpass"
+
+[[ $# -gt 0 ]] || { echo "usage : asroot 'COMMANDE'" >&2; exit 2; }
+
+if [[ $# -eq 1 ]]; then
+	cmd=(sh -c "$1")
+else
+	cmd=("$@")
+fi
+
+## Thème courant
+gtk_theme= icon_theme= cursor_theme= color_scheme= font=
+. "$HOME/.config/packarch/packarch-theme" 2>/dev/null
+dark=0
+[[ $color_scheme == prefer-dark ]] && dark=1
+
+conf="${XDG_RUNTIME_DIR:-/tmp}/packarch-asroot"
+for v in gtk-3.0 gtk-4.0; do
+	mkdir -p "$conf/$v"
+	{
+		echo '[Settings]'
+		[[ -n $gtk_theme ]] && echo "gtk-theme-name=$gtk_theme"
+		[[ -n $icon_theme ]] && echo "gtk-icon-theme-name=$icon_theme"
+		[[ -n $cursor_theme ]] && echo "gtk-cursor-theme-name=$cursor_theme"
+		[[ -n $font ]] && echo "gtk-font-name=$font"
+		echo "gtk-application-prefer-dark-theme=$dark"
+	} > "$conf/$v/settings.ini"
+done
+
+thunarx=()
+[[ -n $THUNARX_DIRS ]] && thunarx=(THUNARX_DIRS="$THUNARX_DIRS")
+
+## Accès de root à Xwayland, donné ici et pas seulement au démarrage : labwc
+## lance Xwayland à la demande et l'arrête 10 s après sa dernière fenêtre
+## (-terminate 10) ; relancé, il a perdu la liste d'accès (xhost). Mot de
+## passe demandé d'abord (sudo true ; sudo -v le demanderait même avec
+## NOPASSWD) : le temps de le taper, Xwayland s'arrêterait ; l'application
+## se connecte juste après xhost.
+sudo -A true || exit 1
+xhost +si:localuser:root >/dev/null 2>&1
+
+exec sudo -A \
+	"${thunarx[@]}" \
+	XDG_CONFIG_DIRS="$conf:/etc/xdg" \
+	XDG_DATA_DIRS="$HOME/.local/share:/usr/local/share:/usr/share" \
+	XCURSOR_THEME="$cursor_theme" XCURSOR_SIZE=24 \
+	KITTY_CONFIG_DIRECTORY="$HOME/.config/packarch/kitty" \
+	dbus-run-session -- \
+	/usr/share/packarch/rwdesktop/thunar-defaults /usr/share/packarch/rwdesktop/uca-root.xml \
+	"${cmd[@]}"
