@@ -22,9 +22,11 @@
 #          qxl and vmwgfx with its hotspot: patched Smithay in vendor/)
 # 1.1.4-1: session opened from LightDM (waits for the libseat session to be
 #          active before opening the GPU)
+# 1.1.5-1: make, model and serial number of the monitors read from their
+#          EDID; ~/.Xresources merged into XWayland; log without color codes
 
 pkgname=packarch-rwdesktop
-pkgver=1.1.4
+pkgver=1.1.5
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
@@ -38,6 +40,8 @@ optdepends=(
   'dbus: separate D-Bus bus when another session of the user is running'
   'xdg-desktop-portal-wlr: screenshots and screen sharing (packarch-portals.conf)'
   'xdg-desktop-portal-gtk: file chooser and other portals (packarch-portals.conf)'
+  'hwdata: full manufacturer names of the monitors'
+  'xorg-xrdb: X resources (~/.Xresources, Xft.dpi) of the X11 applications'
 )
 makedepends=('cargo')
 options=(!lto)
