@@ -20,9 +20,11 @@
 #          applications such as Packarch Hello keep only their own title bar)
 # 1.1.3-1: a single cursor in virtual machines (cursor plane of virtio-gpu,
 #          qxl and vmwgfx with its hotspot: patched Smithay in vendor/)
+# 1.1.4-1: session opened from LightDM (waits for the libseat session to be
+#          active before opening the GPU)
 
 pkgname=packarch-rwdesktop
-pkgver=1.1.3
+pkgver=1.1.4
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
