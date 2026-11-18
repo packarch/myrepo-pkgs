@@ -6,7 +6,7 @@
 #   packarch-paf-le-bengal-altitude  Altitude: tail spin launch, bounce up to space
 
 pkgname=packarch-paf-le-bengal
-pkgver=1.0.2
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="Paf le Bengal: two arcade games, Baby Kart launches the Gremlin du Bengal (Baseball and Altitude)"
 arch=('x86_64')
