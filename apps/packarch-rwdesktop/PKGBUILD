@@ -24,9 +24,10 @@
 #          active before opening the GPU)
 # 1.1.5-1: make, model and serial number of the monitors read from their
 #          EDID; ~/.Xresources merged into XWayland; log without color codes
+# 1.1.6-1: log without empty details (keyboard variant, app_id)
 
 pkgname=packarch-rwdesktop
-pkgver=1.1.5
+pkgver=1.1.6
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
