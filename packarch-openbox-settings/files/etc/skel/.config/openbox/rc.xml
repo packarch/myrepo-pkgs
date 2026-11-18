@@ -5,10 +5,7 @@
   <!-- Resistance -->
   <resistance>
     <strength>10</strength>
-    <!-- Bord de la zone utile (sous polybar) quasi infranchissable : une
-         fenêtre glissée trop haut ne passe plus sous la barre, sa barre de
-         titre reste attrapable. -->
-    <screen_edge_strength>10000</screen_edge_strength>
+    <screen_edge_strength>20</screen_edge_strength>
   </resistance>
   <!-- Focus -->
   <focus>

@@ -73,7 +73,7 @@
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=80
+pkgrel=81
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
