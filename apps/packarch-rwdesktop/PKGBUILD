@@ -13,9 +13,12 @@
 # 1.1.0-1: sharp X11 applications at fractional scales (xwaylandSharp),
 #          quarter tiling (SnapToEdge combine="yes"), magnifier (ZoomIn,
 #          ZoomOut, ToggleMagnify)
+# 1.1.1-1: maximize button restores a window dragged to the top of the screen,
+#          title bar always reachable when restored, magnifier border in
+#          the highlight color of the theme
 
 pkgname=packarch-rwdesktop
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
