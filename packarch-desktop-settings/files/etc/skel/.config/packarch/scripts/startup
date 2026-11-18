@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Packarch : programmes relancés au démarrage de packarch (autostart) et après
+## chaque changement de thème (packarch-skin apply) : fond d'écran, barre et
+## notifications, avec les couleurs du thème relues. Les entrées de
+## /etc/xdg/autostart (cachy-update, xfce-polkit, configuration de GitHub...)
+## sont lancées une seule fois, par dex dans autostart.
+
+## Helpers
+run() {
+	if ! pgrep -u "$UID" -x "$1" >/dev/null 2>&1; then
+		"$@" >/dev/null 2>&1 &
+	fi
+}
+
+restart() {
+	local proc="$1"
+	shift
+
+	if pgrep -u "$UID" -x "$proc" >/dev/null 2>&1; then
+		pkill -TERM -u "$UID" -x "$proc"
+		while pgrep -u "$UID" -x "$proc" >/dev/null 2>&1; do
+			sleep 0.1
+		done
+	fi
+
+	"$@" >/dev/null 2>&1 &
+}
+
+## Fond d'écran, barre et notifications (couleurs du thème relues)
+~/.config/packarch/scripts/wallpaper
+restart waybar ~/.config/packarch/scripts/statusbar
+restart mako   ~/.config/packarch/scripts/notifications
+
+## Style « Glyphes » du menu : police feather remise après un changement de
+## thème (packarch-skin réécrit la police du menu)
+~/.config/packarch/scripts/menu-style --refresh
+
+## Applications lancées en administrateur (scripts/asroot) : root peut
+## afficher ses fenêtres sur Xwayland
+xhost +si:localuser:root >/dev/null 2>&1
+
+## Thunar : actions personnalisées en français, les mêmes que sous Openbox
+## (terminal ici, rechercher, ouvrir et modifier en root, comparer, fond
+## d'écran, écran de verrouillage), et action « Supprimer » affichée
+/usr/share/packarch/desktop/thunar-defaults /usr/share/packarch/desktop/uca.xml
+
+## Icône du réseau dans la barre (StatusNotifierItem : --indicator ; l'entrée
+## autostart de nm-applet est masquée dans ~/.config/autostart)
+run nm-applet --indicator
+
+exit 0

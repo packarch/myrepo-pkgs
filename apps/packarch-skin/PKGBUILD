@@ -1,10 +1,10 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
-# Theme (skin) chooser of the Packarch Openbox, XFCE and labwc desktops: applies
-# the themes described by the theme.toml files of packarch-openbox-settings
-# (~/.config/openbox/themes) and their copies of packarch-xfce-settings
-# (~/.config/xfce4/themes) and packarch-labwc-settings
-# (~/.config/labwc/themes). "render" writes the default theme into the
+# Theme (skin) chooser of the Packarch Openbox, XFCE and Packarch desktops:
+# applies the themes described by the theme.toml files of
+# packarch-openbox-settings (~/.config/openbox/themes) and their copies of
+# packarch-xfce-settings (~/.config/xfce4/themes) and
+# packarch-desktop-settings (~/.config/packarch/themes). "render" writes the default theme into the
 # /etc/skel of these three packages when they are built (makedepends:
 # build.sh builds packarch-skin first).
 # Own repository since 1.1.0 (sources in myrepo-pkgs/packarch-skin/skin
@@ -28,11 +28,14 @@
 # 1.8.0: Packarch desktop (packarch compositor, packarch-rwdesktop-settings):
 # the same files as labwc in ~/.config/packarch, reloaded by
 # packarch --reconfigure
+# 1.9.0: labwc desktop removed (Packarch only); thumbnails in
+# /usr/share/packarch/desktop/icons (packarch-desktop-settings); scripts of
+# the bars of ~/.config/labwc/ replaced by those of ~/.config/packarch/
 
 pkgname=packarch-skin
-pkgver=1.8.0
+pkgver=1.9.0
 pkgrel=1
-pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE, labwc and Packarch desktops"
+pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Packarch desktops"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-skin"
 license=('GPL-3.0-or-later')

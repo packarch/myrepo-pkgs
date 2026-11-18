@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+## Packarch : lance un menu rofi (menu COMMANDE…), ou ferme celui qui est
+## ouvert (nouveau clic sur le bouton de la barre, même raccourci) au lieu
+## d'en lancer un second. Sous Wayland, rofi ne voit pas les clics en dehors
+## de lui : packarch le ferme par un clic sur une fenêtre ou le bureau
+## (rc.xml : pkill rofi dans les contextes Client, Root et Title).
+
+[[ $# -gt 0 ]] || { echo "usage : menu COMMANDE…" >&2; exit 2; }
+
+if pgrep -u "$UID" -x rofi >/dev/null; then
+	pkill -u "$UID" -x rofi
+	exit 0
+fi
+
+exec "$@"

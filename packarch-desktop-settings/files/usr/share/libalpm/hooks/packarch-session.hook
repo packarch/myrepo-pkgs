@@ -1,0 +1,15 @@
+# Packarch (packarch-desktop-settings) : la session Packarch de LightDM
+# lance packarch-run (variables de Wayland, clavier du système, configuration
+# copiée au premier démarrage) au lieu de packarch
+
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = packarch-desktop-settings
+Target = packarch-desktop
+
+[Action]
+Description = Session Packarch (packarch-run)...
+When = PostTransaction
+Exec = /usr/bin/sed -i -e 's|^Exec=.*|Exec=/usr/bin/packarch-run|' /usr/share/wayland-sessions/packarch.desktop

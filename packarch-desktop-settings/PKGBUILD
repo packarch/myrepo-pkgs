@@ -1,0 +1,107 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Configuration of the Packarch desktop: the packarch compositor
+# (packarch-desktop, Wayland, floating windows with the look and feel of
+# Openbox: Openbox window themes OB-Packarch-*, rc.xml and menu.xml in the
+# Openbox format, rounded and shadowed windows and menus, animations) with
+# the Wayland tools of the former labwc desktop (waybar, rofi menus, mako,
+# hyprlock, swaybg, swayidle, grim and slurp, hyprpicker, kitty), the same
+# keys, menu and 10 themes applied by packarch-skin (>= 1.9.0: Packarch
+# desktop, XDG_CURRENT_DESKTOP=packarch:wlroots). The configuration goes to
+# /etc/skel/.config/packarch, with the default theme already applied to it at
+# build time (packarch-skin render).
+#
+# Session: packarch-run (Wayland variables, keyboard layout of the system,
+# kitty configuration of the session, Thunar plugins without the wallpaper
+# one, configuration copied from /etc/skel at the first start for the
+# existing accounts), set as the Exec of packarch.desktop by the
+# packarch-session hook; Packarch is the default session of LightDM
+# (60-packarch-desktop.conf).
+#
+# 1.0-1: first version, from packarch-labwc-settings 1.0-16
+# 1.0-2: no longer replaces packarch-labwc-settings: installed on request only
+#        (pacman -Syu switched labwc systems to this desktop, and the labwc
+#        session lost its packarch-run-labwc)
+# 1.0-3: labwc session kept as a fallback: its Exec is set back to labwc
+#        (packarch-labwc-plain.hook)
+# 1.0-4: labwc session started again by packarch-run-labwc (keyboard layout of
+#        the system: labwc alone was in qwerty), with the Thunar files of
+#        ~/.config/labwc/scripts/startup (/usr/share/packarch/labwc), taken
+#        from packarch-labwc-settings (packarch-labwc-session.hook)
+# 1.1-1: renamed from packarch-rwdesktop-settings; labwc removed from
+#        Packarch: replaces packarch-labwc-settings and labwc-packarch (the
+#        labwc systems switch to packarch at the next update), no labwc
+#        fallback session any more; files in /usr/share/packarch/desktop;
+#        scripts of the waybar bars in ~/.config/packarch/scripts (they were
+#        still in ~/.config/labwc/scripts)
+
+pkgname=packarch-desktop-settings
+pkgver=1.1
+pkgrel=1
+pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
+arch=('any')
+url="https://github.com/packarch/myrepo-pkgs"
+license=('GPL3')
+depends=(
+  # packarch and the Wayland tools of the configuration
+  packarch-desktop labwc-menu-generator swaybg swayidle xorg-xwayland mako waybar rofi
+  hyprlock hyprpicker grim slurp wf-recorder wl-clipboard wlr-randr wlopm jq imagemagick
+  pulsemixer pavucontrol playerctl light libnotify dex xdg-terminal-exec
+  xdg-user-dirs xorg-xhost nwg-look wdisplays waypaper
+  xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
+  network-manager-applet networkmanager-dmenu-git bluez-utils xfce-polkit
+  # applications of the keys and menu
+  kitty thunar geany firefox viewnior htop nano yad
+  # Geany color schemes of the themes
+  packarch-geany-config
+  # applications of the Thunar actions
+  catfish meld xfconf
+  # fonts of waybar, kitty, mako and hyprlock
+  noto-fonts ttf-jetbrains-mono-nerd packarch-fonts
+  # LightDM greeter, menu hooks, cachy-update
+  packarch-system-settings
+  # theme chooser, GTK and Openbox (window) themes, icons, cursors and
+  # wallpapers
+  'packarch-skin>=1.9.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
+)
+# Writes the default theme into /etc/skel (render)
+makedepends=('packarch-skin>=1.9.0')
+optdepends=(
+  'blueman: Bluetooth manager (right click on the Bluetooth module)'
+  'kanshi: screen configuration kept (~/.config/kanshi/config, started by autostart)'
+)
+# Replaces the former name of this package and the labwc desktop of
+# Packarch (its configuration and labwc itself), removed from Packarch: the
+# labwc systems switch to packarch at the next update. The Sway desktop before
+# it too.
+replaces=(packarch-rwdesktop-settings packarch-labwc-settings labwc-packarch packarch-sway-settings)
+conflicts=(packarch-rwdesktop-settings packarch-labwc-settings labwc-packarch packarch-sway-settings)
+provides=(packarch-rwdesktop-settings)
+options=(!strip !emptydirs)
+
+package() {
+	cp -a "$startdir"/files/. "$pkgdir"/
+	# The themes of the Openbox desktop (theme.toml only: polybar and rofi
+	# layouts are not used), with the thumbnails of the XFCE theme launcher
+	local t id themes="$startdir"/../packarch-openbox-settings/files/etc/skel/.config/openbox/themes
+	local icons="$startdir"/../packarch-xfce-settings/files/usr/share/xfcethemes/icons
+	for t in "$themes"/*/theme.toml; do
+		id="$(basename "$(dirname "$t")")"
+		install -Dm644 "$t" "$pkgdir"/etc/skel/.config/packarch/themes/"$id"/theme.toml
+		if [[ -f "$icons/$id.png" ]]; then
+			install -Dm644 "$icons/$id.png" "$pkgdir"/usr/share/packarch/desktop/icons/"$id".png
+		fi
+	done
+	# Icon sets of the menu of the Openbox desktop (scripts/menu-style)
+	local set
+	for set in "$startdir"/../packarch-openbox-settings/files/usr/share/packarch/openbox/icons/*/; do
+		install -Dm644 -t "$pkgdir"/usr/share/packarch/desktop/menu-icons/"$(basename "$set")" "$set"*.png
+	done
+	install -Dm644 /dev/stdin "$pkgdir"/usr/share/licenses/"$pkgname"/NOTICE <<-EOF
+		Wayland tools configuration based on archcraft-sway-free by Aditya
+		Shakya (adi1090x), GPL-3.0: https://github.com/archcraft-os/archcraft-sway
+	EOF
+	# The first session starts with the default theme
+	packarch-skin render "$pkgdir" default
+}

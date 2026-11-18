@@ -1,0 +1,175 @@
+// Barre waybar du thème « adaptive » du bureau Packarch, comme
+// sa barre polybar sous Openbox. Copiée dans ~/.config/packarch/waybar/config
+// par packarch-skin, qui y remplace les @couleur@ par les couleurs du thème ;
+// "@output@" (écran principal) et "@marge15@" : remplis par scripts/statusbar.
+[
+  {
+    "name": "main",
+    "output": "@output@",
+    "layer": "top",
+    "position": "top",
+    "height": 34,
+    "exclusive": true,
+    "fixed-center": true,
+    "spacing": 0,
+    "reload_style_on_change": true,
+    "ext/workspaces": {
+      "format": "{icon}",
+      "format-icons": {
+        "default": "",
+        "active": ""
+      },
+      "on-click": "activate",
+      "sort-by-id": true,
+      "all-outputs": true
+    },
+    "modules-left": [
+      "ext/workspaces"
+    ],
+    "wlr/taskbar": {
+      "format": "{icon} {title:.25}",
+      "icon-size": 16,
+      "tooltip-format": "{title}",
+      "on-click": "minimize-raise",
+      "on-click-middle": "close",
+      "on-click-right": "maximize",
+      "all-outputs": true,
+      "ignore-list": [
+        "yad"
+      ]
+    },
+    "modules-center": [
+      "wlr/taskbar"
+    ],
+    "custom/arrow#a2": {
+      "format": "",
+      "tooltip": false
+    },
+    "pulseaudio": {
+      "format": "<span color='@blue@'>{icon}</span> {volume}%",
+      "format-bluetooth": "<span color='@blue@'>{icon}</span> {volume}%",
+      "format-muted": "<span color='@foreground-alt@'>󰝟</span> Muet",
+      "format-icons": {
+        "default": [
+          "󰕿",
+          "󰖀",
+          "󰕾"
+        ]
+      },
+      "scroll-step": 5.0,
+      "tooltip-format": "Volume : {volume}% ({desc})",
+      "on-click": "pulsemixer --toggle-mute",
+      "on-click-right": "pavucontrol",
+      "smooth-scrolling-threshold": 1
+    },
+    "custom/arrow#a3": {
+      "format": "",
+      "tooltip": false
+    },
+    "backlight": {
+      "format": "<span color='@cyan@'>{icon}</span> {percent}%",
+      "format-icons": [
+        "󰃞",
+        "󰃟",
+        "󰃝",
+        "󰃠"
+      ],
+      "tooltip-format": "Luminosité : {percent}%",
+      "on-scroll-up": "light -A 5",
+      "on-scroll-down": "light -U 5"
+    },
+    "custom/arrow#a4": {
+      "format": "",
+      "tooltip": false
+    },
+    "battery": {
+      "interval": 60,
+      "states": {
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "<span color='@green@'>{icon}</span> {capacity}%",
+      "format-charging": "<span color='@red@'></span> {capacity}%",
+      "format-plugged": "<span color='@red@'></span> {capacity}%",
+      "format-full": "<span color='@green@'></span> Chargée",
+      "format-icons": [
+        "",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "format-time": "{H}h{M:02}",
+      "tooltip-format": "{timeTo}"
+    },
+    "custom/arrow#a5": {
+      "format": "",
+      "tooltip": false
+    },
+    "bluetooth": {
+      "format": "<span color='@blue@'></span> {status}",
+      "format-on": "<span color='@blue@'></span> Activé",
+      "format-off": "<span color='@foreground-alt@'>󰂲</span> Désactivé",
+      "format-disabled": "<span color='@foreground-alt@'>󰂲</span> Désactivé",
+      "format-connected": "<span color='@blue@'>󰂱</span> {device_alias}",
+      "format-connected-battery": "<span color='@blue@'>󰂱</span> {device_alias} {device_battery_percentage}%",
+      "format-no-controller": "",
+      "tooltip-format": "{controller_alias}\t{controller_address}",
+      "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+      "on-click": "~/.config/packarch/scripts/menu ~/.config/packarch/scripts/rofi_bluetooth",
+      "on-click-right": "blueman-manager"
+    },
+    "network": {
+      "interval": 5,
+      "format-wifi": "<span color='@magenta@'>󰤨</span> {essid}",
+      "format-ethernet": "<span color='@magenta@'>󰈀</span> {ifname}",
+      "format-linked": "<span color='@magenta@'>󰈀</span> {ifname} (pas d'IP)",
+      "format-disconnected": "<span color='@foreground-alt@'>󰤭</span> Hors ligne",
+      "format-disabled": "<span color='@foreground-alt@'>󰤭</span> Désactivé",
+      "tooltip-format": "{ifname} · {ipaddr}/{cidr} via {gwaddr}",
+      "on-click": "~/.config/packarch/scripts/menu ~/.config/packarch/scripts/rofi_network",
+      "on-click-right": "nm-connection-editor"
+    },
+    "custom/arrow#a6": {
+      "format": "",
+      "tooltip": false
+    },
+    "clock": {
+      "interval": 60,
+      "locale": "fr_FR.UTF-8",
+      "format": "<span color='@green@'></span> {:%H:%M}",
+      "format-alt": "<span color='@green@'></span> {:%A %d %B %Y}",
+      "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+    "custom/arrow#a7": {
+      "format": "",
+      "tooltip": false
+    },
+    "tray": {
+      "icon-size": 16,
+      "spacing": 8
+    },
+    "custom/power": {
+      "format": "<span color='@red@'></span>",
+      "tooltip-format": "Éteindre, redémarrer, se déconnecter…",
+      "on-click": "~/.config/packarch/scripts/menu ~/.config/packarch/scripts/rofi_powermenu"
+    },
+    "modules-right": [
+      "custom/arrow#a2",
+      "pulseaudio",
+      "custom/arrow#a3",
+      "backlight",
+      "custom/arrow#a4",
+      "battery",
+      "custom/arrow#a5",
+      "bluetooth",
+      "network",
+      "custom/arrow#a6",
+      "clock",
+      "custom/arrow#a7",
+      "tray",
+      "custom/power"
+    ]
+  }
+]

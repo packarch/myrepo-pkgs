@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+
+## Packarch : pipemenu « Style du menu » (Préférences > Packarch), comme
+## pa-ob-menu du bureau Openbox : icônes du thème d'icônes, jeux d'icônes de
+## Packarch (crayon, delta, kecil, you : ceux du menu d'Openbox) ou glyphes
+## (police feather, sans icônes).
+##   menu-style                 le pipemenu
+##   menu-style --set STYLE     theme, glyphs ou un jeu d'icônes
+##   menu-style --refresh       police des glyphes remise après un changement
+##                              de thème (scripts/startup)
+## Le style est gardé dans ~/.config/packarch/menu-style. Seules les entrées
+## principales du menu changent (celles qui avaient une icône ou un glyphe
+## sous Openbox) ; les sous-menus gardent les icônes du thème.
+
+dir="$HOME/.config/packarch"
+menu="$dir/menu.xml"
+rc="$dir/rc.xml"
+state="$dir/menu-style"
+sets=/usr/share/packarch/desktop/menu-icons
+
+# Libellé | icône du thème | image des jeux d'icônes | glyphe (feather)
+entries=(
+	'Terminal|utilities-terminal|terminal|'
+	'Gestionnaire de fichiers|system-file-manager|filemanager|'
+	'Navigateur web|web-browser|browser|'
+	'Éditeur de texte|accessories-text-editor|editor|'
+	'Applications|applications-all|apps|'
+	'Applications en root|dialog-password|root|'
+	'Favoris Internet|bookmarks|browser|'
+	'Capture d’écran|applets-screenshooter|shots|'
+	'Enregistreur d’écran|media-record|record|'
+	'Préférences|preferences-system|settings|'
+	'Verrouiller l’écran|system-lock-screen|sys-lock|'
+	'Système|system-shutdown|sys-poweroff|'
+	'Infos système|hwinfo|stats|'
+	'Se déconnecter|system-log-out|sys-exit|'
+	'Mettre en veille|system-suspend|sys-sleep|'
+	'Redémarrer|system-reboot|sys-reboot|'
+	'Éteindre|system-shutdown|sys-poweroff-alt|'
+)
+
+notify() {
+	notify-send -u low -h string:x-canonical-private-synchronous:packarch-menu-style "$1"
+}
+
+current() {
+	local s
+	s="$(head -n 1 "$state" 2>/dev/null)"
+	printf '%s' "${s:-theme}"
+}
+
+# Police des entrées du menu : feather en second pour les glyphes (leurs
+# codes sont aussi dans d'autres polices d'icônes, avec d'autres largeurs)
+menu_font() {
+	local name
+	name="$(sed -n '/<font place="MenuItem">/,/<\/font>/s|.*<name>\(.*\)</name>.*|\1|p' "$rc")"
+	name="${name%,feather}"
+	[[ $1 == glyphs ]] && name="$name,feather"
+	sed -i "/<font place=\"MenuItem\">/,/<\/font>/s|<name>.*</name>|<name>${name//|/\\|}</name>|" "$rc"
+}
+
+apply() {
+	local style="$1" e label icon png glyph new_label new_icon
+	case "$style" in
+		theme | glyphs) ;;
+		*) [[ -d $sets/$style ]] || { notify "Style inconnu : $style"; exit 1; } ;;
+	esac
+
+	for e in "${entries[@]}"; do
+		IFS='|' read -r label icon png glyph <<< "$e"
+		new_label="$label" new_icon="$icon"
+		case "$style" in
+			glyphs) new_label="$glyph $label" ;;
+			theme) ;;
+			*) new_icon="$sets/$style/$png.png" ;;
+		esac
+		# Libellé avec ou sans glyphe (U+E000 à U+EFFF : octets EE xx xx)
+		LC_ALL=C sed -i -E "/label=\"(\xEE[\x80-\xBF][\x80-\xBF] )?$label\"/{
+			s|label=\"(\xEE[\x80-\xBF][\x80-\xBF] )?$label\"|label=\"$new_label\"|
+			s|icon=\"[^\"]*\"|icon=\"$new_icon\"|
+		}" "$menu"
+	done
+
+	# Glyphes : pas d'icônes (showIcons) et police feather
+	if [[ $style == glyphs ]]; then
+		sed -i 's|<showIcons>yes</showIcons>|<showIcons>no</showIcons>|' "$rc"
+	else
+		sed -i 's|<showIcons>no</showIcons>|<showIcons>yes</showIcons>|' "$rc"
+	fi
+	menu_font "$style"
+
+	printf '%s\n' "$style" > "$state"
+	packarch --reconfigure 2>/dev/null
+}
+
+item() {
+	local mark=''
+	[[ $(current) == "$2" ]] && mark=' ✓'
+	printf '  <item label="%s%s"><action name="Execute" command="sh -c &apos;~/.config/packarch/scripts/menu-style --set %s&apos;" /></item>\n' \
+		"$1" "$mark" "$2"
+}
+
+case "${1:-}" in
+	--set)
+		apply "$2"
+		;;
+	--refresh)
+		# packarch-skin réécrit la police du menu à chaque changement de thème
+		if [[ $(current) == glyphs ]] && ! grep -q '<name>.*,feather</name>' "$rc"; then
+			menu_font glyphs
+			packarch --reconfigure 2>/dev/null
+		fi
+		;;
+	"")
+		echo '<openbox_pipe_menu>'
+		item 'Icônes du thème' theme
+		item 'Glyphes' glyphs
+		echo '  <separator label="Icônes de Packarch" />'
+		n=1
+		for d in "$sets"/*/; do
+			d="$(basename "$d")"
+			item "$n. ${d^}" "$d"
+			n=$((n + 1))
+		done
+		echo '</openbox_pipe_menu>'
+		;;
+	*)
+		echo "usage : menu-style [--set STYLE | --refresh]" >&2
+		exit 2
+		;;
+esac
+exit 0

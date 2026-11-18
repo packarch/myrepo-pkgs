@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
+##
+## Session Packarch (d'après run-sway d'Archcraft) : variables d'environnement
+## de Wayland, disposition du clavier du système, configuration copiée au
+## premier démarrage, puis le compositeur packarch. Lancé par
+## /usr/share/wayland-sessions/packarch.desktop (Exec réécrit par le hook
+## packarch-session.hook).
+
+## Session Wayland
+export XDG_SESSION_TYPE=wayland
+export XDG_SESSION_DESKTOP=packarch
+export XDG_CURRENT_DESKTOP=packarch:wlroots
+export XDG_CURRENT_SESSION=packarch
+
+## GTK
+export TDESKTOP_DISABLE_GTK_INTEGRATION=1
+export CLUTTER_BACKEND=wayland
+export BEMENU_BACKEND=wayland
+export GDK_BACKEND="wayland,x11,*"
+
+## Firefox
+export MOZ_ENABLE_WAYLAND=1
+
+## Qt
+export QT_AUTO_SCREEN_SCALE_FACTOR=1
+export QT_QPA_PLATFORM="wayland;xcb"
+export QT_WAYLAND_DISABLE_WINDOWDECORATION=1
+## Packarch : les applications Qt (MKVToolNix, FileBot...) suivent le thème
+## GTK, sombre ou clair, comme sous Openbox (packarch-qt.sh) : Qt ne choisit
+## son thème GTK lui-même que sous XFCE, GNOME ou MATE
+[[ -n $QT_QPA_PLATFORMTHEME ]] || export QT_QPA_PLATFORMTHEME=gtk3
+
+## Elementary
+export ELM_DISPLAY=wl
+export ECORE_EVAS_ENGINE=wayland_egl
+export ELM_ENGINE=wayland_egl
+export ELM_ACCEL=opengl
+
+## SDL (repli sur X11 pour les jeux qui ne gèrent pas Wayland)
+export SDL_VIDEODRIVER="wayland,x11"
+
+## Java
+export _JAVA_AWT_WM_NONREPARENTING=1
+
+## LibreOffice
+export SAL_USE_VCLPLUGIN=gtk3
+
+export NO_AT_BRIDGE=1
+export WINIT_UNIX_BACKEND=wayland
+
+## Packarch : tous les kitty de la session (lanceurs, applications
+## Terminal=true) prennent la configuration de Packarch, aux couleurs du thème
+export KITTY_CONFIG_DIRECTORY="$HOME/.config/packarch/kitty"
+
+## Packarch : greffons de Thunar sans celui du fond d'écran
+## (thunar-wallpaper-plugin, XFCE et GNOME seulement : son « Définir comme
+## fond d'écran » échouait sous labwc et Packarch, à côté de l'action de Packarch qui
+## marche). Liens vers les autres greffons dans le dossier d'exécution, à
+## chaque session (greffons ajoutés ou retirés par une mise à jour de Thunar
+## pris en compte) ; XFCE et Openbox gardent tous les greffons.
+thunarx="${XDG_RUNTIME_DIR:-/tmp/packarch-$UID}/packarch-thunarx-3"
+rm -rf "$thunarx" && mkdir -p "$thunarx" && {
+    for p in /usr/lib/thunarx-3/*.so; do
+        [[ -e $p && ${p##*/} != thunar-wallpaper-plugin.so ]] && ln -s "$p" "$thunarx/"
+    done
+    export THUNARX_DIRS="$thunarx"
+}
+
+## Packarch : disposition du clavier du système (localectl, réglée par
+## l'installeur), lue par packarch au démarrage (environment peut la remplacer)
+if command -v localectl >/dev/null; then
+    while IFS=: read -r key value; do
+        value="${value#"${value%%[![:space:]]*}"}"
+        case "${key//[[:space:]]/}" in
+            X11Layout) export XKB_DEFAULT_LAYOUT="$value" ;;
+            X11Variant) export XKB_DEFAULT_VARIANT="$value" ;;
+            X11Model) export XKB_DEFAULT_MODEL="$value" ;;
+            X11Options) export XKB_DEFAULT_OPTIONS="$value" ;;
+        esac
+    done < <(localectl status 2>/dev/null)
+fi
+
+## VirtualBox
+if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
+    export WLR_NO_HARDWARE_CURSORS=1
+fi
+
+## Variables de session D-Bus
+export DBUS_SESSION_BUS_ADDRESS
+export DBUS_SESSION_BUS_PID
+
+## Configuration du bureau : celle de /etc/skel au premier démarrage (comptes
+## créés avant l'installation de packarch-desktop-settings, anciens bureaux
+## labwc remplacés par celui-ci). ~/.config/packarch contient aussi les réglages de packarch-hello et
+## packarch-pi : seuls les fichiers absents sont copiés
+if [[ ! -f $HOME/.config/packarch/rc.xml && -d /etc/skel/.config/packarch ]]; then
+    mkdir -p "$HOME/.config/packarch"
+    cp -a -n /etc/skel/.config/packarch/. "$HOME/.config/packarch/"
+fi
+
+## Packarch, son journal dans ~/.local/state/packarch.log (le précédent en
+## packarch.log.old)
+log="${XDG_STATE_HOME:-$HOME/.local/state}/packarch.log"
+mkdir -p "${log%/*}"
+[[ -f $log ]] && mv -f "$log" "$log.old"
+exec packarch 2>"$log"
