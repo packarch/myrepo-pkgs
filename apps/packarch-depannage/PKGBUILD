@@ -27,9 +27,10 @@
 # session), the Sway desktop of Packarch is removed.
 # 0.3.6: Packarch desktop (packarch compositor: PACKARCH_PID, Wayland socket
 # of the packarch session).
+# 0.3.7: labwc desktop removed (Packarch only).
 
 pkgname=packarch-depannage
-pkgver=0.3.6
+pkgver=0.3.7
 pkgrel=1
 pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
