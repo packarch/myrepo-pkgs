@@ -24,10 +24,12 @@
 # 1.0-2: no longer replaces packarch-labwc-settings: installed on request only
 #        (pacman -Syu switched labwc systems to this desktop, and the labwc
 #        session lost its packarch-run-labwc)
+# 1.0-3: labwc session kept as a fallback: its Exec is set back to labwc
+#        (packarch-labwc-plain.hook)
 
 pkgname=packarch-rwdesktop-settings
 pkgver=1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

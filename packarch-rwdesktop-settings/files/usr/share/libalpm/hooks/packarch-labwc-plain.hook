@@ -1,0 +1,17 @@
+# Packarch (packarch-rwdesktop-settings) : la session labwc reste utilisable
+# en secours. packarch-labwc-settings, remplacé par ce paquet, faisait lancer
+# labwc par son packarch-run-labwc, parti avec lui : sans ce crochet, la
+# session labwc ne démarrait plus. Rien n'est fait si labwc n'est pas installé.
+
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = packarch-rwdesktop-settings
+Target = labwc
+Target = labwc-packarch
+
+[Action]
+Description = Session labwc de secours (labwc)...
+When = PostTransaction
+Exec = /usr/bin/find /usr/share/wayland-sessions -maxdepth 1 -name labwc.desktop -exec /usr/bin/sed -i -e "s|^Exec=/usr/bin/packarch-run-labwc$|Exec=labwc|" {} +
