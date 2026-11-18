@@ -34,9 +34,11 @@
 # 1.3.1-1: frame callbacks and presentation feedback paced by the primary
 #          output of each surface, sent at vblank (smooth X11 video players
 #          such as Nounours Player on two monitors)
+# 1.3.2-1: windows with rounded corners no longer lag (their surfaces were
+#          seen as hidden and got one frame callback per second)
 
 pkgname=packarch-desktop
-pkgver=1.3.1
+pkgver=1.3.2
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
