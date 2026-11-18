@@ -18,9 +18,11 @@
 #          the highlight color of the theme
 # 1.1.2-1: frame of the windows as the application asks (GtkHeaderBar
 #          applications such as Packarch Hello keep only their own title bar)
+# 1.1.3-1: a single cursor in virtual machines (cursor plane of virtio-gpu,
+#          qxl and vmwgfx with its hotspot: patched Smithay in vendor/)
 
 pkgname=packarch-rwdesktop
-pkgver=1.1.2
+pkgver=1.1.3
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
