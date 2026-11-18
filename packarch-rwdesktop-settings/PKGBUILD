@@ -5,7 +5,7 @@
 # Openbox: Openbox window themes OB-Packarch-*, rc.xml and menu.xml in the
 # Openbox format, rounded and shadowed windows and menus, animations) with
 # the configuration of the labwc desktop of Packarch (packarch-labwc-settings,
-# replaced by this package): the same Wayland tools (waybar, rofi menus, mako,
+# in conflict with this package): the same Wayland tools (waybar, rofi menus, mako,
 # hyprlock, swaybg, swayidle, grim and slurp, hyprpicker, kitty), the same
 # keys, menu and 10 themes applied by packarch-skin (>= 1.8.0: Packarch
 # desktop, XDG_CURRENT_DESKTOP=packarch:wlroots). The configuration goes to
@@ -21,10 +21,13 @@
 # its session and ~/.config/labwc stay usable.
 #
 # 1.0-1: first version, from packarch-labwc-settings 1.0-16
+# 1.0-2: no longer replaces packarch-labwc-settings: installed on request only
+#        (pacman -Syu switched labwc systems to this desktop, and the labwc
+#        session lost its packarch-run-labwc)
 
 pkgname=packarch-rwdesktop-settings
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -58,10 +61,11 @@ optdepends=(
   'blueman: Bluetooth manager (right click on the Bluetooth module)'
   'kanshi: screen configuration kept (~/.config/kanshi/config, started by autostart)'
 )
-# The labwc desktop of Packarch is replaced by this one (same Wayland tools,
-# files of /etc/skel/.config/autostart and waypaper in common); the Sway one
-# before it
-replaces=(packarch-labwc-settings packarch-sway-settings)
+# Not installed together with the labwc desktop of Packarch (same Wayland
+# tools, files of /etc/skel/.config/autostart and waypaper in common), nor the
+# Sway one before it. No replaces=: the Packarch desktop is installed on
+# request only (sudo pacman -S packarch-rwdesktop-settings), until it becomes
+# the default desktop
 conflicts=(packarch-labwc-settings packarch-sway-settings)
 options=(!strip !emptydirs)
 
