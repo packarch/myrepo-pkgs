@@ -38,10 +38,12 @@
 #        packarch-desktop >= 1.2.1) instead of dex: stopped at the end of the
 #        session (the cachy-update applet survived it); packarch-run comments
 #        out the dex line of the autostart of existing accounts
+# 1.2-1: waybar clock: day and month names in French (L specifier of
+#        std::format, the "locale" option alone is ignored since waybar 0.11)
 
 pkgname=packarch-desktop-settings
-pkgver=1.1
-pkgrel=2
+pkgver=1.2
+pkgrel=1
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
