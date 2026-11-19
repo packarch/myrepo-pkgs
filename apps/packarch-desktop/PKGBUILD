@@ -53,9 +53,11 @@
 # 1.4.3-1: drag and drop icon (file or folder) drawn under the pointer
 # 1.4.4-1: drag and drop between Wayland and X11 applications (XDND, both
 #          directions: Thunar to FileBot and back)
+# 1.4.5-1: drag and drop to Java applications (FileBot): the X client may
+#          read the dragged data several times
 
 pkgname=packarch-desktop
-pkgver=1.4.4
+pkgver=1.4.5
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
