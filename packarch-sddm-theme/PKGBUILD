@@ -11,10 +11,14 @@
 # 1.0-1: first version (prototype tested on the test machine, 2026-11-19);
 #        background without the ghost line (background.jpg has it, see
 #        theme.conf)
+# 1.0-2: session of the first boot (nobody logged in yet): the first installed
+#        of sessionsPreferees (packarch, openbox, xfce: the installed desktop),
+#        since SDDM 0.21 has no default session; Packarch uses SDDM instead of
+#        LightDM
 
 pkgname=packarch-sddm-theme
 pkgver=1.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Packarch theme of the SDDM login screen (maze, room for the login, ghosts)"
 arch=('any')
 url="https://github.com/packarch/Packarch"
