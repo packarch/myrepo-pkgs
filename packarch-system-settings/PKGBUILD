@@ -57,10 +57,12 @@
 #   "Installation de Packarch"
 # - 1.0-20: the installation snapshot is also renamed in limine.conf
 #   (limine-snapper-sync keeps the text of its existing entries)
+# - 1.0-21: new Packarch logo (yellow pacman) on the background of the GRUB
+#   theme packarch, also used by the live ISO
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=20
+pkgrel=21
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
