@@ -3,6 +3,9 @@
 # Wallpapers of the themes of packarch-skin (Openbox and XFCE desktops) and
 # of the LightDM greeter (wallpaper-alt.png, also the one of the default
 # theme), in /usr/share/backgrounds.
+# 2.0-8: packarch-default.jpg: the maze of the Packarch theme (darker
+# background #0e0e11, "Packarch Linux" in a room of the maze, ghosts in the
+# corridors; Packarch repository, branding/fonds/packarch-labyrinthe.jpg)
 # 2.0-7: packarch-default.jpg (wallpaper of the Packarch theme and of the
 # LightDM greeter): the pacman of the bare packarch desktop, a little darker
 # than the gray background (3840x2160)
@@ -16,7 +19,7 @@
 
 pkgname=packarch-backgrounds
 pkgver=2.0
-pkgrel=7
+pkgrel=8
 pkgdesc="Wallpapers of the Packarch themes"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

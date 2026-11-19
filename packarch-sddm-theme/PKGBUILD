@@ -1,0 +1,51 @@
+# Maintainer: Fabrice Corraire <antidote1911@gmail.com>
+#
+# Theme of the SDDM login screen of Packarch (Qt 6): the whole maze of the
+# Packarch theme, a room with "Packarch Linux" and the login fields (user,
+# password, session), ghosts in the corridors, clock on top, host name and
+# power buttons at the bottom; French. Sources (SVG, maze generator, build
+# script): Packarch repository, branding/ (branding/sddm/packarch is copied
+# here). /etc/sddm.conf.d/10-packarch.conf selects the theme; SDDM itself is
+# only used when it is the display manager (systemctl enable sddm).
+#
+# 1.0-1: first version (prototype tested on the test machine, 2026-11-19);
+#        background without the ghost line (background.jpg has it, see
+#        theme.conf)
+
+pkgname=packarch-sddm-theme
+pkgver=1.0
+pkgrel=1
+pkgdesc="Packarch theme of the SDDM login screen (maze, room for the login, ghosts)"
+arch=('any')
+url="https://github.com/packarch/Packarch"
+license=('MIT')
+depends=(sddm qt6-declarative noto-fonts qogir-icon-theme)
+backup=('etc/sddm.conf.d/10-packarch.conf')
+
+package() {
+	cp -a "$startdir"/files/. "$pkgdir"/
+	chmod -R u=rwX,go=rX "$pkgdir"/usr/share/sddm/themes/packarch
+	install -Dm644 /dev/stdin "$pkgdir"/usr/share/licenses/"$pkgname"/LICENSE <<-'LIC'
+		MIT License
+
+		Copyright (c) 2026 Packarch
+
+		Permission is hereby granted, free of charge, to any person obtaining a copy
+		of this software and associated documentation files (the "Software"), to deal
+		in the Software without restriction, including without limitation the rights
+		to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+		copies of the Software, and to permit persons to whom the Software is
+		furnished to do so, subject to the following conditions:
+
+		The above copyright notice and this permission notice shall be included in all
+		copies or substantial portions of the Software.
+
+		THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+		IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+		FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+		AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+		LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+		OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+		SOFTWARE.
+	LIC
+}

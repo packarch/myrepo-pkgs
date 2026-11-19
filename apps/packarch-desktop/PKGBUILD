@@ -65,9 +65,11 @@
 #          host, X11 clipboard managers)
 # 1.4.8-1: Ghostty first in the default terminals ($TERMINAL, then ghostty,
 #          foot, kitty…)
+# 1.4.9-1: default background of the bare compositor: the maze of the
+#          Packarch theme, full screen (instead of the dark pacman)
 
 pkgname=packarch-desktop
-pkgver=1.4.8
+pkgver=1.4.9
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')

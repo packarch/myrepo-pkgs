@@ -74,10 +74,11 @@
 # 1.0.9-16: default theme packarch (packarch-skin 1.10.0): first wallpaper
 # packarch-default.jpg; the former default theme is named classic (thumbnail
 # classic.png, old "default" color of the theme switcher mapped to it)
+# 1.0.9-17: thumbnail of the packarch theme from its maze wallpaper
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=16
+pkgrel=17
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

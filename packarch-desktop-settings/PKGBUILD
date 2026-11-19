@@ -50,10 +50,12 @@
 #        (custom/launch-terminal), Thunar actions, root terminal by
 #        packarch-terminal; configuration ~/.config/ghostty of
 #        packarch-system-settings (colors and font by packarch-skin)
+# 1.2-4: thumbnail of the packarch theme from its maze wallpaper
+#        (packarch-xfce-settings 1.0.9-17)
 
 pkgname=packarch-desktop-settings
 pkgver=1.2
-pkgrel=3
+pkgrel=4
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
