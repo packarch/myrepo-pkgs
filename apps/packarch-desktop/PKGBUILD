@@ -50,9 +50,10 @@
 #          (/etc/xdg/xdg-desktop-portal-wlr/packarch)
 # 1.4.2-1: screen recording on NVIDIA: linear dmabuf of wf-recorder filled
 #          by the CPU (not renderable by the GPU)
+# 1.4.3-1: drag and drop icon (file or folder) drawn under the pointer
 
 pkgname=packarch-desktop
-pkgver=1.4.2
+pkgver=1.4.3
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
