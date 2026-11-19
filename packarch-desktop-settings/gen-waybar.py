@@ -100,10 +100,10 @@ def m_volume(color="blue", bar=False):
             "smooth-scrolling-threshold": 1}
 
 def m_clock(color="red", icon="󰥔", date=False):
-    fmt = "{:%d %b %H:%M}" if date else "{:%H:%M}"
+    fmt = "{:L%d %b %H:%M}" if date else "{:L%H:%M}"
     return {"interval": 60, "locale": "fr_FR.UTF-8",
-            "format": f"{sp(color, icon)} {fmt}", "format-alt": f"{sp(color, icon)} {{:%A %d %B %Y}}",
-            "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>"}
+            "format": f"{sp(color, icon)} {fmt}", "format-alt": f"{sp(color, icon)} {{:L%A %d %B %Y}}",
+            "tooltip-format": "<big>{:L%B %Y}</big>\n<tt><small>{calendar}</small></tt>"}
 
 def m_tray():
     return {"icon-size": 16, "spacing": 8}
