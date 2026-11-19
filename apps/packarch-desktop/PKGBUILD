@@ -60,9 +60,12 @@
 #          by category, windows, terminal, session), keyboard layout also from
 #          /etc/default/keyboard, gray pacman in the middle of the background
 #          (<core><logo>no</logo></core> removes it)
+# 1.4.7-1: copy from a Wayland application to the X11 clients without a
+#          focused window (spice-vdagent: copy from a virtual machine to the
+#          host, X11 clipboard managers)
 
 pkgname=packarch-desktop
-pkgver=1.4.6
+pkgver=1.4.7
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
