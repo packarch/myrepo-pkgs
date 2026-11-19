@@ -47,10 +47,13 @@
 #   labwc desktop of Packarch replaces the Sway one
 # - 1.0-17: URLs of /etc/os-release on the Packarch repository (renamed from
 #   CachyOS-Packarch)
+# - 1.0-18: new Packarch logo (yellow gradient pacman, the shape of the
+#   background of the Packarch desktop) for /usr/share/pixmaps/packarch.png
+#   and the packarch icon of the GRUB themes
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=17
+pkgrel=18
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

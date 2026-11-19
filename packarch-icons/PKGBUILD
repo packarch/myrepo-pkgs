@@ -7,6 +7,9 @@
 # (cyberpunk, aur/beautyline), and the themes they inherit from
 # (Packarch-Base, Packarch-Base-Dark, Papirus-Apps; Papirus and Qogir-Dark
 # from the official packages).
+# 2.0-10: new Packarch logo (yellow gradient pacman) for
+# distributor-logo-packarch and packarch-{cyan,green,purple,red,yellow} of
+# Papirus-Apps, instead of the former "A" logos
 # 2.0-9: content of packarch-icons-openbox merged (replaced): both desktops
 # use the same themes; Vimix-Black(-Dark), used by no theme since the XFCE
 # color switcher was removed, moved to packarch-extra (formerly
@@ -28,7 +31,7 @@
 
 pkgname=packarch-icons
 pkgver=2.0
-pkgrel=9
+pkgrel=10
 pkgdesc="Icon themes of Packarch (Papirus, Qogir and BeautyLine from their packages)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
