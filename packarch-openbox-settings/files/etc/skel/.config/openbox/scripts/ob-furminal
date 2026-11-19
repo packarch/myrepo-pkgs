@@ -2,7 +2,7 @@
 
 ## Copyright (C) 2020-2026 Aditya Shakya <adi1090x@gmail.com>
 ##
-## Fullscreen terminal
+## Fullscreen terminal (Ghostty; --class: a GTK application ID, with dots)
 
-kitty --class kitty_fullscreen --start-as fullscreen \
-	  -o window_padding_width=45 -o background_opacity=1.0 -o font_size=14
+ghostty --class=org.packarch.TerminalFullscreen --fullscreen=true \
+	--window-padding-x=45 --window-padding-y=45 --background-opacity=1.0 --font-size=14

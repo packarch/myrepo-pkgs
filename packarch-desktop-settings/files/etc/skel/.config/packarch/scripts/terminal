@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+## Packarch : terminal (Ghostty) : terminal [-f|-F] [OPTIONS DE GHOSTTY...]
+##   -f  fenêtre flottante (org.packarch.TerminalFloat)
+##   -F  plein écran (org.packarch.TerminalFullscreen)
+## Les arguments suivants sont transmis à Ghostty (-e COMMANDE…). Le terminal
+## s'ouvre dans le dossier personnel : lancé depuis waybar, il héritait de
+## son dossier courant (~/.config/packarch/waybar, scripts/statusbar).
+## Configuration : ~/.config/ghostty (couleurs et police du thème écrites par
+## packarch-skin). --class : un identifiant d'application GTK (avec des
+## points), sinon Ghostty l'ignore.
+
+cd -- "$HOME" || exit 1
+
+# Virtualbox workarounds
+cmd=(ghostty)
+if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
+	cmd=(env LIBGL_ALWAYS_SOFTWARE=1 ghostty)
+fi
+
+case "${1:-}" in
+	-f)
+		shift
+		exec "${cmd[@]}" --class=org.packarch.TerminalFloat "$@"
+		;;
+	-F)
+		shift
+		exec "${cmd[@]}" \
+			--class=org.packarch.TerminalFullscreen \
+			--fullscreen=true \
+			--window-padding-x=30 \
+			--window-padding-y=30 \
+			--font-size=14 \
+			--background-opacity=0.95 \
+			"$@"
+		;;
+	*)
+		exec "${cmd[@]}" "$@"
+		;;
+esac

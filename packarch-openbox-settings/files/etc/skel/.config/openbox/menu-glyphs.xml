@@ -8,7 +8,7 @@
 <!--	<separator label="Menu principal"/>  -->
 		<item label=" Terminal">
 			<action name="Execute">
-				<command>kitty</command>
+				<command>ghostty</command>
 			</action>
 		</item>
 		<item label=" Gestionnaire de fichiers">

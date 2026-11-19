@@ -1,4 +1,4 @@
 # Terminal of the applications with Terminal=true under packarch (XDG_CURRENT_DESKTOP=packarch)
 # (xdg-terminal-exec, used by GLib: "Launch Cachy-Update" of the cachy-update
 # tray icon, for example)
-kitty.desktop
+com.mitchellh.ghostty.desktop

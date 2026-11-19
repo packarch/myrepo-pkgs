@@ -34,9 +34,11 @@
 # 1.10.0: default theme packarch (render, account without a current theme);
 # the former default theme is named classic (an account that still has its
 # theme "default" keeps it and does not get classic twice)
+# 1.11.0: colors and font of the terminal Ghostty (~/.config/ghostty/colors
+# and fonts, reloaded live by SIGUSR2), Openbox and Packarch desktops
 
 pkgname=packarch-skin
-pkgver=1.10.0
+pkgver=1.11.0
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Packarch desktops"
 arch=('x86_64')

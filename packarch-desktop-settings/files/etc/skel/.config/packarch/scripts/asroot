@@ -17,7 +17,7 @@
 ## GTK du dossier d'exécution de l'utilisateur, donné à root par
 ## XDG_CONFIG_DIRS, sans toucher à la configuration de root ; XDG_DATA_DIRS
 ## donne aussi les thèmes d'icônes de l'utilisateur (couleur des dossiers),
-## KITTY_CONFIG_DIRECTORY sa configuration de kitty.
+## PACKARCH_GHOSTTY_CONFIG sa configuration de Ghostty (packarch-terminal).
 ##
 ## Thunar de root : thunar-defaults lui donne, dans son bus D-Bus, les
 ## actions personnalisées en français (uca-root.xml : terminal ici,
@@ -71,7 +71,7 @@ exec sudo -A \
 	XDG_CONFIG_DIRS="$conf:/etc/xdg" \
 	XDG_DATA_DIRS="$HOME/.local/share:/usr/local/share:/usr/share" \
 	XCURSOR_THEME="$cursor_theme" XCURSOR_SIZE=24 \
-	KITTY_CONFIG_DIRECTORY="$HOME/.config/packarch/kitty" \
+	PACKARCH_GHOSTTY_CONFIG="$HOME/.config/ghostty/config" \
 	dbus-run-session -- \
 	/usr/share/packarch/desktop/thunar-defaults /usr/share/packarch/desktop/uca-root.xml \
 	"${cmd[@]}"

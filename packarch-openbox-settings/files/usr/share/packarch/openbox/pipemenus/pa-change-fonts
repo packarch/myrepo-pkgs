@@ -47,7 +47,7 @@ case "$1" in
 		menuStart
 		menuItem 'Barre d’état (polybar)' "$0 --bar"
 		menuItem 'Lanceurs (rofi)' "$0 --rofi"
-		menuItem 'Terminal (kitty)' "$0 --terminal"
+		menuItem 'Terminal (Ghostty)' "$0 --terminal"
 		menuItem 'Bureau (openbox)' "$0 --openbox"
 		menuItem 'Notifications (dunst)' "$0 --dunst"
 		menuItem 'Applications (gtk)' "$0 --gtk"

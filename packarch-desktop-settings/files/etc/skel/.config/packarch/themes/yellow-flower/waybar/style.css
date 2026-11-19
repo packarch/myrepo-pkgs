@@ -70,6 +70,6 @@ window#waybar.bottom { border-top: 1px solid @accent; }
 #workspaces button { color: @accent; padding: 0px 4px; }
 #workspaces button.active { color: @red; }
 #custom-menu { font-size: 14px; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty { font-size: 14px; padding: 0px 4px; }
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal { font-size: 14px; padding: 0px 4px; }
 #cpu, #memory, #disk, #battery, #bluetooth, #network { padding: 0px 2px; }
 #custom-sep { color: @background-alt; }

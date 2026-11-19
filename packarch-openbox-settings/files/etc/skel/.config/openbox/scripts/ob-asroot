@@ -7,11 +7,12 @@
 ## actions de Thunar par packarch-tcma).
 ##
 ## Packarch : application root avec le thème courant. Root n'a pas de
-## réglages GTK ni de configuration kitty (Thunar sans les icônes du thème,
-## kitty tout noir) : les settings.ini GTK de l'utilisateur (écrits par
+## réglages GTK ni de configuration de Ghostty (Thunar sans les icônes du
+## thème, terminal sans ses couleurs) : les settings.ini GTK de l'utilisateur (écrits par
 ## packarch-skin) sont copiés dans son dossier d'exécution et donnés à root
 ## par XDG_CONFIG_DIRS, avec ses thèmes d'icônes (XDG_DATA_DIRS, couleur des
-## dossiers) et sa configuration kitty, sans toucher à la configuration de
+## dossiers) et sa configuration de Ghostty (PACKARCH_GHOSTTY_CONFIG, lue par
+## packarch-terminal), sans toucher à la configuration de
 ## root. sudo sans -E : root garde HOME=/root (rien n'est écrit chez
 ## l'utilisateur).
 
@@ -37,5 +38,5 @@ exec sudo -A \
 	XDG_CONFIG_DIRS="$conf:/etc/xdg" \
 	XDG_DATA_DIRS="$HOME/.local/share:/usr/local/share:/usr/share" \
 	XCURSOR_THEME="${cursor:-default}" \
-	KITTY_CONFIG_DIRECTORY="$HOME/.config/kitty" \
+	PACKARCH_GHOSTTY_CONFIG="$HOME/.config/ghostty/config" \
 	sh -c "$*"

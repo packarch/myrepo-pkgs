@@ -63,9 +63,11 @@
 # 1.4.7-1: copy from a Wayland application to the X11 clients without a
 #          focused window (spice-vdagent: copy from a virtual machine to the
 #          host, X11 clipboard managers)
+# 1.4.8-1: Ghostty first in the default terminals ($TERMINAL, then ghostty,
+#          foot, kitty…)
 
 pkgname=packarch-desktop
-pkgver=1.4.7
+pkgver=1.4.8
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')

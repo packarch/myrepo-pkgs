@@ -61,10 +61,16 @@
 #   theme packarch, also used by the live ISO
 # - 1.0-22: LightDM greeter background packarch-default.jpg (the pacman of the
 #   Packarch theme) instead of wallpaper-alt.png
+# - 1.0-23: Ghostty, terminal of the Packarch and Openbox desktops:
+#   /etc/skel/.config/ghostty (config including colors and fonts, written by
+#   packarch-skin with each theme; the ones of the default theme packarch
+#   here) and /usr/bin/packarch-terminal (Ghostty with the configuration of
+#   the user for the root terminal: PACKARCH_GHOSTTY_CONFIG of asroot and
+#   ob-asroot)
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=22
+pkgrel=23
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -74,7 +80,8 @@ depends=(sed numlockx qogir-icon-theme 'packarch-icons>=2.0-8'
 optdepends=(
   'lightdm-gtk-greeter: login screen using these settings'
   'fastfetch: system information with the Packarch logo'
-  'imagemagick: image logo of fastfetch in kitty'
+  'imagemagick: image logo of fastfetch in Ghostty or kitty (kitty image protocol)'
+  'ghostty: terminal of packarch-terminal (Packarch and Openbox desktops)'
 )
 backup=(
   'etc/xdg/fastfetch/config.jsonc'

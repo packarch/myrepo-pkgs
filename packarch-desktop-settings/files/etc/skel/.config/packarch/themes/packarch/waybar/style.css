@@ -76,7 +76,7 @@ window#waybar.empty #taskbar { background-color: transparent; }
 #workspaces button { font-size: 14px; padding: 0px 5px; }
 #workspaces button.active { color: @red; }
 #custom-menu { font-size: 16px; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty, #custom-launch-discord,
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal, #custom-launch-discord,
 #custom-launch-filezilla, #custom-launch-mkvtoolnix, #custom-launch-filebot {
 	font-size: 15px;
 	padding: 0px 8px;

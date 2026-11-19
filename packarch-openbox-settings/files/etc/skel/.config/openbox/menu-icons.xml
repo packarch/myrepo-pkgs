@@ -9,7 +9,7 @@
 <!--	<separator label="Menu principal"/>  -->
 		<item icon="&icons;/terminal.png" label="Terminal">
 			<action name="Execute">
-				<command>kitty</command>
+				<command>ghostty</command>
 			</action>
 		</item>
 		<separator/>

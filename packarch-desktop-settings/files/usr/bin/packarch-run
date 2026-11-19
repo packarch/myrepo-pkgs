@@ -50,8 +50,9 @@ export SAL_USE_VCLPLUGIN=gtk3
 export NO_AT_BRIDGE=1
 export WINIT_UNIX_BACKEND=wayland
 
-## Packarch : tous les kitty de la session (lanceurs, applications
-## Terminal=true) prennent la configuration de Packarch, aux couleurs du thème
+## Terminal : Ghostty, configuration ~/.config/ghostty (packarch-system-settings,
+## couleurs du thème par packarch-skin). kitty des comptes d'avant Ghostty :
+## la configuration de Packarch, aux couleurs du thème
 export KITTY_CONFIG_DIRECTORY="$HOME/.config/packarch/kitty"
 
 ## Packarch : greffons de Thunar sans celui du fond d'écran

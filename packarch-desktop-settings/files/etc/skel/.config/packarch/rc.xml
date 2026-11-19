@@ -255,24 +255,24 @@
     <keybind key="W-o"><action name="ToggleOmnipresent" /></keybind>
     <keybind key="W-y"><action name="ToggleDecorations" /></keybind>
 
-    <!-- Terminal : kitty -->
+    <!-- Terminal : Ghostty (scripts/terminal) -->
     <keybind key="W-Return">
-      <action name="Execute" command="sh -c '~/.config/packarch/scripts/kitty'" />
+      <action name="Execute" command="sh -c '~/.config/packarch/scripts/terminal'" />
     </keybind>
     <keybind key="W-S-Return">
-      <action name="Execute" command="sh -c '~/.config/packarch/scripts/kitty -f'" />
+      <action name="Execute" command="sh -c '~/.config/packarch/scripts/terminal -f'" />
     </keybind>
     <keybind key="W-A-Return">
-      <action name="Execute" command="sh -c '~/.config/packarch/scripts/kitty -F'" />
+      <action name="Execute" command="sh -c '~/.config/packarch/scripts/terminal -F'" />
     </keybind>
     <keybind key="C-A-t">
-      <action name="Execute" command="sh -c '~/.config/packarch/scripts/kitty'" />
+      <action name="Execute" command="sh -c '~/.config/packarch/scripts/terminal'" />
     </keybind>
     <keybind key="C-A-v">
-      <action name="Execute" command="sh -c '~/.config/packarch/scripts/kitty -f nano'" />
+      <action name="Execute" command="sh -c '~/.config/packarch/scripts/terminal -f nano'" />
     </keybind>
     <keybind key="C-A-h">
-      <action name="Execute" command="sh -c '~/.config/packarch/scripts/kitty -f htop'" />
+      <action name="Execute" command="sh -c '~/.config/packarch/scripts/terminal -f htop'" />
     </keybind>
 
     <!-- Applications -->

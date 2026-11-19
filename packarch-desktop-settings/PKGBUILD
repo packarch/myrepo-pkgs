@@ -43,10 +43,17 @@
 # 1.2-2: default theme packarch (packarch-skin 1.10.0, wallpaper with the
 #        pacman of the bare packarch desktop); the former default theme is
 #        named classic
+# 1.2-3: terminal Ghostty instead of kitty (right click menu with Paste, theme
+#        colors reloaded live, kitty image protocol): scripts/terminal
+#        (-f floating, -F fullscreen, GTK application IDs
+#        org.packarch.Terminal*), keys, menus, waybar of the themes
+#        (custom/launch-terminal), Thunar actions, root terminal by
+#        packarch-terminal; configuration ~/.config/ghostty of
+#        packarch-system-settings (colors and font by packarch-skin)
 
 pkgname=packarch-desktop-settings
 pkgver=1.2
-pkgrel=2
+pkgrel=3
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -60,22 +67,23 @@ depends=(
   xdg-desktop-portal xdg-desktop-portal-wlr xdg-desktop-portal-gtk
   network-manager-applet networkmanager-dmenu-git bluez-utils xfce-polkit
   # applications of the keys and menu
-  kitty thunar geany firefox viewnior htop nano yad
+  ghostty thunar geany firefox viewnior htop nano yad
   # Geany color schemes of the themes
   packarch-geany-config
   # applications of the Thunar actions
   catfish meld xfconf
-  # fonts of waybar, kitty, mako and hyprlock
+  # fonts of waybar, Ghostty, mako and hyprlock
   noto-fonts ttf-jetbrains-mono-nerd packarch-fonts
-  # LightDM greeter, menu hooks, cachy-update
-  packarch-system-settings
+  # LightDM greeter, menu hooks, cachy-update; Ghostty configuration and
+  # packarch-terminal (1.0-23)
+  'packarch-system-settings>=1.0-23'
   # theme chooser, GTK and Openbox (window) themes, icons, cursors and
   # wallpapers
-  'packarch-skin>=1.10.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.11.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.10.0')
+makedepends=('packarch-skin>=1.11.0')
 optdepends=(
   'blueman: Bluetooth manager (right click on the Bluetooth module)'
   'kanshi: screen configuration kept (~/.config/kanshi/config, started by autostart)'

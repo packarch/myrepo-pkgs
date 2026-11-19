@@ -11,7 +11,7 @@
 	<icon>open-terminal</icon>
 	<name>Ouvrir un terminal ici</name>
 	<unique-id>1794265032233695-1</unique-id>
-	<command>kitty --directory %f</command>
+	<command>ghostty --working-directory=%f</command>
 	<description>Ouvrir un terminal dans le dossier courant</description>
 	<patterns>*</patterns>
 	<startup-notify/>

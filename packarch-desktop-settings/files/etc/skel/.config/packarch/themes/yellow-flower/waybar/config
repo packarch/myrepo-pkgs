@@ -31,13 +31,13 @@
       "interval": 5,
       "format": "<span color='@yellow@'></span> {usage}%",
       "tooltip": false,
-      "on-click": "kitty -e htop"
+      "on-click": "~/.config/packarch/scripts/terminal -f -e htop"
     },
     "memory": {
       "interval": 10,
       "format": "<span color='@blue@'></span> {used:0.1f}G",
       "tooltip-format": "Mémoire : {used:0.1f} Go / {total:0.1f} Go",
-      "on-click": "kitty -e htop"
+      "on-click": "~/.config/packarch/scripts/terminal -f -e htop"
     },
     "disk": {
       "interval": 60,
@@ -177,10 +177,10 @@
       "on-click-right": "~/.config/packarch/scripts/asroot thunar",
       "format": "<span color='@blue@'></span>"
     },
-    "custom/launch-kitty": {
+    "custom/launch-terminal": {
       "tooltip-format": "Terminal (clic droit : en administrateur)",
-      "on-click": "~/.config/packarch/scripts/kitty",
-      "on-click-right": "~/.config/packarch/scripts/asroot 'kitty --class kitty-float --directory /root'",
+      "on-click": "~/.config/packarch/scripts/terminal",
+      "on-click-right": "~/.config/packarch/scripts/asroot 'packarch-terminal --class=org.packarch.TerminalRoot --working-directory=/root'",
       "format": "<span color='@green@'></span>"
     },
     "modules-left": [
@@ -188,7 +188,7 @@
       "custom/sep#s3",
       "custom/launch-firefox",
       "custom/launch-thunar",
-      "custom/launch-kitty"
+      "custom/launch-terminal"
     ],
     "wlr/taskbar": {
       "format": "{icon} {title:.25}",

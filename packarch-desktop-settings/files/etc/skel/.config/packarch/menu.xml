@@ -7,7 +7,7 @@
 <openbox_menu>
   <menu id="root-menu" label="Packarch">
     <item label="Terminal" icon="utilities-terminal">
-      <action name="Execute" command="sh -c '~/.config/packarch/scripts/kitty'" />
+      <action name="Execute" command="sh -c '~/.config/packarch/scripts/terminal'" />
     </item>
     <item label="Gestionnaire de fichiers" icon="system-file-manager">
       <action name="Execute" command="thunar" />
@@ -19,12 +19,12 @@
       <action name="Execute" command="geany" />
     </item>
     <separator />
-    <menu id="applications" label="Applications" icon="applications-all" execute="labwc-menu-generator -p -I -t 'kitty -e'" />
+    <menu id="applications" label="Applications" icon="applications-all" execute="labwc-menu-generator -p -I -t 'ghostty -e'" />
     <!-- Comme sous Openbox (pipemenu pa-asroot) ; le menu rofi des
          applications en root reste au raccourci de rc.xml -->
     <menu id="asroot" label="Applications en root" icon="dialog-password">
-      <item label="Terminal (kitty)" icon="utilities-terminal">
-        <action name="Execute" command="sh -c '~/.config/packarch/scripts/asroot &quot;kitty --class kitty-float --directory /root&quot;'" />
+      <item label="Terminal (Ghostty)" icon="utilities-terminal">
+        <action name="Execute" command="sh -c '~/.config/packarch/scripts/asroot &quot;packarch-terminal --class=org.packarch.TerminalRoot --working-directory=/root&quot;'" />
       </item>
       <item label="Gestionnaire de fichiers (thunar)" icon="system-file-manager">
         <action name="Execute" command="sh -c '~/.config/packarch/scripts/asroot thunar'" />

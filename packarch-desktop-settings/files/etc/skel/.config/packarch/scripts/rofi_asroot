@@ -9,7 +9,7 @@ USER=`whoami`
 # Theme Elements
 prompt='Root'
 mesg='Lancer une application en administrateur'
-term="kitty --class kitty-float --config /home/$USER/.config/packarch/kitty/kitty.conf"
+term="packarch-terminal --class=org.packarch.TerminalRoot --working-directory=/root"
 
 # Options
 layout=`cat ${RASI} | grep 'USE_ICON' | cut -d'=' -f2`
@@ -50,9 +50,9 @@ run_cmd() {
 	elif [[ "$1" == '--opt3' ]]; then
 		${ASROOT} geany
 	elif [[ "$1" == '--opt4' ]]; then
-		${ASROOT} "$term htop"
+		${ASROOT} "$term -e htop"
 	elif [[ "$1" == '--opt5' ]]; then
-		${ASROOT} "$term nano"
+		${ASROOT} "$term -e nano"
 	fi
 }
 

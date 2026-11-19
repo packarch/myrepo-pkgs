@@ -72,10 +72,15 @@
 # desktops) from /etc/skel/.config/geany/colorschemes
 # 7.0-82: default theme packarch (packarch-skin 1.10.0); the former default
 # theme is named classic
+# 7.0-83: terminal Ghostty instead of kitty (right click menu with Paste,
+# theme colors reloaded live, kitty image protocol): keys, menus, polybar of
+# the themes (launch-terminal module), ob-furminal, pipemenus, Thunar
+# actions, root terminal by packarch-terminal; configuration ~/.config/ghostty
+# of packarch-system-settings (colors and font by packarch-skin)
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=82
+pkgrel=83
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -89,7 +94,7 @@ depends=(
   xfce4-settings xmlstarlet
   python-lxml lead-git skippy-xd-git
   # optional dependencies used by the configuration (keys, menus, scripts)
-  kitty thunar geany firefox viewnior betterlockscreen
+  ghostty thunar geany firefox viewnior betterlockscreen
   # Geany color schemes of the themes (7.0-79)
   packarch-geany-config
   ksuperkey networkmanager-dmenu-git ffmpeg maim xclip xcolor
@@ -105,11 +110,13 @@ depends=(
   # font (1.0.0-11, 7.0-38); role fastfetch of red-satanic (1.0.0-12, 7.0-42).
   # 7.0-72: the -openbox packages are merged into packarch-themes,
   # packarch-icons and packarch-backgrounds (same themes on XFCE)
-  'packarch-skin>=1.10.0' 'packarch-themes>=2.0-7' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.11.0' 'packarch-themes>=2.0-7' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors packarch-fonts
+  # Ghostty configuration and packarch-terminal (root terminal) (7.0-83)
+  'packarch-system-settings>=1.0-23'
 )
 # Writes the default theme into /etc/skel (render, packarch-skin 1.0.0-9)
-makedepends=('packarch-skin>=1.10.0')
+makedepends=('packarch-skin>=1.11.0')
 # Merged into this package (7.0-16); formerly packarch-openbox (renamed in
 # 7.0-72, like packarch-xfce-settings)
 replaces=(packarch-openbox-extras packarch-openbox)

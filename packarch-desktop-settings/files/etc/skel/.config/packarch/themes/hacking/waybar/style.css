@@ -69,7 +69,7 @@ window#waybar.top { border-bottom: 1px solid @background-alt; }
 window#waybar.bottom { border-top: 1px solid @background-alt; }
 #workspaces button { color: @yellow; padding: 0px 8px; }
 #workspaces button.active { color: @red; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty { font-size: 14px; padding: 0px 8px; }
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal { font-size: 14px; padding: 0px 8px; }
 #custom-sep {
 	color: @accent;
 	padding: 0px 14px;

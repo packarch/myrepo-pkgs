@@ -1,0 +1,22 @@
+# Couleurs du thème, écrites par packarch-skin
+background = #20262C
+foreground = #e6e6e6
+selection-background = #e6e6e6
+selection-foreground = #20262C
+cursor-color = #e6e6e6
+palette = 0=#222228
+palette = 1=#ec3a2a
+palette = 2=#3ddc4a
+palette = 3=#f8c602
+palette = 4=#2f80ff
+palette = 5=#ff4fa3
+palette = 6=#3ad6e0
+palette = 7=#d8d8d8
+palette = 8=#44444c
+palette = 9=#ff5a48
+palette = 10=#62f070
+palette = 11=#ffdc3a
+palette = 12=#5a9cff
+palette = 13=#ff78bc
+palette = 14=#6ae4ec
+palette = 15=#f4f4f4

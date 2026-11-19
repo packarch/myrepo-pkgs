@@ -16,7 +16,7 @@ root_cmd="$HOME/.config/openbox/scripts/ob-asroot"
 
 # menu
 menuStart
-	menuItem 'Terminal (kitty)' "$root_cmd 'kitty'"
+	menuItem 'Terminal (Ghostty)' "$root_cmd 'packarch-terminal'"
 	menuItem 'Gestionnaire de fichiers (thunar)' "$root_cmd 'dbus-run-session thunar'"
 	menuItem 'Éditeur de texte (geany)' "$root_cmd 'geany'"
 menuEnd

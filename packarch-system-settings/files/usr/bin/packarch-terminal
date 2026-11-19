@@ -1,0 +1,11 @@
+#!/bin/sh
+# Terminal de Packarch (Ghostty) : packarch-terminal [OPTIONS DE GHOSTTY]
+#
+# En administrateur (asroot, ob-asroot, Thunar de root), root n'a pas de
+# configuration de Ghostty (terminal sans les couleurs du thème) : ces
+# scripts donnent celle de l'utilisateur dans PACKARCH_GHOSTTY_CONFIG, lue
+# ici à la place de celle de root, sans rien écrire chez root.
+if [ -n "$PACKARCH_GHOSTTY_CONFIG" ] && [ -f "$PACKARCH_GHOSTTY_CONFIG" ]; then
+	exec ghostty --config-default-files=false --config-file="$PACKARCH_GHOSTTY_CONFIG" "$@"
+fi
+exec ghostty "$@"

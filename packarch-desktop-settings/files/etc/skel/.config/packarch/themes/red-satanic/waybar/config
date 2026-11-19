@@ -173,10 +173,10 @@
       "on-click-right": "~/.config/packarch/scripts/asroot thunar",
       "format": "<span color='@green@'></span>"
     },
-    "custom/launch-kitty": {
+    "custom/launch-terminal": {
       "tooltip-format": "Terminal (clic droit : en administrateur)",
-      "on-click": "~/.config/packarch/scripts/kitty",
-      "on-click-right": "~/.config/packarch/scripts/asroot 'kitty --class kitty-float --directory /root'",
+      "on-click": "~/.config/packarch/scripts/terminal",
+      "on-click-right": "~/.config/packarch/scripts/asroot 'packarch-terminal --class=org.packarch.TerminalRoot --working-directory=/root'",
       "format": "<span color='@green@'></span>"
     },
     "modules-left": [
@@ -184,7 +184,7 @@
       "custom/dot-alt#da2",
       "custom/launch-firefox",
       "custom/launch-thunar",
-      "custom/launch-kitty"
+      "custom/launch-terminal"
     ],
     "clock": {
       "interval": 60,

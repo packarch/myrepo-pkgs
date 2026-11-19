@@ -1,0 +1,24 @@
+# Ghostty de Packarch (packarch-system-settings), terminal des bureaux
+# Packarch et Openbox. Voir « ghostty +show-config --default --docs ».
+#
+# Couleurs et police du thème : fichiers colors et fonts, écrits par
+# packarch-skin à chaque changement de thème ou de police, puis rechargés
+# dans les fenêtres ouvertes (SIGUSR2). Ajouter vos réglages ici, après eux.
+config-file = ?colors
+config-file = ?fonts
+
+window-padding-x = 12
+window-padding-y = 12
+window-width = 90
+window-height = 24
+cursor-style = block
+
+# Clic droit : menu Copier, Coller… ; la sélection va dans le presse-papiers
+right-click-action = context-menu
+copy-on-select = clipboard
+confirm-close-surface = false
+
+# Cadre des fenêtres par le gestionnaire de fenêtres ; une fenêtre par
+# processus (--class des fenêtres flottantes et plein écran respectée)
+gtk-titlebar = false
+gtk-single-instance = false

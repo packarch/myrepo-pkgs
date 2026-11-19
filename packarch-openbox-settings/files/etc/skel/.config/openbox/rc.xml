@@ -692,7 +692,7 @@
     <!-- Apps -->
     <keybind key="W-Return">
       <action name="Execute">
-        <command>kitty</command>
+        <command>ghostty</command>
       </action>
     </keybind>
     <keybind key="W-f">
@@ -744,17 +744,17 @@
     <!-- CLI Apps -->
     <keybind key="C-A-t">
       <action name="Execute">
-        <command>kitty</command>
+        <command>ghostty</command>
       </action>
     </keybind>
     <keybind key="C-A-v">
       <action name="Execute">
-        <command>kitty -e nano</command>
+        <command>ghostty -e nano</command>
       </action>
     </keybind>
     <keybind key="C-A-h">
       <action name="Execute">
-        <command>kitty -e htop</command>
+        <command>ghostty -e htop</command>
       </action>
     </keybind>
     <!-- Misc -->

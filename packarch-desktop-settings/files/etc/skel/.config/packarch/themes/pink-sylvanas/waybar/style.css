@@ -86,7 +86,7 @@ window#waybar.empty #taskbar { background-color: transparent; }
 #workspaces button.active { color: @green; }
 #custom-menu { font-size: 15px; padding: 0px 9px; }
 #custom-power { padding: 0px 11px; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty { font-size: 14px; padding: 0px 8px; }
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal { font-size: 14px; padding: 0px 8px; }
 
 /* Points (dot, dot-alt) */
 #custom-dot {
