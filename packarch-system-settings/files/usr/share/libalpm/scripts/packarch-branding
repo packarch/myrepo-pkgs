@@ -45,6 +45,34 @@ rename_limine_entry() {
     fi
 }
 
+# Limine theme of Packarch: the wallpaper written by Calamares
+# (limine-splash.png on the ESP, from cachyos-wallpapers before Packarch) is
+# replaced by the one of this package, and the comment of the theme names
+# Packarch. The wallpaper has no checksum in limine.conf: no new enrollment.
+update_limine_wallpaper() {
+    local esp conf splash="/usr/share/packarch/limine-splash.png"
+    [[ -r /etc/default/limine && -f $splash ]] || return 0
+    esp=$(sed -n 's/^ESP_PATH="\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' /etc/default/limine)
+    esp="${esp:-/boot}"
+    conf="$esp/limine.conf"
+    [[ -f $conf ]] && grep -qx 'wallpaper: boot():/limine-splash.png' "$conf" || return 0
+    cmp -s "$splash" "$esp/limine-splash.png" || cp -f "$splash" "$esp/limine-splash.png"
+    sed -i 's|^# CachyOS Limine theme$|# Packarch Limine theme (wallpaper of Packarch)|' "$conf"
+}
+
+# Installation snapshot of Calamares (btrfs-installation-snapshot), named
+# "Fresh CachyOS Installation" before Packarch: renamed, limine-snapper-sync
+# shows the new name in the boot menu at its next update.
+rename_installation_snapshot() {
+    local id
+    command -v snapper >/dev/null && [[ -f /etc/snapper/configs/root ]] || return 0
+    id=$(snapper --no-dbus -c root --csvout list --columns number,description 2>/dev/null |
+        awk -F, '$2 == "Fresh CachyOS Installation" { print $1 }')
+    for n in $id; do
+        snapper --no-dbus -c root modify --description "Installation de Packarch" "$n"
+    done
+}
+
 # GRUB theme packarch (this package) instead of the cachyos one, which
 # Calamares wrote in /etc/default/grub before Packarch: the background of
 # the cachyos theme shows CachyOS. grub.cfg is generated again if it exists.
@@ -62,4 +90,6 @@ update_grub_theme() {
 update_os_release
 update_lsb_release
 rename_limine_entry
+update_limine_wallpaper
+rename_installation_snapshot
 update_grub_theme

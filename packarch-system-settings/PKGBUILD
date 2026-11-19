@@ -50,10 +50,15 @@
 # - 1.0-18: new Packarch logo (yellow gradient pacman, the shape of the
 #   background of the Packarch desktop) for /usr/share/pixmaps/packarch.png
 #   and the packarch icon of the GRUB themes
+# - 1.0-19: Limine wallpaper of Packarch /usr/share/packarch/limine-splash.png
+#   (pacman in the bottom right corner, limineSplashLogo of Calamares); the
+#   branding hook puts it on the ESP instead of the one of CachyOS, and
+#   renames the installation snapshot "Fresh CachyOS Installation" to
+#   "Installation de Packarch"
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=18
+pkgrel=19
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
