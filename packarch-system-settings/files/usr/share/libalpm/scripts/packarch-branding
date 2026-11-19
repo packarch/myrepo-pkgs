@@ -61,8 +61,8 @@ update_limine_wallpaper() {
 }
 
 # Installation snapshot of Calamares (btrfs-installation-snapshot), named
-# "Fresh CachyOS Installation" before Packarch: renamed, limine-snapper-sync
-# shows the new name in the boot menu at its next update.
+# "Fresh CachyOS Installation" before Packarch: renamed in snapper and in the
+# entry of limine.conf (enrolled again if enrollment is enabled).
 rename_installation_snapshot() {
     local id
     command -v snapper >/dev/null && [[ -f /etc/snapper/configs/root ]] || return 0
@@ -71,6 +71,17 @@ rename_installation_snapshot() {
     for n in $id; do
         snapper --no-dbus -c root modify --description "Installation de Packarch" "$n"
     done
+    # limine-snapper-sync keeps the text of the entries it already wrote
+    local esp conf
+    [[ -r /etc/default/limine ]] || return 0
+    esp=$(sed -n 's/^ESP_PATH="\{0,1\}\([^"]*\)"\{0,1\}$/\1/p' /etc/default/limine)
+    conf="${esp:-/boot}/limine.conf"
+    [[ -f $conf ]] && grep -q '^ *comment: Fresh CachyOS Installation$' "$conf" || return 0
+    sed -i 's|^\( *comment: \)Fresh CachyOS Installation$|\1Installation de Packarch|' "$conf"
+    if grep -qs '^ENABLE_ENROLL_LIMINE_CONFIG=yes' /etc/limine-entry-tool.conf /etc/default/limine &&
+        command -v limine-enroll-config >/dev/null; then
+        limine-enroll-config
+    fi
 }
 
 # GRUB theme packarch (this package) instead of the cachyos one, which

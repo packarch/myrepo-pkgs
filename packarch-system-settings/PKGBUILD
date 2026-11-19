@@ -55,10 +55,12 @@
 #   branding hook puts it on the ESP instead of the one of CachyOS, and
 #   renames the installation snapshot "Fresh CachyOS Installation" to
 #   "Installation de Packarch"
+# - 1.0-20: the installation snapshot is also renamed in limine.conf
+#   (limine-snapper-sync keeps the text of its existing entries)
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=19
+pkgrel=20
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
