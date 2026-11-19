@@ -48,9 +48,11 @@
 # 1.4.1-1: screen sharing of a single window: packarch-partage lists the
 #          outputs and windows in rofi for xdg-desktop-portal-wlr
 #          (/etc/xdg/xdg-desktop-portal-wlr/packarch)
+# 1.4.2-1: screen recording on NVIDIA: linear dmabuf of wf-recorder filled
+#          by the CPU (not renderable by the GPU)
 
 pkgname=packarch-desktop
-pkgver=1.4.1
+pkgver=1.4.2
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
