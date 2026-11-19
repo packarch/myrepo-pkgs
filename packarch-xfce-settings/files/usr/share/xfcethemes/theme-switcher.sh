@@ -14,7 +14,7 @@
 set -euo pipefail
 
 declare -A OLD=(
-    [default]=default [blue]=packarch [purple]=pink-sylvanas [red]=red-satanic
+    [default]=classic [blue]=packarch [purple]=pink-sylvanas [red]=red-satanic
     [yellow]=yellow-flower [green]=hacking [gray]=adaptive
 )
 

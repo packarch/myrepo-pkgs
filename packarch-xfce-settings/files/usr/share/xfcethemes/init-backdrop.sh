@@ -36,7 +36,7 @@ image="$(xfconf-query -c xfce4-desktop -l -v 2>/dev/null \
 if [[ -z "$image" || ! -f "$image" ]]; then
     image="$(packarch-skin wallpaper 2>/dev/null)"
 fi
-[[ -f "$image" ]] || image="/usr/share/backgrounds/wallpaper-alt.png"
+[[ -f "$image" ]] || image="/usr/share/backgrounds/packarch-default.jpg"
 
 count="$(xfconf-query -c xfwm4 -p /general/workspace_count 2>/dev/null || echo 4)"
 

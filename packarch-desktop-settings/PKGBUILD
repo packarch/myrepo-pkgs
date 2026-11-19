@@ -40,10 +40,13 @@
 #        out the dex line of the autostart of existing accounts
 # 1.2-1: waybar clock: day and month names in French (L specifier of
 #        std::format, the "locale" option alone is ignored since waybar 0.11)
+# 1.2-2: default theme packarch (packarch-skin 1.10.0, wallpaper with the
+#        pacman of the bare packarch desktop); the former default theme is
+#        named classic
 
 pkgname=packarch-desktop-settings
 pkgver=1.2
-pkgrel=1
+pkgrel=2
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -68,11 +71,11 @@ depends=(
   packarch-system-settings
   # theme chooser, GTK and Openbox (window) themes, icons, cursors and
   # wallpapers
-  'packarch-skin>=1.9.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.10.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.9.0')
+makedepends=('packarch-skin>=1.10.0')
 optdepends=(
   'blueman: Bluetooth manager (right click on the Bluetooth module)'
   'kanshi: screen configuration kept (~/.config/kanshi/config, started by autostart)'
@@ -108,6 +111,6 @@ package() {
 		Wayland tools configuration based on archcraft-sway-free by Aditya
 		Shakya (adi1090x), GPL-3.0: https://github.com/archcraft-os/archcraft-sway
 	EOF
-	# The first session starts with the default theme
-	packarch-skin render "$pkgdir" default
+	# The first session starts with the default theme (packarch)
+	packarch-skin render "$pkgdir" packarch
 }

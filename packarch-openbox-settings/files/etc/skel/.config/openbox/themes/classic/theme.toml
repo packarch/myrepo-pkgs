@@ -1,4 +1,5 @@
-# Default theme of packarch-skin (see "packarch-skin --help").
+# Classic theme of packarch-skin (named "default" before packarch-skin 1.10.0,
+# when it was the default theme; see "packarch-skin --help").
 # Colors: "#RRGGBB", another color of [colors], gradient1..6 ([polybar]
 # gradient), lighten(COLOR, AMOUNT) or darken(COLOR, AMOUNT) (HSL lightness).
 

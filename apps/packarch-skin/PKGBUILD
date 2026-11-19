@@ -31,9 +31,12 @@
 # 1.9.0: labwc desktop removed (Packarch only); thumbnails in
 # /usr/share/packarch/desktop/icons (packarch-desktop-settings); scripts of
 # the bars of ~/.config/labwc/ replaced by those of ~/.config/packarch/
+# 1.10.0: default theme packarch (render, account without a current theme);
+# the former default theme is named classic (an account that still has its
+# theme "default" keeps it and does not get classic twice)
 
 pkgname=packarch-skin
-pkgver=1.9.0
+pkgver=1.10.0
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Packarch desktops"
 arch=('x86_64')

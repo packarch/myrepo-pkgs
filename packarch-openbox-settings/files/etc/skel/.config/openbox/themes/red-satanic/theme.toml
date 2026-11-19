@@ -1,6 +1,6 @@
 # Red Satanic theme of packarch-skin (see "packarch-skin --help"): black and
 # blood red of satanic.jpg, Packarch-Red-Satanic GTK and Openbox themes (from
-# Satanic and OB-Kripton), two bars (from the default theme).
+# Satanic and OB-Kripton), two bars (from the classic theme).
 # Colors: "#RRGGBB", another color of [colors], gradient1..6 ([polybar]
 # gradient), lighten(COLOR, AMOUNT) or darken(COLOR, AMOUNT) (HSL lightness).
 

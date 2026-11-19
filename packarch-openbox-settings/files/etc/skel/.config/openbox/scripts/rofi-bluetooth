@@ -18,7 +18,7 @@
 
 # Import Current Theme
 DIR="$HOME/.config/openbox"
-STYLE="default"
+STYLE="packarch"
 RASI="$DIR/themes/$STYLE/rofi/bluetooth.rasi"
 
 # Constants

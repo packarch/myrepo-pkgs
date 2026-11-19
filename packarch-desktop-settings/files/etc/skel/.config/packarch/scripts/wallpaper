@@ -13,7 +13,7 @@
 
 file= mode= color=
 { read -r file; read -r mode; read -r color; } < "$HOME/.config/packarch/wallpaper" 2>/dev/null
-[[ -f $file ]] || file=/usr/share/backgrounds/wallpaper-alt.png
+[[ -f $file ]] || file=/usr/share/backgrounds/packarch-default.jpg
 [[ $mode =~ ^(fill|fit|stretch|center|tile)$ ]] || mode=fill
 [[ $color =~ ^#[0-9A-Fa-f]{6}$ ]] || color='#000000'
 

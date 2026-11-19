@@ -71,10 +71,13 @@
 # /usr/share/xfcethemes/themes, like the Openbox and Sway desktops
 # (packarch-skin 1.5.0: themes of the user in ~/.config/xfce4/themes, where
 # the missing themes of /etc/skel are copied)
+# 1.0.9-16: default theme packarch (packarch-skin 1.10.0): first wallpaper
+# packarch-default.jpg; the former default theme is named classic (thumbnail
+# classic.png, old "default" color of the theme switcher mapped to it)
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=15
+pkgrel=16
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -86,11 +89,11 @@ depends=(
   geany packarch-geany-config
   # themes of packarch-skin (1.0.9-7): the same as the Openbox desktop, with
   # the same packages
-  'packarch-skin>=1.5.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
+  'packarch-skin>=1.10.0' 'packarch-themes>=2.0-8' 'packarch-icons>=2.0-9'
   'packarch-backgrounds>=2.0-6' packarch-folder-color packarch-cursors
 )
 # Writes the default theme into /etc/skel (render)
-makedepends=('packarch-skin>=1.5.0')
+makedepends=('packarch-skin>=1.10.0')
 optdepends=(
   'firefox: web browser of the panel and the whisker menu'
   'liloucalc: calculator of the whisker menu and the calculator key'
@@ -108,6 +111,6 @@ package() {
 	for t in "$themes"/*/theme.toml; do
 		install -Dm644 "$t" "$pkgdir"/etc/skel/.config/xfce4/themes/"$(basename "$(dirname "$t")")"/theme.toml
 	done
-	# The first session starts with the default theme
-	packarch-skin render "$pkgdir" default
+	# The first session starts with the default theme (packarch)
+	packarch-skin render "$pkgdir" packarch
 }

@@ -1,7 +1,7 @@
 # Cyberpunk theme of packarch-skin (see "packarch-skin --help"):
 # Packarch-Cyberpunk GTK and Openbox themes (from Sweet-Dark), BeautyLine
 # icons, dark Sweet palette,
-# cyberpunk1.jpg wallpaper, two bars (from the default theme).
+# cyberpunk1.jpg wallpaper, two bars (from the classic theme).
 # Colors: "#RRGGBB", another color of [colors], gradient1..6 ([polybar]
 # gradient), lighten(COLOR, AMOUNT) or darken(COLOR, AMOUNT) (HSL lightness).
 
