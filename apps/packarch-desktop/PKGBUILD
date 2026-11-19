@@ -45,9 +45,12 @@
 #          screencopy into dmabuf buffers and only when the screen changes,
 #          virtual pointer (wlr-virtual-pointer), panics logged with a
 #          backtrace
+# 1.4.1-1: screen sharing of a single window: packarch-partage lists the
+#          outputs and windows in rofi for xdg-desktop-portal-wlr
+#          (/etc/xdg/xdg-desktop-portal-wlr/packarch)
 
 pkgname=packarch-desktop
-pkgver=1.4.0
+pkgver=1.4.1
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
@@ -60,6 +63,7 @@ depends=(
 optdepends=(
   'dbus: separate D-Bus bus when another session of the user is running'
   'xdg-desktop-portal-wlr: screenshots and screen sharing (packarch-portals.conf)'
+  'rofi: choice of the output or window to share (packarch-partage)'
   'xdg-desktop-portal-gtk: file chooser and other portals (packarch-portals.conf)'
   'hwdata: full manufacturer names of the monitors'
   'xorg-xrdb: X resources (~/.Xresources, Xft.dpi) of the X11 applications'
@@ -67,6 +71,7 @@ optdepends=(
 replaces=(packarch-rwdesktop)
 conflicts=(packarch-rwdesktop)
 provides=(packarch-rwdesktop)
+backup=('etc/xdg/xdg-desktop-portal-wlr/packarch')
 makedepends=('cargo')
 options=(!lto)
 source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
@@ -90,6 +95,8 @@ check() {
 package() {
 	cd "$pkgname-$pkgver"
 	install -Dm755 target/release/packarch "$pkgdir"/usr/bin/packarch
+	install -Dm755 target/release/packarch-partage "$pkgdir"/usr/bin/packarch-partage
+	install -Dm644 data/xdg-desktop-portal-wlr.conf "$pkgdir"/etc/xdg/xdg-desktop-portal-wlr/packarch
 	install -Dm644 data/packarch.desktop "$pkgdir"/usr/share/wayland-sessions/packarch.desktop
 	install -Dm644 data/packarch-session.target "$pkgdir"/usr/lib/systemd/user/packarch-session.target
 	install -Dm644 data/packarch-portals.conf "$pkgdir"/usr/share/xdg-desktop-portal/packarch-portals.conf
