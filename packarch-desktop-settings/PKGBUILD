@@ -57,10 +57,16 @@
 #        which waybar drops the clock for when it is not generated: fr_BE,
 #        fr_CH, fr_CA); theme packarch: full date and time, time alone on
 #        click; gen-waybar.py brought up to date (Ghostty, theme classic)
+# 1.2-6: accounts from before Ghostty whose kitty was removed (no longer a
+#        dependency: terminal of the keys, menus and waybar did nothing):
+#        packarch-run switches their configuration to Ghostty
+#        (scripts/terminal, asroot and rofi_asroot from /etc/skel, the old
+#        ones kept in avant-ghostty/; kitty replaced in rc.xml, menu.xml, the
+#        network menu and the waybar of the themes)
 
 pkgname=packarch-desktop-settings
 pkgver=1.2
-pkgrel=5
+pkgrel=6
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

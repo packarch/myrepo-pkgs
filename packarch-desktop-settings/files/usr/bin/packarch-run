@@ -101,6 +101,39 @@ if [[ ! -f $HOME/.config/packarch/rc.xml && -d /etc/skel/.config/packarch ]]; th
     cp -a -n /etc/skel/.config/packarch/. "$HOME/.config/packarch/"
 fi
 
+## Comptes d'avant Ghostty (1.2-3) dont kitty a été retiré (il n'est plus une
+## dépendance) : le terminal des touches, des menus et des barres waybar ne
+## se lançait plus. Leur configuration passe à Ghostty : scripts/terminal,
+## asroot et rofi_asroot de /etc/skel (les anciens gardés dans
+## avant-ghostty/), kitty remplacé dans rc.xml, menu.xml, le menu du réseau
+## et les barres des thèmes. Les comptes qui ont encore kitty le gardent.
+cfg="$HOME/.config/packarch"
+skel=/etc/skel/.config/packarch
+if [[ -f $cfg/rc.xml && ! -e $cfg/scripts/terminal && -f $skel/scripts/terminal ]] &&
+    ! command -v kitty >/dev/null && command -v ghostty >/dev/null; then
+    mkdir -p "$cfg/scripts" "$cfg/avant-ghostty"
+    for s in terminal asroot rofi_asroot; do
+        [[ -f $skel/scripts/$s ]] || continue
+        [[ -f $cfg/scripts/$s ]] && mv -f "$cfg/scripts/$s" "$cfg/avant-ghostty/$s"
+        cp -a "$skel/scripts/$s" "$cfg/scripts/$s"
+    done
+    for f in "$cfg"/{rc.xml,menu.xml,rofi/networkmenu_config.ini} \
+        "$cfg"/waybar/{config,style.css} "$cfg"/themes/*/waybar/{config,style.css}; do
+        [[ -f $f ]] && grep -q kitty "$f" || continue
+        sed -i \
+            -e 's#scripts/kitty#scripts/terminal#g' \
+            -e 's#kitty --class kitty-float --directory /root#packarch-terminal --class=org.packarch.TerminalRoot --working-directory=/root#g' \
+            -e 's#"kitty -e sudo #"~/.config/packarch/scripts/terminal -e sudo #g' \
+            -e 's#"kitty -e #"~/.config/packarch/scripts/terminal -f -e #g' \
+            -e 's#launch-kitty#launch-terminal#g' \
+            -e "s#-t 'kitty -e'#-t 'ghostty -e'#g" \
+            -e 's#Terminal (kitty)#Terminal (Ghostty)#g' \
+            -e 's#Terminal : kitty -->#Terminal : Ghostty (scripts/terminal) -->#' \
+            -e 's#^terminal = kitty$#terminal = ghostty#' \
+            "$f"
+    done
+fi
+
 ## Entrées XDG autostart lancées par systemd depuis packarch-desktop 1.2.1
 ## (packarch-session.target) : la ligne dex des anciens autostart les
 ## lançait une seconde fois, elle est mise en commentaire

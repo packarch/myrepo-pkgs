@@ -77,10 +77,17 @@
 # the themes (launch-terminal module), ob-furminal, pipemenus, Thunar
 # actions, root terminal by packarch-terminal; configuration ~/.config/ghostty
 # of packarch-system-settings (colors and font by packarch-skin)
+# 7.0-84: accounts from before Ghostty whose kitty was removed (no longer a
+# dependency: terminal of the keys, menus and polybar did nothing): their
+# configuration is switched to Ghostty when the Openbox session opens
+# (packarch-openbox-ghostty, run by /etc/profile.d/packarch-openbox-ghostty.sh:
+# ob-asroot and ob-furminal from /etc/skel, the old ones kept in
+# ~/.config/openbox/avant-ghostty/; kitty replaced in rc.xml, the menus, the
+# polybar of the themes, the network menu and obmenu-generator)
 
 pkgname=packarch-openbox-settings
 pkgver=7.0
-pkgrel=83
+pkgrel=84
 pkgdesc="Openbox configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

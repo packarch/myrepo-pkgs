@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+
+## Packarch : comptes Openbox d'avant Ghostty (7.0-83) dont kitty a été retiré
+## (il n'est plus une dépendance) : le terminal des touches, des menus et des
+## barres polybar ne se lançait plus. Leur configuration passe à Ghostty :
+## scripts ob-asroot et ob-furminal de /etc/skel (les anciens gardés dans
+## ~/.config/openbox/avant-ghostty/), kitty remplacé dans rc.xml, les menus,
+## les barres des thèmes, le menu du réseau et obmenu-generator. Les comptes
+## qui ont encore kitty le gardent. Lancé à l'ouverture de la session Openbox
+## (/etc/profile.d/packarch-openbox-ghostty.sh), avant Openbox ; sans effet
+## une fois la configuration passée à Ghostty.
+
+conf="${XDG_CONFIG_HOME:-$HOME/.config}"
+cfg="$conf/openbox"
+skel=/etc/skel/.config/openbox
+
+# Marque des comptes d'avant Ghostty : le terminal plein écran lance kitty
+grep -qs kitty "$cfg/scripts/ob-furminal" || exit 0
+[[ -f $skel/scripts/ob-furminal ]] || exit 0
+command -v kitty >/dev/null && exit 0
+command -v ghostty >/dev/null || exit 0
+
+mkdir -p "$cfg/avant-ghostty"
+for s in ob-furminal ob-asroot; do
+	[[ -f $skel/scripts/$s ]] || continue
+	[[ -f $cfg/scripts/$s ]] && mv -f "$cfg/scripts/$s" "$cfg/avant-ghostty/$s"
+	cp -a "$skel/scripts/$s" "$cfg/scripts/$s"
+done
+
+for f in "$cfg"/{rc.xml,menu-glyphs.xml,menu-icons.xml} \
+	"$cfg"/themes/*/polybar/{config.ini,modules.ini} \
+	"$conf"/networkmanager-dmenu/config.ini "$conf"/obmenu-generator/config.pl; do
+	[[ -f $f ]] && grep -q kitty "$f" || continue
+	sed -i \
+		-e 's#<command>kitty\b#<command>ghostty#g' \
+		-e 's#launch-kitty#launch-terminal#g' \
+		-e 's#Thunar and kitty as root#Thunar and Ghostty as root#' \
+		-e 's#ob-asroot kitty#ob-asroot packarch-terminal#g' \
+		-e 's#^\(click-[a-z]* = \)kitty\b#\1ghostty#' \
+		-e 's#%{A\([0-9]\):kitty #%{A\1:ghostty #g' \
+		-e 's#^terminal = kitty$#terminal = ghostty#' \
+		-e 's#\("terminal"[[:space:]]*=>[[:space:]]*"\)kitty"#\1ghostty"#' \
+		"$f"
+done
