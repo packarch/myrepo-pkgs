@@ -67,9 +67,14 @@
 #          foot, kitty…)
 # 1.4.9-1: default background of the bare compositor: the maze of the
 #          Packarch theme, full screen (instead of the dark pacman)
+# 1.4.10-1: scale of each window from the output its center is on (two
+#          outputs with different scales), Kill on an X11 window ends its
+#          process (not the whole XWayland), <libinput> applied again on
+#          reconfigure, -s COMMAND run after the autostart script,
+#          XDG_SESSION_TYPE removed from systemd at the end of the session
 
 pkgname=packarch-desktop
-pkgver=1.4.9
+pkgver=1.4.10
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
