@@ -75,9 +75,12 @@
 # 1.4.11-1: transparent X11 windows (ARGB visual: conky, transparent
 #          terminals): they were opaque, black where transparent (32-bit
 #          frame for a 32-bit window)
+# 1.4.12-1: window rules dropShadow="no" and keepBorder="no": no shadow and
+#          no border around an undecorated transparent window laid on the
+#          background (conky)
 
 pkgname=packarch-desktop
-pkgver=1.4.11
+pkgver=1.4.12
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
