@@ -72,9 +72,12 @@
 #          process (not the whole XWayland), <libinput> applied again on
 #          reconfigure, -s COMMAND run after the autostart script,
 #          XDG_SESSION_TYPE removed from systemd at the end of the session
+# 1.4.11-1: transparent X11 windows (ARGB visual: conky, transparent
+#          terminals): they were opaque, black where transparent (32-bit
+#          frame for a 32-bit window)
 
 pkgname=packarch-desktop
-pkgver=1.4.10
+pkgver=1.4.11
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
