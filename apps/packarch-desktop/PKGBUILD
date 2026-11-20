@@ -78,9 +78,13 @@
 # 1.4.12-1: window rules dropShadow="no" and keepBorder="no": no shadow and
 #          no border around an undecorated transparent window laid on the
 #          background (conky)
+# 1.4.13-1: keybinds repeat while the key is held (repeat="yes|no"; by
+#           default volume, brightness, MoveRelative, ResizeRelative, zoom);
+#           window menu and fullscreen output asked by the application;
+#           wlr-gamma-control (gammastep, wlsunset)
 
 pkgname=packarch-desktop
-pkgver=1.4.12
+pkgver=1.4.13
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
