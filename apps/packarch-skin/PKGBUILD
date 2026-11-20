@@ -36,9 +36,12 @@
 # theme "default" keeps it and does not get classic twice)
 # 1.11.0: colors and font of the terminal Ghostty (~/.config/ghostty/colors
 # and fonts, reloaded live by SIGUSR2), Openbox and Packarch desktops
+# 1.11.1: Packarch desktop: clock formats of the waybar bars of the themes
+# copied before packarch-desktop-settings 1.2-1 given the L of std::format
+# (days and months in the language of the system)
 
 pkgname=packarch-skin
-pkgver=1.11.0
+pkgver=1.11.1
 pkgrel=1
 pkgdesc="Theme (skin) chooser of the Packarch Openbox, XFCE and Packarch desktops"
 arch=('x86_64')

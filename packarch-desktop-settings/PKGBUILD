@@ -52,10 +52,15 @@
 #        packarch-system-settings (colors and font by packarch-skin)
 # 1.2-4: thumbnail of the packarch theme from its maze wallpaper
 #        (packarch-xfce-settings 1.0.9-17)
+# 1.2-5: waybar clock in the language of the session (scripts/statusbar:
+#        LC_ALL, LC_TIME or LANG instead of the fr_FR.UTF-8 of the themes,
+#        which waybar drops the clock for when it is not generated: fr_BE,
+#        fr_CH, fr_CA); theme packarch: full date and time, time alone on
+#        click; gen-waybar.py brought up to date (Ghostty, theme classic)
 
 pkgname=packarch-desktop-settings
 pkgver=1.2
-pkgrel=4
+pkgrel=5
 pkgdesc="Configuration of the Packarch desktop (packarch compositor)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

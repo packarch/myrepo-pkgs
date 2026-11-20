@@ -25,12 +25,12 @@ def bar_icons(icon, color, n=10, fill="━", empty="━"):
 # ---------------------------------------------------------------- modules
 def m_cpu(icon="\uf4bc", color="yellow"):
     return {"interval": 5, "format": f"{sp(color, icon)} {{usage}}%", "tooltip": False,
-            "on-click": "kitty -e htop"}
+            "on-click": f"{S}/terminal -f -e htop"}
 
 def m_memory(icon="\uefc5", color="cyan", percent=False):
     label = "{percentage}%" if percent else "{used:0.1f}G"
     return {"interval": 10, "format": f"{sp(color, icon)} {label}",
-            "tooltip-format": "Mémoire : {used:0.1f} Go / {total:0.1f} Go", "on-click": "kitty -e htop"}
+            "tooltip-format": "Mémoire : {used:0.1f} Go / {total:0.1f} Go", "on-click": f"{S}/terminal -f -e htop"}
 
 def m_disk(icon="󰋊", color="magenta"):
     return {"interval": 60, "paths": ["/"], "format": f"{sp(color, icon)} {{free}}",
@@ -129,7 +129,7 @@ def m_power(color="red"):
 def m_updates(color="foreground"):
     return {"exec": "checkupdates 2>/dev/null | wc -l", "exec-if": "command -v checkupdates",
             "interval": 3600, "format": f"{sp(color, '󰏔')} {{}}", "tooltip-format": "Mises à jour disponibles",
-            "on-click": "kitty -e sudo pacman -Syu"}
+            "on-click": f"{S}/terminal -e sudo pacman -Syu"}
 
 def m_text(text):
     return {"format": text, "tooltip": False}
@@ -137,7 +137,8 @@ def m_text(text):
 LAUNCHERS = {
     "firefox": ("\uf269", "Firefox (clic droit : Gmail)", "firefox", "firefox https://mail.google.com", None),
     "thunar": ("\uf07b", "Fichiers (clic droit : en administrateur)", "thunar", f"{S}/asroot thunar", None),
-    "kitty": ("\uf120", "Terminal (clic droit : en administrateur)", f"{S}/kitty", f"{S}/asroot 'kitty --class kitty-float --directory /root'", None),
+    "terminal": ("\uf120", "Terminal (clic droit : en administrateur)", f"{S}/terminal",
+                 f"{S}/asroot 'packarch-terminal --class=org.packarch.TerminalRoot --working-directory=/root'", None),
     "discord": ("󰙯", "Discord", "discord", None, "discord"),
     "filezilla": ("\uf0ec", "FileZilla", "filezilla", None, "filezilla"),
     "mkvtoolnix": ("\uf008", "MKVToolNix", "mkvtoolnix-gui", None, "mkvtoolnix-gui"),
@@ -262,9 +263,9 @@ button {
 }
 """
 
-# ------------------------------------------------- famille « default »
+# ------------------------------------------------- famille « classic »
 def family_default(theme, red_satanic=False, power_bottom=False):
-    """default, cyberpunk, pink-sylvanas, red-satanic : deux barres de 26 px
+    """classic, cyberpunk, pink-sylvanas, red-satanic : deux barres de 26 px
     avec une bordure de 6 px, des pastilles (LD/RD) et des points, et un
     trait noir (line-top, line-bottom) contre les fenêtres"""
     dot = dots("dot")
@@ -273,7 +274,7 @@ def family_default(theme, red_satanic=False, power_bottom=False):
         menu = m_menu("󰚌", "accent")
         launch_colors = ("green", "green", "green")
         clock = m_clock("red")
-        clock["format"] = f"{sp('red', '󰥔')} {sp('green', '{:%H:%M}')}"
+        clock["format"] = f"{sp('red', '󰥔')} {sp('green', '{:L%H:%M}')}"
     else:
         ws = m_workspaces({"default": "\uf10c", "active": "\uf111"})
         menu = m_menu("", "green")
@@ -291,7 +292,7 @@ def family_default(theme, red_satanic=False, power_bottom=False):
                        ("bluetooth", m_bluetooth("blue")), dot("\uf444"), ("network", m_network("magenta")), dot("\uf444"),
                        ("tray", m_tray()), ("custom/dot-alt#da1", m_text("\uf444")), ("custom/power", m_power())])
     bottom = Bar("bottom", "bottom", 38)
-    launchers = [(f"custom/launch-{a}", m_launch(a, c)) for a, c in zip(("firefox", "thunar", "kitty"), launch_colors)]
+    launchers = [(f"custom/launch-{a}", m_launch(a, c)) for a, c in zip(("firefox", "thunar", "terminal"), launch_colors)]
     if red_satanic:
         bottom.add("left", [("custom/menu", menu), ("custom/dot-alt#da2", m_text("\uf444"))] + launchers)
         bottom.add("center", [("clock", clock)])
@@ -330,7 +331,7 @@ window#waybar.empty #taskbar { background-color: transparent; }
 #workspaces button.active { color: @green; }
 #custom-menu { font-size: 15px; padding: 0px 9px; }
 #custom-power { padding: 0px 11px; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty { font-size: 14px; padding: 0px 8px; }
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal { font-size: 14px; padding: 0px 8px; }
 
 /* Points (dot, dot-alt) */
 #custom-dot {
@@ -357,7 +358,7 @@ def pink_city():
     b.add("left", [("custom/menu", menu), dot("\uf444"), ("ext/workspaces", ws), dot("\uf444"), ("tray", m_tray())])
     b.add("center", [("wlr/taskbar", m_taskbar())])
     clock = m_clock("cyan")
-    clock["format"] = f"{sp('cyan', '\uf017')} {sp('cyan', '{:%H:%M}')}"
+    clock["format"] = f"{sp('cyan', '\uf017')} {sp('cyan', '{:L%H:%M}')}"
     b.add("right", [("pulseaudio", m_volume("blue", bar=True)), dot("\uf444"), ("backlight", m_backlight("cyan")), dot("\uf444"),
                     ("battery", m_battery("green")), dot("\uf444"), ("bluetooth", m_bluetooth("blue")), dot("\uf444"),
                     ("network", m_network("magenta")), dot("\uf444"), ("clock", clock), dot("\uf444"), ("custom/power", m_power())])
@@ -401,7 +402,7 @@ def hacking():
     bottom = Bar("bottom", "bottom", 25)
     bottom.add("left", [("network", m_network("foreground", ext=True)), s(), ("bluetooth", m_bluetooth("foreground"))])
     bottom.add("center", [(f"custom/launch-{a}", m_launch(a, c)) for a, c in
-                          (("firefox", "magenta"), ("thunar", "blue"), ("kitty", "green"))])
+                          (("firefox", "magenta"), ("thunar", "blue"), ("terminal", "green"))])
     bottom.add("right", [("pulseaudio", m_volume("green", bar=True)), s(), ("backlight", m_backlight("yellow", bar=True))])
     css = """
 window#waybar { padding: 0px 8px; }
@@ -409,7 +410,7 @@ window#waybar.top { border-bottom: 1px solid @background-alt; }
 window#waybar.bottom { border-top: 1px solid @background-alt; }
 #workspaces button { color: @yellow; padding: 0px 8px; }
 #workspaces button.active { color: @red; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty { font-size: 14px; padding: 0px 8px; }
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal { font-size: 14px; padding: 0px 8px; }
 #custom-sep {
 	color: @accent;
 	padding: 0px 14px;
@@ -423,13 +424,16 @@ def packarch():
     ws = m_workspaces({"default": "󰊠", "active": "󰊠"})
     top.add("left", [("wlr/taskbar", m_taskbar())])
     top.add("center", [("ext/workspaces", ws)])
-    top.add("right", [("clock", m_clock("cyan", "\uf017")), sep("\uf444"), ("pulseaudio", m_volume("yellow")), sep("\uf444"),
+    # Date complète et heure par défaut, l'heure seule au clic
+    clock = m_clock("cyan", "\uf017")
+    clock["format"], clock["format-alt"] = clock["format-alt"].replace("}", "  %H:%M}"), clock["format"]
+    top.add("right", [("clock", clock), sep("\uf444"), ("pulseaudio", m_volume("yellow")), sep("\uf444"),
                       ("custom/power", m_power())])
     main = Bar("main", "bottom", 38)
     main.add("left", [("custom/menu", m_menu("󰮯", "accent")), sep("\uf444"),
                       ("custom/launch-themes", m_launch("themes", "yellow")), sep("\uf444"), ("cpu", m_cpu("󰍛", "green")), sep("\uf444"),
                       ("memory", m_memory("\uf2db", "cyan", percent=True)), sep("\uf444"), ("temperature", m_temp("\uf2c9", "magenta"))])
-    apps = (("firefox", "magenta"), ("thunar", "blue"), ("kitty", "green"), ("discord", "cyan"),
+    apps = (("firefox", "magenta"), ("thunar", "blue"), ("terminal", "green"), ("discord", "cyan"),
             ("filezilla", "yellow"), ("mkvtoolnix", "red"), ("filebot", "bright-blue"))
     launchers = [(f"custom/launch-{a}", m_launch(a, c)) for a, c in apps]
     main.add("center", [("group/launchers", {"orientation": "horizontal", "modules": [n for n, _ in launchers]})])
@@ -450,7 +454,7 @@ window#waybar.empty #taskbar { background-color: transparent; }
 #workspaces button { font-size: 14px; padding: 0px 5px; }
 #workspaces button.active { color: @red; }
 #custom-menu { font-size: 16px; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty, #custom-launch-discord,
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal, #custom-launch-discord,
 #custom-launch-filezilla, #custom-launch-mkvtoolnix, #custom-launch-filebot {
 	font-size: 15px;
 	padding: 0px 8px;
@@ -501,7 +505,7 @@ def yellow_flower():
     menu = m_menu("", "accent")
     menu["format"] = sp("accent", "", "packarch")
     bottom.add("left", [("custom/menu", menu), sep("|")] + [(f"custom/launch-{a}", m_launch(a, c)) for a, c in
-                                                          (("firefox", "magenta"), ("thunar", "blue"), ("kitty", "green"))])
+                                                          (("firefox", "magenta"), ("thunar", "blue"), ("terminal", "green"))])
     bottom.add("center", [("wlr/taskbar", m_taskbar())])
     bottom.add("right", [("pulseaudio", m_volume("blue", bar=True)), sep("|"), ("custom/power", m_power())])
     css = """
@@ -511,7 +515,7 @@ window#waybar.bottom { border-top: 1px solid @accent; }
 #workspaces button { color: @accent; padding: 0px 4px; }
 #workspaces button.active { color: @red; }
 #custom-menu { font-size: 14px; }
-#custom-launch-firefox, #custom-launch-thunar, #custom-launch-kitty { font-size: 14px; padding: 0px 4px; }
+#custom-launch-firefox, #custom-launch-thunar, #custom-launch-terminal { font-size: 14px; padding: 0px 4px; }
 #cpu, #memory, #disk, #battery, #bluetooth, #network { padding: 0px 2px; }
 #custom-sep { color: @background-alt; }
 """
@@ -554,7 +558,7 @@ window#waybar { border-bottom: 1px solid @accent; }
 """
     write("adaptive", [b], css)
 
-for t in ("default", "cyberpunk"):
+for t in ("classic", "cyberpunk"):
     family_default(t)
 family_default("pink-sylvanas", power_bottom=True)
 family_default("red-satanic", red_satanic=True)

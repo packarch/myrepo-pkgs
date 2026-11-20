@@ -1,4 +1,4 @@
-// Barre waybar du thème « default » du bureau Packarch, comme
+// Barre waybar du thème « classic » du bureau Packarch, comme
 // sa barre polybar sous Openbox. Copiée dans ~/.config/packarch/waybar/config
 // par packarch-skin, qui y remplace les @couleur@ par les couleurs du thème ;
 // "@output@" (écran principal) et "@marge15@" : remplis par scripts/statusbar.
