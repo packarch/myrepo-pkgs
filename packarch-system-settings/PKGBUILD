@@ -67,10 +67,13 @@
 #   here) and /usr/bin/packarch-terminal (Ghostty with the configuration of
 #   the user for the root terminal: PACKARCH_GHOSTTY_CONFIG of asroot and
 #   ob-asroot)
+# - 1.0-24: Ghostty without its toasts ("Copied to clipboard" at each
+#   selection, "Reloaded the configuration" at each theme change):
+#   app-notifications = false
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=23
+pkgrel=24
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"

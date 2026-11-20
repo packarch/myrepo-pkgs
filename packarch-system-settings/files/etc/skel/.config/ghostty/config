@@ -16,6 +16,9 @@ cursor-style = block
 # Clic droit : menu Copier, Coller… ; la sélection va dans le presse-papiers
 right-click-action = context-menu
 copy-on-select = clipboard
+# Pas de bulles de Ghostty (« Copié dans le presse-papiers » à chaque
+# sélection, « Configuration rechargée » à chaque changement de thème)
+app-notifications = false
 confirm-close-surface = false
 
 # Cadre des fenêtres par le gestionnaire de fenêtres ; une fenêtre par
