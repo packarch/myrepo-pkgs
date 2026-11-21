@@ -4,7 +4,7 @@
 # Bordeaux and squashes pigeons, rats and dogs (Rust, macroquad)
 
 pkgname=packarch-acaboulette
-pkgver=1.0.0
+pkgver=1.1.0
 pkgrel=1
 pkgdesc="Acaboulette: arcade game, a big ginger tomcat squashes the pigeons of Bordeaux"
 arch=('x86_64')
