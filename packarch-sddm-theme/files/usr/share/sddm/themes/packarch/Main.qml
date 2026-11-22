@@ -52,15 +52,30 @@ Rectangle {
         }
     }
 
+    // Messages de PAM reçus pendant la tentative en cours : compte verrouillé
+    // après plusieurs échecs (pam_faillock), minutes restantes… Sans eux, un
+    // bon mot de passe refusé pendant le verrouillage passait pour incorrect.
+    property var informations: []
+    // Message général de PAM, envoyé à chaque échec : il n'apprend rien
+    readonly property var messagesGeneraux: [
+        "Échec de l'authentification", "Échec d'authentification", "Authentication failure"
+    ]
+
     function connecter() {
         message.text = ""
+        informations = []
         sddm.login(utilisateur.currentValue, motDePasse.text, session.currentIndex)
     }
 
     Connections {
         target: sddm
+        function onInformationMessage(info) {
+            const t = String(info).replace(/\u2019/g, "'").trim()
+            if (t !== "" && !messagesGeneraux.includes(t) && !informations.includes(t))
+                informations.push(t)
+        }
         function onLoginFailed() {
-            message.text = "Mot de passe incorrect"
+            message.text = informations.length > 0 ? informations.join("\n") : "Mot de passe incorrect"
             motDePasse.text = ""
             motDePasse.forceActiveFocus()
         }
@@ -107,7 +122,9 @@ Rectangle {
         id: panneau
         width: 380 * echelle
         anchors.horizontalCenter: parent.horizontalCenter
-        y: parent.height * (config.hauteurPanneau || 0.80) - height / 2
+        // Le message, sous le panneau, compte pour une ligne : sur plusieurs
+        // lignes (compte verrouillé), il ne déplace pas les champs
+        y: parent.height * (config.hauteurPanneau || 0.80) - (height + spacing + metriqueMessage.height) / 2
         spacing: 12 * echelle
 
         ComboBox {
@@ -264,13 +281,20 @@ Rectangle {
                 }
             }
         }
+    }
 
-        Text {
-            id: message
-            Layout.alignment: Qt.AlignHCenter
-            color: erreur
-            font { family: police; pixelSize: 15 * echelle }
-        }
+    Text {
+        id: message
+        anchors { top: panneau.bottom; topMargin: panneau.spacing; horizontalCenter: panneau.horizontalCenter }
+        width: panneau.width
+        horizontalAlignment: Text.AlignHCenter
+        wrapMode: Text.WordWrap
+        color: erreur
+        font { family: police; pixelSize: 15 * echelle }
+    }
+    FontMetrics {
+        id: metriqueMessage
+        font: message.font
     }
 
     // --- Nom de la machine et alimentation, en bas au centre ----------------

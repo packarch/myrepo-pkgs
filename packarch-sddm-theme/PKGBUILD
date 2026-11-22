@@ -15,10 +15,15 @@
 #        of sessionsPreferees (packarch, openbox, xfce: the installed desktop),
 #        since SDDM 0.21 has no default session; Packarch uses SDDM instead of
 #        LightDM
+# 1.0-3: messages of PAM shown after a refused login (account locked by
+#        pam_faillock after 3 failures, minutes left) instead of always
+#        "Mot de passe incorrect", which was shown even for the right password
+#        during the lock (seen on a user's computer, 2026-11-22); the message
+#        is under the panel and does not move the fields
 
 pkgname=packarch-sddm-theme
 pkgver=1.0
-pkgrel=2
+pkgrel=3
 pkgdesc="Packarch theme of the SDDM login screen (maze, room for the login, ghosts)"
 arch=('any')
 url="https://github.com/packarch/Packarch"
