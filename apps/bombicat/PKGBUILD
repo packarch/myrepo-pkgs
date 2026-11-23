@@ -1,6 +1,6 @@
 # Maintainer: Antidote1911
 pkgname=bombicat
-pkgver=1.1.0
+pkgver=1.2.0
 pkgrel=1
 pkgdesc="A minesweeper with cats, written in Rust with egui"
 arch=('x86_64')
