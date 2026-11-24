@@ -1,9 +1,11 @@
 # Maintainer: Fabrice Corraire <antidote1911@gmail.com>
 #
+# 3.0.0-1: Arsenic V2 file format, not compatible with V1 (files written by
+#          2.x are rejected: decrypt them with 2.1.2 and encrypt them again)
 # 2.1.2-1: files dropped from a file manager on Wayland desktops (X11
 #          backend through XWayland)
 pkgname=cryptyrust
-pkgver=2.1.2
+pkgver=3.0.0
 pkgrel=1
 pkgdesc="Post-quantum file encryption with a drag-and-drop GUI, CLI, and hybrid X25519+ML-KEM-768 key management"
 arch=('x86_64')
