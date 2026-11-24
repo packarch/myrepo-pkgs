@@ -87,9 +87,13 @@
 # 1.4.15-1: a window maximized before it is shown (Firefox reopened
 #           maximized) takes the usable area of the output where it is placed
 #           (its bottom went under the bottom bar with two outputs)
+# 1.4.16-1: dialogs stay above their window (raised, lowered, minimized and
+#          sent to another desktop together); the keyboard goes to the modal
+#          dialog (xdg-dialog, gtk_shell1 for GTK 3, _NET_WM_STATE_MODAL);
+#          dialogs no longer listed in the taskbar, Alt+Tab and window menu
 
 pkgname=packarch-desktop
-pkgver=1.4.15
+pkgver=1.4.16
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
