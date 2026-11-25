@@ -39,10 +39,13 @@
 # 0.4.2: the Claude Code skill (packarch-admin) follows the chat.
 # 0.4.3: packarch-admin: a session opened again (same name, new address) gets
 # a new page, chat and connection key.
+# 0.4.4: packarch-admin: screen of the helped person (view and control) and
+# information about the computer, by scripts sent over SSH (nothing more on the
+# helped computer).
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.3
+pkgver=0.4.4
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
