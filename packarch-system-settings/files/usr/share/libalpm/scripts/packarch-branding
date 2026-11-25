@@ -91,7 +91,8 @@ update_grub_theme() {
     local conf="/etc/default/grub"
     local theme="/usr/share/grub/themes/packarch/theme.txt"
     [[ -f $conf && -f $theme ]] || return 0
-    grep -q '^GRUB_THEME="\{0,1\}/usr/share/grub/themes/cachyos/theme.txt"\{0,1\}$' "$conf" || return 0
+    # Value bare, in double quotes or in single quotes (CachyOS installer)
+    grep -q "^GRUB_THEME=[\"']\{0,1\}/usr/share/grub/themes/cachyos/theme.txt[\"']\{0,1\}\$" "$conf" || return 0
     sed -i "s|^GRUB_THEME=.*$|GRUB_THEME=\"$theme\"|" "$conf"
     if [[ -f /boot/grub/grub.cfg ]] && command -v grub-mkconfig >/dev/null; then
         grub-mkconfig -o /boot/grub/grub.cfg

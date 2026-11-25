@@ -70,10 +70,14 @@
 # - 1.0-24: Ghostty without its toasts ("Copied to clipboard" at each
 #   selection, "Reloaded the configuration" at each theme change):
 #   app-notifications = false
+# - 1.0-25: the zz-packarch-branding hook also switches a GRUB_THEME written
+#   in single quotes (/etc/default/grub of the CachyOS installer) to the
+#   packarch theme: only the bare and double-quoted forms matched, a CachyOS
+#   system converted to Packarch kept the cachyos theme (2026-11-23)
 
 pkgname=packarch-system-settings
 pkgver=1.0
-pkgrel=24
+pkgrel=25
 pkgdesc="System settings of Packarch (LightDM, X server, menu entries, cachy-update, os-release)"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
