@@ -37,10 +37,12 @@
 # the window is a separate program (/usr/lib/packarch-depannage), the
 # commands only need Qt Core.
 # 0.4.2: the Claude Code skill (packarch-admin) follows the chat.
+# 0.4.3: packarch-admin: a session opened again (same name, new address) gets
+# a new page, chat and connection key.
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.2
+pkgver=0.4.3
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
