@@ -44,10 +44,12 @@
 # helped computer).
 # 0.4.5: compact window with the Packarch logo (also the icon), emoji in the
 # chat, name of the helper shown instead of the Tailscale account name.
+# 0.4.6: every chat message starts with the name of its author; the Claude
+# Code skill stays out of the chat unless the helper allows it.
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.5
+pkgver=0.4.6
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
