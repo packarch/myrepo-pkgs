@@ -1,0 +1,23 @@
+# One PolicyKit authentication agent in the XFCE session: xfce4-session starts
+# its own (polkit-gnome, /etc/xdg/autostart/
+# xfce-polkit-gnome-authentication-agent-1.desktop, OnlyShowIn=XFCE), and
+# xfce-polkit (Openbox and Packarch desktops, installed next to XFCE on a
+# computer with several desktops) starts too: the second one fails with the
+# window "An authentication agent already exists". xfce-polkit.desktop gets
+# XFCE in its NotShowIn while xfce4-session is installed; run again after
+# each upgrade of xfce-polkit, which brings its file back.
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Type = Package
+Target = xfce-polkit
+Target = xfce4-session
+Target = polkit-gnome
+Target = packarch-xfce-settings
+
+[Action]
+Description = Keeping one PolicyKit agent in the XFCE session...
+When = PostTransaction
+Depends = sed
+Exec = /usr/share/libalpm/scripts/packarch-xfce-polkit

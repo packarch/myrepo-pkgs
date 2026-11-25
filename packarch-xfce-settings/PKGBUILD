@@ -7,6 +7,8 @@
 # new users), except the theme switcher and the GSettings defaults.
 #
 # Our changes:
+# - one PolicyKit agent in the XFCE session (1.0.9-18, pacman hook
+#   90-packarch-xfce-polkit)
 # - "default" theme of packarch-skin from the start (render, see "themes"
 #   below): terminal colors in terminalrc (imported into xfconf by
 #   xfce4-terminal at first start), same values in the GTK 2/3/4 files,
@@ -75,10 +77,19 @@
 # packarch-default.jpg; the former default theme is named classic (thumbnail
 # classic.png, old "default" color of the theme switcher mapped to it)
 # 1.0.9-17: thumbnail of the packarch theme from its maze wallpaper
+# 1.0.9-18: XFCE added to a computer installed with another desktop (the ISO
+# installs the xfce4 group and its plugins next to this package, pacman -S
+# packarch-xfce-settings alone did not): the session (xfce4-session,
+# xfce4-settings: no "Xfce Session" on the login screen without them) and the
+# plugins of our panel (pulseaudio, power-manager-plugin, notification-plugin:
+# "Impossible de charger le greffon" otherwise) are dependencies; pacman hook
+# 90-packarch-xfce-polkit: one PolicyKit agent in the XFCE session (xfce-polkit
+# of the Openbox and Packarch desktops kept out of it while xfce4-session
+# starts polkit-gnome)
 
 pkgname=packarch-xfce-settings
 pkgver=1.0.9
-pkgrel=17
+pkgrel=18
 pkgdesc="XFCE configuration of Packarch"
 arch=('any')
 url="https://github.com/packarch/myrepo-pkgs"
@@ -86,6 +97,8 @@ license=('GPL-1.0-only')
 depends=(
   xfce4-panel xfce4-whiskermenu-plugin xfdesktop xfconf thunar xfwm4 libnotify xorg-xrandr yad
   noto-fonts packarch-system-settings htop
+  # the session and the plugins of the panel of /etc/skel (1.0.9-18)
+  xfce4-session xfce4-settings xfce4-pulseaudio-plugin xfce4-power-manager xfce4-notifyd
   # default text editor, with the color schemes of the themes (1.0.9-14)
   geany packarch-geany-config
   # themes of packarch-skin (1.0.9-7): the same as the Openbox desktop, with
@@ -99,6 +112,12 @@ optdepends=(
   'firefox: web browser of the panel and the whisker menu'
   'liloucalc: calculator of the whisker menu and the calculator key'
   'xfce4-terminal: terminal with the colors of the theme'
+  'xfce4-screensaver: screen locking (xflock4)'
+  'xfce4-screenshooter: screenshots of the Print key'
+  'xfce4-taskmanager: task manager of the whisker menu and of Ctrl+Alt+M'
+  'xfce4-appfinder: application finder of Alt+F2'
+  'pavucontrol: volume control of the whisker menu and of the pulseaudio plugin'
+  'ristretto: image viewer of the whisker menu and of mimeapps.list'
 )
 conflicts=(cachyos-xfce-settings packarch-openbox-settings packarch-openbox)
 replaces=(cachyos-xfce-settings)
