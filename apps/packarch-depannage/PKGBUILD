@@ -46,10 +46,12 @@
 # chat, name of the helper shown instead of the Tailscale account name.
 # 0.4.6: every chat message starts with the name of its author; the Claude
 # Code skill stays out of the chat unless the helper allows it.
+# 0.4.7: packarch-admin tchat-suivre/tchat-dire (chat of the assistant, gated
+# by the checkbox), coloured chat, animated logo in the window.
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.6
+pkgver=0.4.7
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
