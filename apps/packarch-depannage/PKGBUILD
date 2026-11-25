@@ -36,10 +36,11 @@
 # 0.4.1: text mode in a console (no desktop, or the window does not open);
 # the window is a separate program (/usr/lib/packarch-depannage), the
 # commands only need Qt Core.
+# 0.4.2: the Claude Code skill (packarch-admin) follows the chat.
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.1
+pkgver=0.4.2
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
