@@ -28,51 +28,56 @@
 # 0.3.6: Packarch desktop (packarch compositor: PACKARCH_PID, Wayland socket
 # of the packarch session).
 # 0.3.7: labwc desktop removed (Packarch only).
+# 0.4.0: C++/Qt 6 (CMake) instead of Rust/egui, and two packages built from
+# the same sources: packarch-depannage (helped computer, same commands as
+# before over Tailscale SSH) and packarch-admin (helper: computers to help,
+# embedded terminals with qtermwidget, chat, tray icon, connection keys).
+# Both have the version of the tag; each takes its CMake install component.
 
-pkgname=packarch-depannage
-pkgver=0.3.7
+pkgbase=packarch-depannage
+pkgname=('packarch-depannage' 'packarch-admin')
+pkgver=0.4.0
 pkgrel=1
-pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
 license=('GPL-3.0-or-later')
-# maim, xdotool, wmctrl: used by the person who helps in the session of the
-# user (screenshot, clicks, closing a window), on every desktop
-depends=('tailscale' 'polkit' 'gcc-libs' 'glibc'
-         'maim' 'xdotool' 'wmctrl' 'openssh' 'libnotify'
-         'libglvnd' 'libxkbcommon' 'libx11' 'libxcursor' 'libxi' 'libxrandr')
-makedepends=('cargo')
-options=(!lto)
-source=("$pkgname-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
+makedepends=('cmake' 'qt6-base' 'qtermwidget')
+source=("$pkgbase-$pkgver.tar.gz::${url}/archive/refs/tags/v${pkgver}.tar.gz")
 sha256sums=('SKIP')
 
-prepare() {
-	cd "$pkgname-$pkgver"
-	cargo fetch --locked --target "$(rustc -vV | sed -n 's/host: //p')"
-}
-
 build() {
-	cd "$pkgname-$pkgver"
-	cargo build --frozen --release
+	cmake -S "$pkgbase-$pkgver" -B build \
+		-DCMAKE_BUILD_TYPE=Release \
+		-DCMAKE_INSTALL_PREFIX=/usr
+	cmake --build build
 }
 
 check() {
-	cd "$pkgname-$pkgver"
-	cargo test --frozen --release
+	ctest --test-dir build --output-on-failure
 }
 
-package() {
-	cd "$pkgname-$pkgver"
-	install -Dm755 target/release/$pkgname "$pkgdir"/usr/bin/$pkgname
-	install -Dm644 data/org.packarch.Depannage.desktop \
-		"$pkgdir"/usr/share/applications/org.packarch.Depannage.desktop
-	install -Dm644 data/org.packarch.depannage.policy \
-		"$pkgdir"/usr/share/polkit-1/actions/org.packarch.depannage.policy
-	install -Dm644 data/packarch-depannage-cleanup.service \
-		"$pkgdir"/usr/lib/systemd/system/packarch-depannage-cleanup.service
+package_packarch-depannage() {
+	pkgdesc="Temporary remote help (Tailscale SSH) for Packarch"
+	# maim, xdotool, wmctrl: used by the person who helps in the session of the
+	# user (screenshot, clicks, closing a window), on every desktop;
+	# util-linux: runuser (session-run)
+	depends=('qt6-base' 'tailscale' 'polkit' 'libnotify' 'util-linux'
+	         'maim' 'xdotool' 'wmctrl' 'gcc-libs' 'glibc')
+
+	DESTDIR="$pkgdir" cmake --install build --component depannage
 	# Enabled: ends a session left open by a shutdown
 	install -d "$pkgdir"/usr/lib/systemd/system/multi-user.target.wants
 	ln -s ../packarch-depannage-cleanup.service \
 		"$pkgdir"/usr/lib/systemd/system/multi-user.target.wants/packarch-depannage-cleanup.service
-	install -Dm644 README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+	install -Dm644 "$pkgbase-$pkgver"/README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
+}
+
+package_packarch-admin() {
+	pkgdesc="Remote help of Packarch computers (packarch-depannage): helper side"
+	depends=('qt6-base' 'qtermwidget' 'tailscale' 'openssh' 'libnotify'
+	         'gcc-libs' 'glibc')
+	optdepends=('claude-code: "Dépanner avec Claude Code" (or Claude Code installed in ~/.local/bin)')
+
+	DESTDIR="$pkgdir" cmake --install build --component admin
+	install -Dm644 "$pkgbase-$pkgver"/README.md "$pkgdir"/usr/share/doc/$pkgname/README.md
 }
