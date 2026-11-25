@@ -42,10 +42,12 @@
 # 0.4.4: packarch-admin: screen of the helped person (view and control) and
 # information about the computer, by scripts sent over SSH (nothing more on the
 # helped computer).
+# 0.4.5: compact window with the Packarch logo (also the icon), emoji in the
+# chat, name of the helper shown instead of the Tailscale account name.
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.4
+pkgver=0.4.5
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
