@@ -33,10 +33,13 @@
 # before over Tailscale SSH) and packarch-admin (helper: computers to help,
 # embedded terminals with qtermwidget, chat, tray icon, connection keys).
 # Both have the version of the tag; each takes its CMake install component.
+# 0.4.1: text mode in a console (no desktop, or the window does not open);
+# the window is a separate program (/usr/lib/packarch-depannage), the
+# commands only need Qt Core.
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.0
+pkgver=0.4.1
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
