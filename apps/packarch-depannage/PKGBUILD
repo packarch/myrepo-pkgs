@@ -55,10 +55,12 @@
 # 0.4.10: packarch-depannage aur: AUR packages installed by yay as the user
 # (yay as root builds in a noexec directory since systemd 262), with a temporary
 # sudo rule (pacman) written by the command; hence sudo (visudo).
+# 0.4.11: packarch-admin: tray icon also when started before the bar (waits
+# for the tray of the bar on D-Bus; Qt DBus, in qt6-base).
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.10
+pkgver=0.4.11
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
