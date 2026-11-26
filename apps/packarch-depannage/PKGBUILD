@@ -50,10 +50,12 @@
 # by the checkbox), coloured chat, animated logo in the window.
 # 0.4.8: packarch-admin: one page per session, never closed by itself (a
 # session opened again no longer kills the tabs of the previous one).
+# 0.4.9: no password to allow the remote help for an administrator (wheel) at
+# the screen (polkit rule), one polkit action per command.
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.8
+pkgver=0.4.9
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
