@@ -52,10 +52,13 @@
 # session opened again no longer kills the tabs of the previous one).
 # 0.4.9: no password to allow the remote help for an administrator (wheel) at
 # the screen (polkit rule), one polkit action per command.
+# 0.4.10: packarch-depannage aur: AUR packages installed by yay as the user
+# (yay as root builds in a noexec directory since systemd 262), with a temporary
+# sudo rule (pacman) written by the command; hence sudo (visudo).
 
 pkgbase=packarch-depannage
 pkgname=('packarch-depannage' 'packarch-admin')
-pkgver=0.4.9
+pkgver=0.4.10
 pkgrel=1
 arch=('x86_64')
 url="https://github.com/packarch/packarch-depannage"
@@ -80,8 +83,9 @@ package_packarch-depannage() {
 	# maim, xdotool, wmctrl: used by the person who helps in the session of the
 	# user (screenshot, clicks, closing a window), on every desktop;
 	# util-linux: runuser (session-run)
-	depends=('qt6-base' 'tailscale' 'polkit' 'libnotify' 'util-linux'
+	depends=('qt6-base' 'tailscale' 'polkit' 'libnotify' 'util-linux' 'sudo'
 	         'maim' 'xdotool' 'wmctrl' 'gcc-libs' 'glibc')
+	optdepends=('yay: AUR packages installed by the person who helps (packarch-depannage aur)')
 
 	DESTDIR="$pkgdir" cmake --install build --component depannage
 	# Enabled: ends a session left open by a shutdown
