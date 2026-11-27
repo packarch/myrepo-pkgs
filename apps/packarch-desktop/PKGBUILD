@@ -95,9 +95,12 @@
 #          windowEdgeStrength): an edge is held only while it is pushed
 #          across; a large value keeps the windows on the screen (it pinned
 #          them in the top left corner, impossible to move)
+# 1.4.18-1: the title bar of a moved window stays reachable: it no longer
+#          goes under a panel (waybar is above the windows) or off the
+#          screen, whatever the edge resistance
 
 pkgname=packarch-desktop
-pkgver=1.4.17
+pkgver=1.4.18
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
