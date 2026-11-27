@@ -91,9 +91,13 @@
 #          sent to another desktop together); the keyboard goes to the modal
 #          dialog (xdg-dialog, gtk_shell1 for GTK 3, _NET_WM_STATE_MODAL);
 #          dialogs no longer listed in the taskbar, Alt+Tab and window menu
+# 1.4.17-1: one-way edge resistance as in Openbox (screenEdgeStrength,
+#          windowEdgeStrength): an edge is held only while it is pushed
+#          across; a large value keeps the windows on the screen (it pinned
+#          them in the top left corner, impossible to move)
 
 pkgname=packarch-desktop
-pkgver=1.4.16
+pkgver=1.4.17
 pkgrel=1
 pkgdesc="Wayland stacking compositor of the Packarch desktop (packarch)"
 arch=('x86_64')
